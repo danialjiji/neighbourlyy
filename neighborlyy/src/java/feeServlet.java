@@ -3,32 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import bean.ComplaintBean;
+import bean.FeeBean;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 import util.DBConnection;
+
 /**
  *
- * @author soleha
+ * @author junmee
  */
 @MultipartConfig
-@WebServlet(urlPatterns = {"/residentController"})
-public class residentController extends HttpServlet {
-    
-     // Helper method to load the Oracle driver and get a database connection
-    private Connection getConnection() throws SQLException, ClassNotFoundException {
+@WebServlet(urlPatterns = {"/feeServlet"})
+public class feeServlet extends HttpServlet {
+
+   private Connection getConnection() throws SQLException, ClassNotFoundException {
         Class.forName("oracle.jdbc.OracleDriver"); // Load the Oracle JDBC driver
         return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "neighborly", "system");
     }
@@ -37,13 +37,11 @@ public class residentController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-           String accessType = request.getParameter("accessType");
-
-        if ("addComplaints".equalsIgnoreCase(accessType)) {
-           addComplaints (request, response);
-        } /*else if ("edit".equalsIgnoreCase(accessType)) {
-            //editEmployee(request, response);
-        }*/ else {
+            String accessType = request.getParameter("accessType");
+   
+        if ("addFee".equalsIgnoreCase(accessType)) {
+            addFee(request, response);
+        } else {
             try (PrintWriter out = response.getWriter()) {
                 out.println("<html>");
                 out.println("<head>");
@@ -57,31 +55,28 @@ public class residentController extends HttpServlet {
         }
     }
     
-    private void addComplaints (HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
+        private void addFee(HttpServletRequest request, HttpServletResponse response) 
+                throws IOException, ServletException {
         
-        
-        String complaintTypeStr = request.getParameter("complaintType");
-        String description = request.getParameter("description");
-        String date = request.getParameter("dateComplaint");
-        String location = request.getParameter("location");
+        String feeTypestr = request.getParameter("feeType");
+        double amount = Double.parseDouble (request.getParameter("amount"));
+        String date = request.getParameter("dateFee");
         String useridStr = request.getParameter("userid");
 
-         if (complaintTypeStr == null || complaintTypeStr.trim().isEmpty() ||
-            description == null || description.trim().isEmpty() ||
-            date == null || date.trim().isEmpty() ||
-            location == null || location.trim().isEmpty()) {
+        if (    feeTypestr == null || feeTypestr.trim().isEmpty() ||
+                date == null || date.trim().isEmpty() ||
+                amount <= 0 ){
             request.setAttribute("message", "Please insert all values");
-            request.setAttribute("errorType", "add");
+            request.setAttribute("errorType", "addFee");
             request.getRequestDispatcher("error.jsp").forward(request, response);
             return;
         }
-         
-          try {
+
+        try {
             int userid = Integer.parseInt(useridStr);
-            int complaintType = Integer.parseInt(complaintTypeStr);
+            int feeType = Integer.parseInt(feeTypestr);
             java.sql.Date sqlDate = java.sql.Date.valueOf(date);
-            Part filePart = request.getPart("attachment");
+            Part filePart = request.getPart("receipt");
             if (filePart == null) {
                 request.setAttribute("message", "No file uploaded");
                 request.getRequestDispatcher("error.jsp").forward(request, response);
@@ -90,44 +85,34 @@ public class residentController extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
             InputStream fileContent = filePart.getInputStream();
             
-            int statusid = 1;
-            //int complainttypeid = 60001;
+            FeeBean fee = new FeeBean();
+            fee.setFeeType(feeType);
+            fee.setAmount(amount);
+            fee.setDateFee(sqlDate);
+            fee.setReceipt(fileName);
             
-            ComplaintBean cp = new ComplaintBean ();
-            cp.setComplaintType(complaintType);
-            cp.setDate(sqlDate);
-            cp.setAttachment(fileName);
-            cp.setDescription(description);
-            cp.setLocation(location);
-           
             
-            System.out.println(statusid);
-            //System.out.println(complainttypeid);
-            System.out.println(complaintType);
-            System.out.println(description);
-            System.out.println(date);
-            System.out.println(location);
-            System.out.println(userid);
-            
-             try (Connection conn = DBConnection.createConnection()) {
-                String query = "INSERT INTO Complaint (USERID, STATUSID, COMPLAINT_TYPE_ID, COMPLAINT_DESCRIPTION, COMPLAINT_DATE, COMPLAINT_LOCATION, COMPLAINT_ATTACHMENT) VALUES (?, ?, ?, ?, ?, ?, ?)";
+             int statusid = 1;
+
+            // Use the helper method to get a connection
+            try (Connection conn = DBConnection.createConnection()) {
+                String query = "INSERT INTO Fee (USERID, FEE_CATEGORY_ID, STATUSID, FEE_DATE, FEE_AMOUNT, ATTACHMENT) VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, userid);
-                stmt.setInt(2, statusid);
-                stmt.setInt(3, complaintType);
-                stmt.setString(4, description);
-                stmt.setDate (5, sqlDate);
-                stmt.setString(6, location);
-                stmt.setString(7, fileName);
+                stmt.setInt(2, feeType);
+                stmt.setInt(3, statusid);
+                stmt.setDate (4, sqlDate);
+                stmt.setDouble(5, amount);
+                stmt.setString(6, fileName);
                 stmt.executeUpdate();
             }
-                
+
             request.setAttribute("message", "Data successfully submitted");
-            request.getRequestDispatcher("complaintTable.jsp").forward(request, response);
+            request.getRequestDispatcher("feeTable.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
-            //request.getRequestDispatcher("error.jsp").forward(request, response);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         } catch (Exception e) { // Catch any Exception that may occur
             if (e instanceof ClassNotFoundException) {
                 // Handle ClassNotFoundException specifically
@@ -144,11 +129,8 @@ public class residentController extends HttpServlet {
             request.setAttribute("message", "An error occurred while processing your request");
             //request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-     }
-        
 
-    
-    
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -188,6 +170,5 @@ public class residentController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 
 }
