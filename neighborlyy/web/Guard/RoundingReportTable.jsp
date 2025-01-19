@@ -26,13 +26,14 @@
             }
 
             Integer userid = (Integer) session.getAttribute("userid");
+            String username = (String) session.getAttribute("username");
         %>
         
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="profile">
                 <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
-                <h3>Hi, Danial</h3>
+                <h3>Hi, <%= username %></h3>
                 
             </div>
             
