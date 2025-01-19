@@ -44,41 +44,43 @@
                 </ul>
             </nav>
         </aside>
+        
+        <main class="main-content">
+            <div class="form-container">
+                <h3>Visitor Form</h3>
+                <p>Please fill all informations</p>
+                <form action="securityController" method="POST" enctype="multipart/form-data">
+                    <label for="visitorname">Visitor's Name</label>
+                    <input type="text" name="visitorname" placeholder="Name" required/>
 
-        <div class="form-container">
-            <h3>Visitor Form</h3>
-            <p>Please fill all informations</p>
-            <form action="securityController" method="POST" enctype="multipart/form-data">
-                <label for="visitorname">Visitor's Name</label>
-                <input type="text" name="visitorname" placeholder="Name" required/>
-                
-                <label for="icpassport">IC/Passport</label>
-                <input type="text" name="icpassport" placeholder="IC/Passport" required/>
-                
-                <label for="plateno">Plate Number</label>
-                <input type="text" name="plateno" placeholder="Plate Number" required/>
-                
-                <label for="purposevisit">Purpose of Visit</label>
-                <input type="text" name="purposevisit" placeholder="Purpose of Visit" required/>
-                
-                <label for="phoneno">Phone Number</label>
-                <input type="text" name="phoneno" placeholder="Phone Number" required/>
-                
-                <label for="entrytime">Entry Time</label>
-                <input type="time" name="entrytime" required/>
-                
-                <label for="datevisit">Date of Visit</label>
-                <input type="date" name="datevisit" required/>
-                <p></p>
-                
-                <div class="btn-container">
-                    <button type="submit" class="btn-submit">Submit</button>
-                    <button type="reset" class="btn-cancel">Cancel</button>
-                </div>
-                <input type="hidden" name="accessType" value="addVisitor">
-                <input type="hidden" name="userid" value="<%= userid %>"> <!-- Set the userid dynamically -->
-            </form>
-        </div>
+                    <label for="icpassport">IC/Passport</label>
+                    <input type="text" name="icpassport" placeholder="IC/Passport" required/>
+
+                    <label for="plateno">Plate Number</label>
+                    <input type="text" name="plateno" placeholder="Plate Number" required/>
+
+                    <label for="purposevisit">Purpose of Visit</label>
+                    <input type="text" name="purposevisit" placeholder="Purpose of Visit" required/>
+
+                    <label for="phoneno">Phone Number</label>
+                    <input type="text" name="phoneno" placeholder="Phone Number" required/>
+
+                    <label for="entrytime">Entry Time</label>
+                    <input type="time" name="entrytime" required/>
+
+                    <label for="datevisit">Date of Visit</label>
+                    <input type="date" name="datevisit" required/>
+                    <p></p>
+
+                    <div class="btn-container">
+                        <button type="submit" class="btn-submit">Submit</button>
+                        <button type="reset" class="btn-cancel">Cancel</button>
+                    </div>
+                    <input type="hidden" name="accessType" value="addVisitor">
+                    <input type="hidden" name="userid" value="<%= userid %>"> <!-- Set the userid dynamically -->
+                </form>
+            </div>
+        </main>
     </div>
     </body>
 </html>
