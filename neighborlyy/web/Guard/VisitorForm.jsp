@@ -33,14 +33,12 @@
             
             <nav class="menu">
                 <ul>
-                    <li class="active"><a href="#">Dashboard</a></li>
-                    <li><a href="#">Basic UI Elements</a></li>
-                    <li><a href="#">Icons</a></li>
-                    <li><a href="#">Forms</a></li>
-                    <li><a href="#">Charts</a></li>
-                    <li><a href="#">Tables</a></li>
-                    <li><a href="#">Sample Pages</a></li>
-                    <li><a href="#" class="btn-add-project">+ Add a Project</a></li>
+                    <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="RoundingReport.jsp">Rounding Report</a></li>
+                    <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
+                    <li class="active"><a href="VisitorForm.jsp">Visitor Form</a></li>
+                    <li><a href="VisitorTable.jsp">Visitor List</a></li>
+                    <li><a href="/neighborlyy/LogoutServlet.java" class="btn-add-project">Logout</a></li>
                 </ul>
             </nav>
         </aside>
@@ -49,7 +47,7 @@
             <div class="form-container">
                 <h3>Visitor Form</h3>
                 <p>Please fill all informations</p>
-                <form action="securityController" method="POST" enctype="multipart/form-data">
+                <form action="/neighborlyy/securityController" method="POST" enctype="multipart/form-data">
                     <label for="visitorname">Visitor's Name</label>
                     <input type="text" name="visitorname" placeholder="Name" required/>
 

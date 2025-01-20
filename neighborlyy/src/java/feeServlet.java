@@ -107,8 +107,7 @@ public class feeServlet extends HttpServlet {
                 stmt.executeUpdate();
             }
 
-            request.setAttribute("message", "Data successfully submitted");
-            request.getRequestDispatcher("feeTable.jsp").forward(request, response);
+            response.sendRedirect("../Resident/fee.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");

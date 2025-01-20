@@ -1,20 +1,35 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="javax.servlet.http.HttpSession"%>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Success</title>
+        <%
+            // Check if the session exists and if the user is logged in
+            if (session == null || session.getAttribute("userid") == null) {
+        %>
+            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
+        <%
+                return; // Stop rendering the page if the session is invalid
+            }
+            
+            // Retrieve the userid and username safely
+            Integer userid = (Integer) session.getAttribute("userid"); // Use implicit session
+            String username = (String) session.getAttribute("username");
+        %>
     <script>
         var message = "<%= request.getAttribute("message") %>";
         var type = "<%= request.getAttribute("type") %>";
         alert(message);
         if (type === "addReport") {
-            window.location.href = "RoundingReportTable.jsp";
+            window.location.href = "./Guard/RoundingReportTable.jsp";
         }
         if (type === "addVisitor") {
-            window.location.href = "VisitorTable.jsp";
+            window.location.href = "./Guard/VisitorTable.jsp";
         }
     </script>
 </head>
 <body>
+    
 </body>
 </html>

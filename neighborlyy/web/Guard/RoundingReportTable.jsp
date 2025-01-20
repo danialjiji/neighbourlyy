@@ -20,7 +20,7 @@
         <%
             if (session == null || session.getAttribute("userid") == null) {
         %>
-            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
+            <p>Session expired or not logged in. Please <a href="../login.jsp">log in</a>.</p>
         <%
                 return;
             }
@@ -40,14 +40,12 @@
             
             <nav class="menu">
                 <ul>
-                    <li class="active"><a href="#">Dashboard</a></li>
-                    <li><a href="#">Basic UI Elements</a></li>
-                    <li><a href="#">Icons</a></li>
-                    <li><a href="#">Forms</a></li>
-                    <li><a href="#">Charts</a></li>
-                    <li><a href="#">Tables</a></li>
-                    <li><a href="#">Sample Pages</a></li>
-                    <li><a href="#" class="btn-add-project">+ Add a Project</a></li>
+                    <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="RoundingReport.jsp">Rounding Report</a></li>
+                    <li class="active"><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
+                    <li><a href="VisitorForm.jsp">Visitor Form</a></li>
+                    <li><a href="VisitorTable.jsp">Visitor List</a></li>
+                    <li><a href="/neighborlyy/LogoutServlet.java" class="btn-add-project">Logout</a></li>
                 </ul>
             </nav>
         </aside>
@@ -100,7 +98,7 @@
                             <td><%= location %></td>
                             <td><%= remarks %></td>
                             <td><%= attachmentLink %></td>
-                            <td><a href="securityController?accessType=deleteReport&id=<%= reportID %>" class="btn-submit">Delete</a></td>
+                            <td><a href="/neighborlyy/securityController?accessType=deleteReport&id=<%= reportID %>" class="btn-submit">Delete</a></td>
                         </tr>
                     </tbody>
                     <%

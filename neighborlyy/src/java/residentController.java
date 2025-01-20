@@ -41,7 +41,10 @@ public class residentController extends HttpServlet {
 
         if ("addComplaints".equalsIgnoreCase(accessType)) {
            addComplaints (request, response);
-        } else {
+        } else if ("deleteComplaint".equalsIgnoreCase(accessType)) {
+           deleteComplaints (request, response);
+        }else 
+        {
             try (PrintWriter out = response.getWriter()) {
                 out.println("<html>");
                 out.println("<head>");
@@ -58,7 +61,6 @@ public class residentController extends HttpServlet {
     private void addComplaints (HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        
         String complaintTypeStr = request.getParameter("complaintType");
         String description = request.getParameter("description");
         String date = request.getParameter("dateComplaint");
@@ -74,6 +76,7 @@ public class residentController extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
             return;
         }
+         
          
           try {
             int userid = Integer.parseInt(useridStr);
@@ -92,7 +95,7 @@ public class residentController extends HttpServlet {
                   
             ComplaintBean cp = new ComplaintBean ();
             cp.setComplaintType(complaintType);
-            cp.setDate(sqlDate);
+            cp.setDateComplaint(sqlDate);
             cp.setAttachment(fileName);
             cp.setDescription(description);
             cp.setLocation(location);
@@ -119,8 +122,7 @@ public class residentController extends HttpServlet {
                 stmt.executeUpdate();
             }
                 
-            request.setAttribute("message", "Data successfully submitted");
-            request.getRequestDispatcher("complaintTable.jsp").forward(request, response);
+           response.sendRedirect("../Resident/complaint.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
@@ -143,6 +145,45 @@ public class residentController extends HttpServlet {
         }
      }
         
+    private void deleteComplaints (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String complaintidStr = request.getParameter("id");
+
+        if (complaintidStr == null || complaintidStr.trim().isEmpty()) {
+            request.setAttribute("message", "Invalid complaint ID");
+            request.setAttribute("errorType", "deleteComplaint");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            int complaintId = Integer.parseInt(complaintidStr);
+
+            // Use the helper method to get a connection
+            try (Connection conn = DBConnection.createConnection()) {
+                String query = "DELETE FROM Complaint WHERE REPORTID = ?";
+                PreparedStatement stmt = conn.prepareStatement(query);
+                stmt.setInt(1, complaintId);
+                int rowsAffected = stmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    response.sendRedirect("./Resident/complaint.jsp");
+                } else {
+                    request.setAttribute("message", "Complaint not found");
+                    request.setAttribute("errorType", "deleteComplaint");
+                    request.getRequestDispatcher("error.jsp").forward(request, response);
+                }
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            request.setAttribute("message", "Invalid complaint ID format");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("message", "An error occurred while deleting the complaint");
+            request.setAttribute("errorType", "deleteComplaint");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
 
     
     

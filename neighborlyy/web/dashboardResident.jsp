@@ -30,7 +30,7 @@
 
         <h2>Navigation</h2>
        
-
+        <p><a href="./Resident/complaint.jsp">Complaint</a></p>
         <p><a href="LogoutServlet">Logout</a></p>
     </body>
 </html>

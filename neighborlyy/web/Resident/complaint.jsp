@@ -1,51 +1,145 @@
-<%-- 
-    Document   : complaint
-    Created on : Jan 16, 2025, 2:01:09 PM
-    Author     : soleha
---%>
-
+<%@page import="util.DBConnection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@page import="javax.servlet.http.HttpSession"%> 
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Complaint Form</title>
-    </head>
-    <body>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href=".../style.css">
+</head>
+<body>
+    <div class="dashboard-container">
          <%
             if (session == null || session.getAttribute("userid") == null) {
         %>
-            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
+            <p>Session expired or not logged in. Please <a href="/neighborlyy/login.jsp">log in</a>.</p>
         <%
                 return;
             }
             // Retrieve the userid and username safely
-            Integer userid = (Integer) session.getAttribute("userid"); // Use implicit session
+            Integer userid = (Integer) session.getAttribute("userid");
             String username = (String) session.getAttribute("username");
         %>
-        
-        <form action="residentController" method="POST" enctype="multipart/form-data">
-            <label for="exampleFormControlSelect1" class="form-label">Complaints type</label>
-                    <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="complaintType">
-                      <option selected>Open this select menu</option>
-                      <option value="60001">Parking</option>
-                      <option value="60002">Noise</option>
-                      <option value="60003">Property</option>
-                      <option value="60004">Environment</option>
-                      <option value="60005">Waste Management</option>
-                    </select>
-            <p>Date</p>
-                <input type="date" id="dateComplaint" name ="dateComplaint" placeholder="YYYY-MM-DD"/><br>
-            <p>Location</p>
-                <input type="text" id="location" name="location"/><br>
-            <p>Description</p>
-                <input type="text" id="description" name="description"/><br>
-            <p>Attachment</p>
-            <input type="file" id="attachment" name="attachment"/><br>
-            <button type="submit" value="Submit" >Submit</button>
-            <button type="reset" >Cancel</button>
-            <input type="hidden" name="accessType" value="addComplaints">
-             <input type="hidden" name="userid" value="<%= userid %>">
-        </form>
-    </body>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile">
+                <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
+                <h3>Hi, <%= username %></h3>
+                
+            </div>
+            
+            
+            <nav class="menu">
+                <ul>
+                    <li ><a href="#">Dashboard</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li class="active"><a href="#">Complaint</a></li>
+                    <li><a href="#">Fee</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>Complaint</h1>
+                <span>Overview</span>
+            </header>
+            <div class="form-container">
+                <h3>Complaint Form</h3><br>
+                <p>Please Fill in the Form to Complaint to Management</p>
+                <form action="/neighborlyy/residentController" method="POST" enctype="multipart/form-data">
+                <label for="gender">Complaint Type</label>
+                <select id="complaintType"name="complaintType">
+                     <option selected>Open this select menu</option>
+                    <option value="60001">Parking</option>
+                    <option value="60002">Noise</option>
+                    <option value="60003">Property</option>
+                    <option value="60004">Environment</option>
+                    <option value="60005">Waste Management</option>
+                </select>
+                
+               <label for="dateComplaint">Date</label>
+                <input type="date" id="dateComplaint" name="dateComplaint" placeholder="YYYY-MM-DD">
+                
+                <label for="name">Location</label>
+                <input type="text" id="Location" placeholder="Location" name="location">
+
+                <label for="email">Description</label>
+                <input type="text" id="Description" placeholder="Description" name="description"> 
+                
+                <label for="receipt">Attachment</label>
+                <input type="file" id="receipt" name="attachment" required/>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="button" class="btn-cancel">Cancel</button>
+                     <input type="hidden" name="accessType" value="addComplaints">
+                    <input type="hidden" name="userid" value="<%= userid %>">
+                </div>
+            </form>
+        </div>
+            
+           <section class="data-table">
+        <h3>Complaints List</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Complaint ID</th>
+                            <th>Complaint Type</th>
+                            <th>Complaint Description</th>
+                            <th>Complaint Date</th>
+                            <th>Complaint Location</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+               <%
+
+                            try {
+                                Connection conn = DBConnection.createConnection();
+                                String query = "SELECT c.COMPLAINTID, ct.COMP_TYPE_NAME, c.COMPLAINT_DESCRIPTION, " +
+                                               "c.COMPLAINT_DATE, c.COMPLAINT_LOCATION, c.COMPLAINT_ATTACHMENT " +
+                                               "FROM COMPLAINT c " +
+                                               "JOIN COMPLAINT_TYPE ct ON c.COMPLAINT_TYPE_ID = ct.COMPLAINT_TYPE_ID " +
+                                               "WHERE c.USERID = ?";
+
+                                PreparedStatement stmt = conn.prepareStatement(query);
+                                stmt.setInt(1, userid);
+                                ResultSet rs = stmt.executeQuery();
+                                
+
+                                // Iterate through the result set and display data
+                                while (rs.next()) {
+                                    int complaintID = rs.getInt("complaintid");
+                                    String complaintType = rs.getString("comp_type_name");
+                                    String complaintDescription = rs.getString("complaint_description");
+                                    Date complaintDate = rs.getDate("complaint_date");
+                                    String complaintLocation = rs.getString("complaint_location");
+                                    String attachment = rs.getString("complaint_attachment");
+                        %>
+                        <tr>
+                            <td><%= complaintID %></td>
+                            <td><%= complaintType %></td>
+                            <td><%= complaintDescription %></td>
+                            <td><%= complaintDate %></td>
+                            <td><%= complaintLocation %></td>
+                            <td><%= attachment %></td>
+                            <td><a href="/neighborlyy/residentController?accessType=deleteComplaint&id=<%= complaintID %>" class="btn-submit">Delete</a></td-->
+                        </tr>
+                        <%
+                                }
+                            } catch (Exception e) {
+                                out.println("<tr><td colspan='6'>Error: " + e.getMessage() + "</td></tr>");
+                            }
+                        %>
+            </tbody>
+        </table>
+    </section>
+     </main>
+   </div>
+</body>
 </html>

@@ -1,32 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
+
+import bean.ReportBean;
+import bean.VisitorBean;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
-import java.sql.Timestamp;
-import util.DBConnection; // Import the DBConnection class
+import java.io.InputStream;
+import util.DBConnection;
 
 
-/**
- *
- * @author USER
- */
+@MultipartConfig
+@WebServlet(urlPatterns = {"/securityController"})
 public class securityController extends HttpServlet {
 
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
@@ -61,9 +56,10 @@ public class securityController extends HttpServlet {
                 }
         }
     }
-
-    private void handleAddReport(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    
+    //Add Rounding Report Form
+    private void handleAddReport(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        
         String dateReport = request.getParameter("dateReport");
         String location = request.getParameter("location");
         String remarks = request.getParameter("remarks");
@@ -86,8 +82,17 @@ public class securityController extends HttpServlet {
                 request.getRequestDispatcher("error.jsp").forward(request, response);
                 return;
             }
+            
+            String fileName = filePart.getSubmittedFileName();
             InputStream fileContent = filePart.getInputStream();
+            
+            ReportBean report = new ReportBean();
+            report.setDateofvisit(dateReport);
+            report.setLocation(location);
+            report.setRemarks(remarks);
+            report.setAttachment(fileName);
 
+            // Use the helper method to get a connection
             try (Connection conn = DBConnection.createConnection()) {
                 String query = "INSERT INTO Report (USERID, DATEOFVISIT, LOCATION, REMARKS, ATTACHMENT) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
@@ -98,23 +103,32 @@ public class securityController extends HttpServlet {
                 stmt.setBlob(5, fileContent);
                 stmt.executeUpdate();
             }
-
-            request.setAttribute("message", "Data successfully submitted");
-            request.setAttribute("type", "addReport");
-            request.getRequestDispatcher("success.jsp").forward(request, response);
+            
+            //here, change direct this one instead of requestdispatcher to success.jsp, untuk setiap method
+            response.sendRedirect("./Guard/RoundingReportTable.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
             request.getRequestDispatcher("error.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) { // Catch any Exception that may occur
+            if (e instanceof SQLException) {
+                // Handle SQLException specifically
+                System.out.println("A database error occurred: " + e.getMessage());
+            } else {
+                // Handle other exceptions
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
+
+            e.printStackTrace(); // Print the stack trace for debugging
             request.setAttribute("message", "An error occurred while processing your request");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-    }
 
-    private void handleAddVisitor(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    }
+    
+    //Add Visitor Form
+    VisitorBean visitor = new VisitorBean();
+    private void handleAddVisitor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String visitorName = request.getParameter("visitorname");
         String icPassport = request.getParameter("icpassport");
         String plateNo = request.getParameter("plateno");
@@ -136,6 +150,15 @@ public class securityController extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
             return;
         }
+        
+        visitor.setVisitorname(visitorName);
+        visitor.setIcpassport(icPassport);
+        visitor.setPlateno(plateNo);
+        visitor.setEntrytime(entryTime);
+        visitor.setDatevisit(dateVisit);
+        visitor.setExittime(null);
+        visitor.setPurposevisit(purposeVisit);
+        visitor.setPhoneno(phoneNo);
 
         try {
             int userid = Integer.parseInt(useridStr);
@@ -155,22 +178,81 @@ public class securityController extends HttpServlet {
                 stmt.executeUpdate();
             }
 
-            request.setAttribute("message", "Data successfully submitted");
-            request.setAttribute("type", "addVisitor");
-            request.getRequestDispatcher("success.jsp").forward(request, response);
+            response.sendRedirect("./Guard/VisitorTable.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
             request.getRequestDispatcher("error.jsp").forward(request, response);
-        } catch (Exception e) {
+            } catch (Exception e) {
+                if (e instanceof ClassNotFoundException) {
+                    System.out.println("Oracle JDBC Driver not found.");
+                } else if (e instanceof SQLException) {
+                    System.out.println("A database error occurred: " + e.getMessage());
+                } else {
+                    System.out.println("An unexpected error occurred: " + e.getMessage());
+                }
+
+                e.printStackTrace();
+                request.setAttribute("message", "An error occurred while processing your request");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
+
+    //Exit Visitor
+    private void handleEditVisitor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String visitorIdStr = request.getParameter("id"); // Assuming visitor ID is passed as a parameter
+
+        if (visitorIdStr == null || visitorIdStr.trim().isEmpty()) {
+            request.setAttribute("message", "Visitor ID is required to update exit time");
+            request.setAttribute("errorType", "editVisitor");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            int visitorId = Integer.parseInt(visitorIdStr);
+
+            // Get the current time
+            java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
+            String exittime = currentTime.toString();
+            visitor.setExittime(exittime);
+            
+
+            // Use the helper method to get a connection
+            try (Connection conn = DBConnection.createConnection()) {
+                String query = "UPDATE VISITOR SET EXITTIME = ? WHERE REGISTERID = ?";
+                PreparedStatement stmt = conn.prepareStatement(query);
+                stmt.setTimestamp(1, currentTime); // Set the current time
+                stmt.setInt(2, visitorId); // Set the visitor ID
+
+                int rowsUpdated = stmt.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    response.sendRedirect("./Guard/VisitorTable.jsp");
+                } else {
+                    request.setAttribute("message", "No visitor found with the specified ID");
+                    request.getRequestDispatcher("error.jsp").forward(request, response);
+                }
+            }
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-            request.setAttribute("message", "An error occurred while processing your request");
+            request.setAttribute("message", "Invalid Visitor ID format");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        } catch (Exception e) {
+            if (e instanceof SQLException) {
+                System.out.println("A database error occurred: " + e.getMessage());
+            } else {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
+
+            e.printStackTrace();
+            request.setAttribute("message", "An error occurred while updating the visitor");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 
-    private void handleDeleteReport(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    //Delete Report
+    private void handleDeleteReport(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String reportIdStr = request.getParameter("id");
 
         if (reportIdStr == null || reportIdStr.trim().isEmpty()) {
@@ -183,6 +265,7 @@ public class securityController extends HttpServlet {
         try {
             int reportId = Integer.parseInt(reportIdStr);
 
+            // Use the helper method to get a connection
             try (Connection conn = DBConnection.createConnection()) {
                 String query = "DELETE FROM Report WHERE REPORTID = ?";
                 PreparedStatement stmt = conn.prepareStatement(query);
@@ -190,8 +273,7 @@ public class securityController extends HttpServlet {
                 int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    request.setAttribute("message", "Report successfully deleted");
-                    request.getRequestDispatcher("success.jsp").forward(request, response);
+                    response.sendRedirect("./Guard/RoundingReportTable.jsp");
                 } else {
                     request.setAttribute("message", "Report not found");
                     request.setAttribute("errorType", "deleteReport");
@@ -202,56 +284,16 @@ public class securityController extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("message", "Invalid report ID format");
             request.getRequestDispatcher("error.jsp").forward(request, response);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("message", "An error occurred while deleting the report");
+            request.setAttribute("errorType", "deleteReports");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
-
-    private void handleEditVisitor(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String visitorIdStr = request.getParameter("id");
-
-        if (visitorIdStr == null || visitorIdStr.trim().isEmpty()) {
-            request.setAttribute("message", "Visitor ID is required to update exit time");
-            request.setAttribute("errorType", "editVisitor");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-            return;
-        }
-
-        try {
-            int visitorId = Integer.parseInt(visitorIdStr);
-            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-
-            try (Connection conn = DBConnection.createConnection()) {
-                String query = "UPDATE VISITOR SET EXITTIME = ? WHERE REGISTERID = ?";
-                PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.setTimestamp(1, currentTime);
-                stmt.setInt(2, visitorId);
-
-                int rowsUpdated = stmt.executeUpdate();
-                if (rowsUpdated > 0) {
-                    request.setAttribute("message", "Exit time successfully updated for Visitor ID: " + visitorId);
-                    request.getRequestDispatcher("VisitorTable.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("message", "No visitor found with the specified ID");
-                    request.getRequestDispatcher("error.jsp").forward(request, response);
-                }
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            request.setAttribute("message", "Invalid Visitor ID format");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("message", "An error occurred while updating the visitor");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
-    }
-
-    private void handleDeleteVisitor(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    
+    //Delete Visitor
+    private void handleDeleteVisitor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String registerIdStr = request.getParameter("id");
 
         if (registerIdStr == null || registerIdStr.trim().isEmpty()) {
@@ -262,33 +304,35 @@ public class securityController extends HttpServlet {
         }
 
         try {
-            int registerId = Integer.parseInt(registerIdStr);
+            int reportId = Integer.parseInt(registerIdStr);
 
+            // Use the helper method to get a connection
             try (Connection conn = DBConnection.createConnection()) {
-                String query = "DELETE FROM VISITOR WHERE REGISTERID = ?";
+                String query = "DELETE FROM Visitor WHERE REGISTERID = ?";
                 PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.setInt(1, registerId);
+                stmt.setInt(1, reportId);
                 int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    request.setAttribute("message", "Visitor successfully deleted");
-                    request.getRequestDispatcher("success.jsp").forward(request, response);
+                    response.sendRedirect("./Guard/VisitorTable.jsp");
                 } else {
-                    request.setAttribute("message", "Visitor not found");
+                    request.setAttribute("message", "Report not found");
                     request.setAttribute("errorType", "deleteVisitor");
                     request.getRequestDispatcher("error.jsp").forward(request, response);
                 }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            request.setAttribute("message", "Invalid Visitor ID format");
+            request.setAttribute("message", "Invalid report ID format");
             request.getRequestDispatcher("error.jsp").forward(request, response);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("message", "An error occurred while deleting the visitor");
+            request.setAttribute("message", "An error occurred while deleting the report");
+            request.setAttribute("errorType", "deleteVisitor");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
