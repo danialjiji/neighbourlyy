@@ -35,10 +35,6 @@
         <h1>Welcome to the Dashboard, <%= username %>!</h1>
         <p>Your User ID: <%= userid %></p>
         -->
- 
-       
-
-        
         
         <div class="dashboard-container">
         
