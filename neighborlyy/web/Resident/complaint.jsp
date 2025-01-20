@@ -15,7 +15,7 @@
          <%
             if (session == null || session.getAttribute("userid") == null) {
         %>
-            <p>Session expired or not logged in. Please <a href=".../login.jsp">log in</a>.</p>
+            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
         <%
                 return;
             }

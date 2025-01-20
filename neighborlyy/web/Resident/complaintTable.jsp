@@ -9,7 +9,7 @@
      <%
             if (session == null || session.getAttribute("userid") == null) {
         %>
-            <p>Session expired or not logged in. Please <a href=".../login.jsp">log in</a>.</p>
+            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
         <%
                 return;
             }
@@ -30,7 +30,7 @@
             <%
                 // Database connection parameters
                 String jdbcURL = "jdbc:oracle:thin:@localhost:1521:XE";
-                String dbUser = "neighborly";
+                String dbUser = "neighborlynew";
                 String dbPassword = "system"; // Replace with your actual password
 
                 Connection conn = null;
