@@ -15,7 +15,7 @@
          <%
             if (session == null || session.getAttribute("userid") == null) {
         %>
-            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
+            <p>Session expired or not logged in. Please <a href=".../login.jsp">log in</a>.</p>
         <%
                 return;
             }
@@ -23,6 +23,7 @@
             Integer userid = (Integer) session.getAttribute("userid"); // Use implicit session
             String username = (String) session.getAttribute("username");
         %>
+        
         <form action="residentController" method="POST" enctype="multipart/form-data">
             <label for="exampleFormControlSelect1" class="form-label">Complaints type</label>
                     <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="complaintType">

@@ -8,6 +8,7 @@ and open the template in the editor.
     Author     : USER
 */
 
+
 /* General Reset */
 * {
     margin: 0;
@@ -33,7 +34,6 @@ body {
 
 .sidebar {  
     width: 250px;  
-
     background-color: #ffffff;  
     border-right: 1px solid #ddd;  
     padding: 20px;  
@@ -100,7 +100,17 @@ header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    
 }
+
+.cardheader {
+    background: #ffffff    
+    padding: 20px;
+    flex: 1;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 
 .cards {
     display: flex;
@@ -304,6 +314,9 @@ header {
 .form-container input[type="text"],
 .form-container input[type="email"],
 .form-container input[type="password"],
+.form-container input[type="tel"],
+.form-container input[type="time"],
+.form-container input[type="date"],
 .form-container input[type="file"],
 .form-container input[type="tel"],
 .form-container input[type="time"],
@@ -319,6 +332,7 @@ header {
     font-size: 14px;
     color: #333;
 }
+
 
 .form-container input::placeholder,
 .form-container textarea::placeholder {

@@ -7,8 +7,8 @@
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
   </jsp-config>
-  <resource-ref>
+   <resource-ref>
     <res-ref-name>jdbc/myDatasource</res-ref-name>
     <jndi-name>jdbc/myDatasource</jndi-name>
-</resource-ref>
+    </resource-ref>
 </glassfish-web-app>

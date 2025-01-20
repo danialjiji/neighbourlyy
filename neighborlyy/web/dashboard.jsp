@@ -3,6 +3,11 @@
     Created on : Jan 19, 2025, 12:26:04 AM
     Author     : USER
 --%>
+<%-- 
+    Document   : dashboard.jsp
+    Created on : Jan 19, 2025, 12:26:04 AM
+    Author     : USER
+--%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,10 +21,10 @@
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
+            
             <div class="profile">
                 <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
                 <h3>Hi, Danial</h3>
-                
             </div>
             
             
@@ -39,7 +44,7 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <header>
+            <header class="cardheader">
                 <h1>Dashboard</h1>
                 <span>Overview</span>
             </header>
@@ -129,7 +134,19 @@
 
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="Password">
+                
+                <!-- Phone Number Input -->
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
 
+                <!-- Date Input -->
+                <label for="date">Preferred Appointment Date</label>
+                <input type="date" id="date" name="date" required>
+
+                <!-- Time Input -->
+                <label for="time">Preferred Appointment Time</label>
+                <input type="time" id="time" name="time" required>
+        
                 <label for="gender">Gender</label>
                 <select id="gender">
                     <option>Male</option>
