@@ -1,8 +1,9 @@
 <%-- 
-    Document   : registerGuard1
-    Created on : Jan 19, 2025, 3:18:14 AM
+    Document   : registerResident1
+    Created on : Jan 20, 2025, 3:33:33 AM
     Author     : USER
 --%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,6 +13,18 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 </head>
+<style>  
+        .switch-button {  
+            position: absolute;  
+            top: 0;  
+            left: 50%;  
+            width: 50%;  
+            height: 100%;  
+            background: linear-gradient(45deg, #d65bb2, #a25cc5);
+            border-radius: 20px;  
+            transition: transform 0.3s ease;  
+        }  
+    </style>  
 
  <script>  
         function slideLeft() {  
@@ -57,7 +70,8 @@
             <header>
                 <h1>Dashboard</h1>
                 <span>Overview</span>
-            </header>     
+            </header>
+            
             <div class="switch" id="toggleSwitch">  
                 <div class="switch-button" id="switchButton"></div>  
                 <div class="label" onclick="slideLeft()">Register New Guard</div>  
@@ -65,10 +79,10 @@
             </div> 
             
             <div class="form-container">
-              <h3>Registeration New Guard</h3>
+              <h3>Registeration New Resident</h3>
               <p>Please fill all the field required</p>
               
-              <form action="RegisterGuardServlet" method="post">
+              <form action="RegisterResidentServlet" method="post">
                 <label for="name">Name</label>
                 <input type="text" name="name" placeholder="Name" required><br>  
 
@@ -93,12 +107,8 @@
                 <label for="confirmpassword">Confirm Password</label>
                 <input type="password" name="confirmpassword" placeholder="Confirm Password" required><br>  
 
-                <label for="shift">Shift</label>
-                <input type="text" name="shift" placeholder="Shift" required><br>  
-
-                <label for="postLocation">Post Location</label>
-                <input type="text" name="postLocation" placeholder="Post Location" required><br>  
-
+                <label for="shift">Unit House</label>
+                <input type="text" name="unitHouse" placeholder="Unit House" required><br>  
 
                 <div class="btn-container">
                     <button type="submit" class="btn-submit">Submit</button>
@@ -112,4 +122,5 @@
    </div>
 </body>
 </html>
+
 
