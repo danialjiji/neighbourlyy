@@ -1,65 +1,60 @@
 <%-- 
-    Document   : dashboardAdmin
-    Created on : Jan 18, 2025, 10:31:14 PM
+    Document   : dashboard.jsp
+    Created on : Jan 19, 2025, 12:26:04 AM
     Author     : USER
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="util.DBConnection"%>
+<%@page import="java.sql.Connection"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*, java.time.*, java.time.format.*, java.util.Date, java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Dashboard Admin</title>
-    </head>
-    <body>
-        <!--
-        <%
-            // Check if the session exists and if the user is logged in
-            if (session == null || session.getAttribute("userid") == null) {
-        %>
-            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
-        <%
-                return; // Stop rendering the page if the session is invalid
-            }
-            
-            // Retrieve the userid and username safely
-            Integer userid = (Integer) session.getAttribute("userid"); // Use implicit session
-            String username = (String) session.getAttribute("username");
-        %>
-
-        <h1>Welcome to the Dashboard, <%= username %>!</h1>
-        <p>Your User ID: <%= userid %></p>
-        -->
- 
-       
-
-        
-        
-        <div class="dashboard-container">
+</head>
+<body>
+    
+    <%
+        if (session == null || session.getAttribute("userid") == null) {
+    %>
+        <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
+    <%
+            return;
+        }
+        // Retrieve the userid and username safely
+        Integer userid = (Integer) session.getAttribute("userid"); // Use implicit session
+        String username = (String) session.getAttribute("username");
+    %>
+    
+    
+    
+    <div class="dashboard-container">
         
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="profile">
                 <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
-                <h3>Hi, Danial</h3>
+                <h3>Hi, <%= username %></h3>
                 
             </div>
             
             
             <nav class="menu">
                 <ul>
-                    <li class="active"><a href="Dashboard.jsp">Dashboard</a></li>
-                    <li><a href="Visitor.jsp">Visitor</a></li>
-                    <li><a href="Fee.jsp">Fee</a></li>
-                    <li><a href="Report.jsp">Report</a></li>
-                    <li><a href="Complaint.jsp">Complaints</a></li>  
-                    <li><a href="registerGuard.jsp">Register Guard</a></li>
-                    <li><a href="registerResident.jsp">Register Resident</a></li>
+                    <li class="active"><a href="dashboardAdmin.jsp">Dashboard</a></li>
+                    <li><a href="./Admin/Visitor.jsp">Visitor</a></li>
+                    <li><a href="./Admin/Fee.jsp">Fee</a></li>
+                    <li><a href="./Admin/Report.jsp">Report</a></li>
+                    <li><a href="./Admin/Complaint.jsp">Complaints</a></li> 
+                    <li><a href="./Admin/registerGuard.jsp">Register Guard</a></li>
+                    <li><a href="./Admin/registerResident.jsp">Register Resident</a></li>
                     <li><a href="LogoutServlet">Logout</a></li>
                 </ul>
             </nav>
@@ -71,78 +66,192 @@
                 <h1>Dashboard</h1>
                 <span>Overview</span>
             </header>
-
+            
+            <%
+                Connection conn = DBConnection.createConnection();
+                
+                PreparedStatement stmt1 = conn.prepareStatement("SELECT COUNT(*) AS TotalVisitors FROM visitor");                                                                                                                                        
+                ResultSet rs1 = stmt1.executeQuery();
+                
+                PreparedStatement stmt2 = conn.prepareStatement("SELECT COUNT(*) AS TotalComplaints FROM complaint");
+                ResultSet rs2 = stmt2.executeQuery();
+                
+                PreparedStatement stmt3 = conn.prepareStatement("SELECT COUNT(*) AS TotalReports FROM report");                                                                                                                                        
+                ResultSet rs3 = stmt3.executeQuery();
+                
+                PreparedStatement stmt4 = conn.prepareStatement("SELECT COUNT(*) AS TotalFees FROM fee");
+                ResultSet rs4 = stmt4.executeQuery();
+                
+                
+                if(rs1.next() && rs2.next() && rs3.next() && rs4.next()){
+                    
+                
+            %>
             <section class="cards">
                 <div class="card">
-                    <h2>Weekly Sales</h2>
-                    <p class="amount">$15,000</p>
-                    <p class="status increased">Increased by 60%</p>
+                    <h2>Visitors</h2>
+                    <p class="amount"><%= rs1.getInt("TotalVisitors")%></p>                  
                 </div>
                 <div class="card">
-                    <h2>Weekly Orders</h2>
-                    <p class="amount">45,6334</p>
-                    <p class="status decreased">Decreased by 10%</p>
+                    <h2>Complaints</h2>
+                    <p class="amount"><%= rs2.getInt("TotalComplaints")%></p>                 
                 </div>
                 <div class="card">
-                    <h2>Visitors Online</h2>
-                    <p class="amount">95,5741</p>
-                    <p class="status increased">Increased by 5%</p>
+                    <h2>Reports</h2>
+                    <p class="amount"><%= rs3.getInt("TotalReports")%></p>                   
                 </div>
-            </section>
-
-            <section class="charts">
-                <div class="chart">
-                    <h3>Visit And Sales Statistics</h3>
-                    <div class="chart-placeholder">Bar Chart Placeholder</div>
-                </div>
-                <div class="chart">
-                    <h3>Traffic Sources</h3>
-                    <div class="chart-placeholder">Pie Chart Placeholder</div>
+                
+                <div class="card">
+                    <h2>Fees</h2>
+                    <p class="amount"><%= rs4.getInt("TotalFees")%></p>                   
                 </div>
             </section>
             
-          <section class="data-table">
-                    <h3>Recent Transactions</h3>
+            <%
+                }
+            %>
+
+            
+
+            
+            
+            <section class="data-table">
+                <h3>Pending Complaints</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Complaints ID</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Attachment</th>                               
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                
+                            try{                         
+                                Connection conn2 = DBConnection.createConnection();
+                                PreparedStatement stmt = conn2.prepareStatement("SELECT c.complaintID, c.complaint_description, c.complaint_date, c.complaint_location, s.status_description, c.complaint_attachment FROM complaint c JOIN status s ON c.statusID=s.statusID WHERE s.status_description='Pending'");
+                                ResultSet rs = stmt.executeQuery();
+
+                            
+                                    while(rs.next()){
+                                        int complaintID = rs.getInt("complaintID");
+                                        String description = rs.getString("complaint_description");                                        
+                                        String complaintDate = rs.getString("complaint_date");                                           
+                                        String complaintLocation = rs.getString("complaint_location");
+                                        String status = rs.getString("status_description");
+                                        String complaintAttachment = rs.getString("complaint_attachment");
+                                            
+                        
+                                    
+                                        //To formate the entry and exit time
+                                        DateTimeFormatter fullFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");                                                                                                      
+                                    
+                                        //To format the date 
+                                        SimpleDateFormat fullFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    
+                                        Date fullDate = fullFormat.parse(complaintDate);
+                                        String onlyDate = dateFormat.format(fullDate);
+                                    
+                            
+                                
+                                        %>    
+                                                                    
+                                            <tr>
+                                                <td><%= complaintID %></td>
+                                                <td><%= description %></td>
+                                                <td><%= onlyDate %></td>
+                                                <td><%= complaintLocation %></td>                                                                                            
+                                                <td><%= status %></td>                                              
+                                                <td><%= complaintAttachment %></td>                            
+                                                                          
+                                            </tr>                                                                                                                                                                                                             
+                                        <%                                   
+                                    }
+                                    stmt.close();
+                                    conn.close();
+                                        
+                                }catch(SQLException e){
+                                    e.printStackTrace();
+                                }
+                        %>
+                        </tbody>
+                    </table>                                                                                                                   
+            </section>
+                        
+            <section class="data-table">
+                <h3>Completed Fees</h3>     
                     <table class="table">
+                        
                         <thead>
                             <tr>
-                                <th>Transaction ID</th>
-                                <th>Customer</th>
-                                <th>Amount</th>
-                                <th>Status</th>
+                                <th>Fee ID</th>
+                                <th>Fee Category</th>
                                 <th>Date</th>
-                                <th>Action</th>
+                                <th>Amount</th>
+                                <th>Status</th>                               
+                                <th>Attachment</th>                               
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>#001</td>
-                                <td>John Doe</td>
-                                <td>$200</td>
-                                <td>Completed</td>
-                                <td>2025-01-18</td>
-                                <td>
-                                    <button class="btn-submit">Edit</button>
-                                    <button class="btn-submit">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#002</td>
-                                <td>Jane Smith</td>
-                                <td>$150</td>
-                                <td>Pending</td>
-                                <td>2025-01-17</td>
-                            </tr>
-                            <tr>
-                                <td>#003</td>
-                                <td>Mike Johnson</td>
-                                <td>$300</td>
-                                <td>Cancelled</td>
-                                <td>2025-01-16</td>
-                            </tr>
+                            <%
+                
+                                try{                         
+                                    Connection conn2 = DBConnection.createConnection();
+                                    PreparedStatement stmt = conn2.prepareStatement("SELECT f.feeID, fc.fee_category_name, f.fee_date, f.fee_amount, s.status_description, f.attachment FROM fee f JOIN status s ON f.statusID=s.statusID JOIN fee_category fc ON f.fee_category_ID = fc.fee_category_ID WHERE s.status_description='Completed'");
+                                    ResultSet rs = stmt.executeQuery();
+
+                            
+                                    while(rs.next()){
+                                        int feeID = rs.getInt("feeID");
+                                        String feeCategory = rs.getString("fee_category_name");
+                                        String feeDate = rs.getString("fee_date"); 
+                                        int feeAmount = rs.getInt("fee_amount");                                        
+                                        String status = rs.getString("status_description");                                                                                                                           
+                                        String feeAttachment = rs.getString("attachment");
+                                                                                                    
+                                        //To formate the entry and exit time
+                                        DateTimeFormatter fullFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");                                                                                                      
+                                    
+                                        //To format the date 
+                                        SimpleDateFormat fullFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    
+                                        Date fullDate = fullFormat.parse(feeDate);
+                                        String onlyDate = dateFormat.format(fullDate);
+                                    
+                            
+                                
+                                        %>    
+                                                                    
+                                            <tr>
+                                                <td><%= feeID %></td>   
+                                                <td><%= feeCategory %></td> 
+                                                <td><%= onlyDate %></td>
+                                                <td>RM<%= feeAmount %></td>                                                                                            
+                                                <td><%= status %></td>                                              
+                                                <td><%= feeAttachment %></td>                            
+                                                                          
+                                            </tr>                                                                                                                                                                                                             
+                                        <%                                   
+                                    }
+                                    stmt.close();
+                                    conn.close();
+                                        
+                                }catch(SQLException e){
+                                    e.printStackTrace();
+                                }
+                            %>
                         </tbody>
                     </table>
-          </section>
+                           
+            </section>
             
         
              <div class="form-container">
@@ -184,6 +293,5 @@
    
      </main>
    </div>
-    </body>
+</body>
 </html>
-
