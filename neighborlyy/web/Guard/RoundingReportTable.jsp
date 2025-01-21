@@ -41,11 +41,13 @@
             <nav class="menu">
                 <ul>
                     <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="profileGuard.jsp">Profile</a></li>
                     <li><a href="RoundingReport.jsp">Rounding Report</a></li>
                     <li class="active"><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
                     <li><a href="VisitorForm.jsp">Visitor Form</a></li>
                     <li><a href="VisitorTable.jsp">Visitor List</a></li>
-                    <li><a href="../LogoutServlet" class="btn-add-project">Logout</a></li>
+                    <li><a href="userlist.jsp">Users List</a></li>
+                    <li><a href="../LogoutServlet">Logout</a></li>
                 </ul>
             </nav>
         </aside>
@@ -80,16 +82,12 @@
                                 Date dateOfVisit = rs.getDate("dateofvisit");
                                 String location = rs.getString("location");
                                 String remarks = rs.getString("remarks");
-                                Blob attachmentBlob = rs.getBlob("attachment");
+                                Blob attachment = rs.getBlob("attachment");
 
                                 // Format the date
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                 String onlyDate = dateFormat.format(dateOfVisit);
 
-                                // For demonstration, you can extract BLOB size or display download link
-                                String attachmentLink = attachmentBlob != null 
-                                    ? "<a href='downloadAttachment?id=" + reportID + "'>Download</a>" 
-                                    : "No Attachment";
                     %>
                     <tbody
                         <tr>
@@ -97,7 +95,7 @@
                             <td><%= onlyDate %></td>
                             <td><%= location %></td>
                             <td><%= remarks %></td>
-                            <td><%= attachmentLink %></td>
+                            <td><%= attachment %></td>
                             <td><a href="/neighborlyy/securityController?accessType=deleteReport&id=<%= reportID %>" class="btn-submit">Delete</a></td>
                         </tr>
                     </tbody>
