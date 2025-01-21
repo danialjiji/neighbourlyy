@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>List Visitor</title>
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="..\style.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
     </head>
     <body>
@@ -39,14 +39,12 @@
             
             <nav class="menu">
                 <ul>
-                    <li class="active"><a href="#">Dashboard</a></li>
-                    <li><a href="#">Basic UI Elements</a></li>
-                    <li><a href="#">Icons</a></li>
-                    <li><a href="#">Forms</a></li>
-                    <li><a href="#">Charts</a></li>
-                    <li><a href="#">Tables</a></li>
-                    <li><a href="#">Sample Pages</a></li>
-                    <li><a href="#" class="btn-add-project">+ Add a Project</a></li>
+                    <li><a href="neighborlyy/ashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="RoundingReport.jsp">Rounding Report</a></li>
+                    <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
+                    <li><a href="VisitorForm.jsp">Visitor Form</a></li>
+                    <li class="active"><a href="VisitorTable.jsp">Visitor List</a></li>
+                    <li><a href="/neighborlyy/LogoutServlet.java" class="btn-add-project">Logout</a></li>
                 </ul>
             </nav>
         </aside>
@@ -71,34 +69,41 @@
                         </tr>
                     </thead>
                     <%
-
+                        Connection conn = null;
                         try {
-                           Connection conn = DBConnection.createConnection();
-                           PreparedStatement stmt = conn.prepareStatement("SELECT * FROM visitor");
-                           ResultSet rs = stmt.executeQuery();
+                            conn = DBConnection.createConnection();
+                            if (conn == null) {
+                                throw new SQLException("Database connection is null");
+                            }
+                            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM visitor");
+                            ResultSet rs = stmt.executeQuery();
 
-                           while (rs.next()) {
-                               int registerID = rs.getInt("registerid");
-                               String visitorName = rs.getString("visitor_name"); // Retrieve as Timestamp
-                               String icpassport = rs.getString("visitor_ic");
-                               String plateNo = rs.getString("no_plate");
-                               Time entryTime = rs.getTime("entrytime");
-                               Time exitTime = rs.getTime("exittime");
-                               Date dateVisit = rs.getDate("dateofvisit");
-                               String purposeVisit = rs.getString("purposeofvisit");
-                               String phoneNum = rs.getString("visitor_phonenum");
+                            while (rs.next()) {
+                                int registerID = rs.getInt("registerid");
+                                String visitorName = rs.getString("visitor_name");
+                                if (visitorName == null) visitorName = "N/A";
 
-                                // Format the entry and exit time
-                                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-                                String entryTimeOnly = timeFormat.format(entryTime);
-                                String exitTimeOnly = timeFormat.format(exitTime);
+                                String icpassport = rs.getString("visitor_ic");
+                                if (icpassport == null) icpassport = "N/A";
 
-                               // Format the date
-                               SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                               String onlyDate = dateFormat.format(dateVisit);
+                                String plateNo = rs.getString("no_plate");
+                                if (plateNo == null) plateNo = "N/A";
 
+                                Time entryTime = rs.getTime("entrytime");
+                                String entryTimeOnly = (entryTime != null) ? new SimpleDateFormat("HH:mm").format(entryTime) : "N/A";
 
-                   %>
+                                Time exitTime = rs.getTime("exittime");
+                                String exitTimeOnly = (exitTime != null) ? new SimpleDateFormat("HH:mm").format(exitTime) : "N/A";
+
+                                Date dateVisit = rs.getDate("dateofvisit");
+                                String onlyDate = (dateVisit != null) ? new SimpleDateFormat("yyyy-MM-dd").format(dateVisit) : "N/A";
+
+                                String purposeVisit = rs.getString("purposeofvisit");
+                                if (purposeVisit == null) purposeVisit = "N/A";
+
+                                String phoneNum = rs.getString("visitor_phonenum");
+                                if (phoneNum == null) phoneNum = "N/A";
+                    %>
                    <tbody>
                         <tr>
                            <td><%= registerID %></td>
@@ -111,8 +116,8 @@
                            <td><%= purposeVisit %></td>
                            <td><%= phoneNum %></td>
                            <td>
-                               <a href="securityController?accessType=editVisitor&id=<%= registerID %>" class="btn-submit">Exit</a>
-                               <a href="securityController?accessType=deleteVisitor&id=<%= registerID %>" class="btn-submit">Delete</a>
+                               <a href="/neighborlyy/securityController?accessType=editVisitor&id=<%= registerID %>" class="btn-submit">Exit</a>
+                               <a href="/neighborlyy/securityController?accessType=deleteVisitor&id=<%= registerID %>" class="btn-submit">Delete</a>
                            </td>
                         </tr>
                    </tbody>

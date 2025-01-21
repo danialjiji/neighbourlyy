@@ -1,3 +1,9 @@
+<%-- 
+    Document   : dashboard.jsp
+    Created on : Jan 19, 2025, 12:26:04 AM
+    Author     : USER
+--%>
+
 <%@page import="util.DBConnection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
@@ -7,7 +13,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-     
+     <link rel="stylesheet" href=".../style.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -32,10 +38,9 @@
             <nav class="menu">
                 <ul>
                     <li class="active"><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
-                    <li ><a href="./Resident/profile.jsp">Profile</a></li>
-                    <li ><a href="./Resident/complaint.jsp">Complaint</a></li>
-                    <li ><a href="./Resident/fee.jsp">Fee</a></li>
-                    <li ><a href="LogoutServlet">Log Out</a></li>
+                    <li ><a href="profile.jsp">Profile</a></li>
+                    <li ><a href="complaint.jsp">Complaint</a></li>
+                    <li ><a href="fee.jsp">Fee</a></li>
                 </ul>
             </nav>
         </aside>
@@ -43,25 +48,20 @@
         <!-- Main Content -->
         <main class="main-content">
             <header>
-                <h1>Welcome to the Dashboard, <%= username %>! </h1>
-                
+                <h1>Profile</h1>
+                <span>Overview</span>
             </header>
+            
             <section class="dashboard-overview">
                <!-- Welcome Section -->
                <div class="welcome-box">
                   <h2>Welcome to Neighborly!</h2>
-                  <br>
-
                   <p>Your one-stop platform for managing your residence.</p>
-                  <br>
                </div>
-                </section>
-                
-               <!-- Dashboard Summary -->
-              
+               <!-- Profile Summary -->
                <div class="overview-box fee-summary">
-    <h3>Your Process Fees</h3>
-    <table class="table-dashboard">
+    <h3>Your Unpaid Fees</h3>
+    <table>
         <thead>
             <tr>
                 <th>Fee Type</th>
@@ -73,14 +73,14 @@
             <%
                 try {
                         // Load Oracle JDBC Driver
-                 
+                        Class.forName("oracle.jdbc.OracleDriver");
                         Connection conn = DBConnection.createConnection();
                         // Create SQL query with a WHERE clause
                         String query = "SELECT f.FEEID, s.STATUS_DESCRIPTION, fc.FEE_CATEGORY_NAME, f.FEE_AMOUNT, f.FEE_DATE, f.ATTACHMENT " +
                                        "FROM FEE f " +
                                        "JOIN FEE_CATEGORY fc ON f.FEE_CATEGORY_ID = fc.FEE_CATEGORY_ID " +
                                        "JOIN STATUS s ON f.STATUSID = s.STATUSID " +
-                                       "WHERE f.USERID = ? AND f.STATUSID = 50001";
+                                       "WHERE f.USERID = ? AND f.STATUSID = 1";
 
                          PreparedStatement pstmt = conn.prepareStatement(query);
                          pstmt.setInt(1, userid);
@@ -110,9 +110,9 @@
         </tbody>
     </table>
 </div>
-           
+
+            </section>
      </main>
    </div>
 </body>
-
 </html>

@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="javax.servlet.http.HttpSession"%>
+<%@page import="javax.servlet.http.HttpSession"%> <!-- here -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,6 +10,7 @@
     </head>
     <body>
         <div class="dashboard-container">
+            <!-- here -->
         <%
             if (session == null || session.getAttribute("userid") == null) {
         %>
@@ -21,6 +22,7 @@
             Integer userid = (Integer) session.getAttribute("userid");
             String username = (String) session.getAttribute("username");
         %>
+        <!-- untill here -->
         
             <!-- Sidebar -->
             <aside class="sidebar">
@@ -33,14 +35,12 @@
 
                 <nav class="menu">
                     <ul>
-                        <li class="active"><a href="#">Dashboard</a></li>
-                        <li><a href="#">Basic UI Elements</a></li>
-                        <li><a href="#">Icons</a></li>
-                        <li><a href="#">Forms</a></li>
-                        <li><a href="#">Charts</a></li>
-                        <li><a href="#">Tables</a></li>
-                        <li><a href="#">Sample Pages</a></li>
-                        <li><a href="#" class="btn-add-project">+ Add a Project</a></li>
+                        <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                        <li class="active"><a href="RoundingReport.jsp">Rounding Report</a></li>
+                        <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
+                        <li><a href="VisitorForm.jsp">Visitor Form</a></li>
+                        <li><a href="VisitorTable.jsp">Visitor List</a></li>
+                        <li><a href="/neighborlyy/LogoutServlet.java" class="btn-add-project">Logout</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -49,7 +49,8 @@
                 <div class="form-container">
                     <h3>Visitor Form</h3>
                     <p>Please fill all informations</p>
-                    <form action="securityController" method="POST" enctype="multipart/form-data">
+                                    <!-- change here -->
+                    <form action="/neighborlyy/securityController" method="POST" enctype="multipart/form-data">
                         <label for="dateReport">Date of Report</label>
                         <input type="date" name ="dateReport" placeholder="YYYY-MM-DD"/>
                         <p></p>
@@ -68,7 +69,7 @@
                             <button type="reset" class="btn-cancel" >Cancel</button>
                         </div>
                         <input type="hidden" name="accessType" value="addReport">
-                        <input type="hidden" name="userid" value="<%= userid %>">
+                        <input type="hidden" name="userid" value="<%= userid %>"> <!-- here -->
                     </form>
         </div>
     </body>

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complaint Dashboard</title>
+    <title>Update Profile</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
      <link rel="stylesheet" href=".../style.css">
@@ -38,7 +38,6 @@
                     <li class="active"><a href="profile.jsp">Profile</a></li>
                     <li ><a href="complaint.jsp">Complaint</a></li>
                     <li><a href="fee.jsp">Fee</a></li>
-                    <li ><a href="/neighborlyy/LogoutServlet">Log Out</a></li>
                 </ul>
             </nav>
         </aside>
@@ -46,8 +45,8 @@
         <!-- Main Content -->
         <main class="main-content">
             <header>
-                <h1>Complaint</h1>
-                <span>Overview</span>
+                <h1>Update Profile</h1>
+                
             </header>
             <div class="form-container">
                 <h3>Update Profile</h3><br>

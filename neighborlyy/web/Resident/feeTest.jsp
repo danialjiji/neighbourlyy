@@ -21,7 +21,7 @@
         <%
             if (session == null || session.getAttribute("userid") == null) {
         %>
-            <p>Session expired or not logged in. Please <a href="/neighborlyy/login.jsp">log in</a>.</p>
+            <p>Session expired or not logged in. Please <a href="../login.jsp">log in</a>.</p>
         <%
                 return;
             }
@@ -40,11 +40,10 @@
             
             <nav class="menu">
                 <ul>
-                   <li ><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
-                    <li ><a href="./profile.jsp">Profile</a></li>
-                    <li ><a href="./complaint.jsp">Complaint</a></li>
-                    <li class="active"><a href="./fee.jsp">Fee</a></li>
-                    <li ><a href="/neighborlyy/LogoutServlet">Log Out</a></li>
+                    <li ><a  href="/neighborlyy/dashboardResident.jsp" >Dashboard</a></li>
+                    <li><a href="profile.jsp">Profile</a></li>
+                    <li ><a href="complaint.jsp">Complaint</a></li>
+                    <li class="active"><a href="fee.jsp">Fee</a></li>
                 </ul>
             </nav>
         </aside>
@@ -68,23 +67,22 @@
             </select>
 
             <label for="amount">Amount</label>
-            <input type="text" id="amount" name="amount" placeholder="Enter amount" />
+            <input type="text" id="amount" name="amount" placeholder="Enter amount" required/>
 
             <label for="feeDate">Date</label>
-            <input type="date" id="feeDate" name="dateFee" placeholder="YYYY-MM-DD" />
+            <input type="date" id="feeDate" name="dateFee" placeholder="YYYY-MM-DD" required/>
 
             <label for="receipt">Attachment</label>
-            <input type="file" id="receipt" name="receipt"/>
+            <input type="file" id="receipt" name="receipt" required/>
 
             <div class="btn-container">
                 <button type="submit" class="btn-submit">Submit</button>
                 <button type="reset" class="btn-cancel">Cancel</button>
-                <input type="hidden" name="accessType" value="addFee">
-             <input type="hidden" name="userid" value="<%= userid %>">
             </div>
 
-            
-           
+            <input type="hidden" name="accessType" value="addFee">
+             <input type="hidden" name="userid" value="<%= userid %>">
+            <!--input type="hidden" name="userid" value="<%= session.getAttribute("userid") %>"-->
         </form>
     </div>
             
@@ -97,50 +95,64 @@
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Payment Receipt</th>
-                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 
                         <%
+                    // Database connection parameters
+                    String jdbcURL = "jdbc:oracle:thin:@localhost:1521:XE";
+                    String dbUser  = "neighborly";
+                    String dbPassword = "system"; // Replace with your actual password
+
+                    
                    
+
                     try {
                         // Load Oracle JDBC Driver
                         Class.forName("oracle.jdbc.OracleDriver");
-                        Connection conn = DBConnection.createConnection();
+
+                        // Establish connection
+                         Connection conn = DBConnection.createConnection();
+
                         // Create SQL query with a WHERE clause
-                        String query = "SELECT f.FEEID, s.STATUS_DESCRIPTION, fc.FEE_CATEGORY_NAME, f.FEE_AMOUNT, f.FEE_DATE, f.ATTACHMENT " +
-                                       "FROM FEE f " +
-                                       "JOIN FEE_CATEGORY fc ON f.FEE_CATEGORY_ID = fc.FEE_CATEGORY_ID " +
-                                       "JOIN STATUS s ON f.STATUSID = s.STATUSID " +
-                                       "WHERE f.USERID = ?";
+                        String query = "SELECT fc.fee_category_name, f.fee_amount, f.fee_date, f.attachment " +
+                                       "FROM fee f " +
+                                       "JOIN fee_category fc ON f.fee_category_ID = fc.fee_category_ID " +
+                                       "WHERE f.userID = ?";
 
                          PreparedStatement pstmt = conn.prepareStatement(query);
                          pstmt.setInt(1, userid);
                          ResultSet rs = pstmt.executeQuery();
+                                
+                        // Prepare statement
+                        pstmt = conn.prepareStatement(query);
+                        //pstmt.setInt(1, loggedInUser Id);
+
+                        // Execute query
+                        rs = pstmt.executeQuery();
 
                         // Iterate through the result set and display data
                         while (rs.next()) {
-                            //int feeID = rs.getInt("feeid");
+                            
                             String feeType = rs.getString("fee_category_name");
                             double feeAmount = rs.getDouble("fee_amount");
                             Date feeDate = rs.getDate("fee_date");
-                            String receipt = rs.getString("attachment");
-                            String statusDesc = rs.getString ("status_description");
+                            String attachment = rs.getString("attachment");
                 %>
                 <tr>
                     <td><%= feeType %></td>
                     <td><%= feeAmount %></td>
                     <td><%= feeDate %></td>
-                  
+                    <td><%= attachment %></td>
+                   
                     <td>
-                        <% if (receipt != null && !receipt.isEmpty()) { %>
-                            <a href="<%= receipt %>" target="_blank">View Receipt</a>
+                        <% if (attachment != null && !attachment.isEmpty()) { %>
+                            <a href="<%= attachment %>" target="_blank">View Receipt</a>
                         <% } else { %>
                             N/A
                         <% } %>
                     </td>
-                    <td><%= statusDesc %></td>
                 </tr>
                 <%
                         }
