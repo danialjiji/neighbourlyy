@@ -94,22 +94,16 @@
                             try {  
                                 conn = DBConnection.createConnection();  
 
-                                String sql = "SELECT u.userID, u.username, u.\"name\", u.ic_passport, u.phoneNum, u.email, u.plate_id, " +  
-                                             "NVL(a.salary, 0) AS salary, " +  
-                                             "NVL(g.shift, '-') AS shift, " +  
-                                             "NVL(g.post_location, '-') AS post_location, " +  
-                                             "NVL(r.unit, '-') AS unit, " +  
-                                             "CASE " +  
-                                             "WHEN a.userID IS NOT NULL THEN 'Admin' " +  
-                                             "WHEN g.userID IS NOT NULL THEN 'Guard' " +  
-                                             "WHEN r.userID IS NOT NULL THEN 'Resident' " +  
-                                             "END AS role " +  
-                                             "FROM users u " +  
-                                             "LEFT JOIN admin a ON u.userID = a.userID " +  
-                                             "LEFT JOIN guard g ON u.userID = g.userID " +  
-                                             "LEFT JOIN resident r ON u.userID = r.userID " +  
-                                             "WHERE (g.shift IS NULL OR REGEXP_LIKE(g.shift, '^[0-9]+(\\.[0-9]+)?$')) " +  
-                                             "AND (r.unit IS NULL OR REGEXP_LIKE(r.unit, '^[0-9]+(\\.[0-9]+)?$'))";  
+                                 String sql = "SELECT u.userID, u.username, u.\"name\", u.ic_passport, u.phoneNum, " +  
+                                                "u.email, u.plate_id, NVL(a.salary, 0) AS salary, NVL(g.shift, '-') AS shift, " +  
+                                                "NVL(g.post_location, '-') AS post_location, NVL(r.unit, '-') AS unit, " +   
+                                                "CASE WHEN a.userID IS NOT NULL THEN 'Admin' " +   
+                                                "WHEN g.userID IS NOT NULL THEN 'Guard' " +   
+                                                "WHEN r.userID IS NOT NULL THEN 'Resident' END AS role " +  
+                                                "FROM users u " +  
+                                                "LEFT JOIN admin a ON u.userID = a.userID " +  
+                                                "LEFT JOIN guard g ON u.userID = g.userID " +  
+                                                "LEFT JOIN resident r ON u.userID = r.userID";  
 
                                 System.out.println("Executing SQL: " + sql);  
 

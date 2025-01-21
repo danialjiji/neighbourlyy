@@ -78,7 +78,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     <label>User ID:</label>
                     <select name="userID">
                         <sql:query var="result" dataSource="${myDatasource}">
-                            SELECT userID FROM admin
+                            SELECT userID FROM resident
                         </sql:query>
                                                 
                         <option value="select" required>Select</option>
