@@ -11,7 +11,7 @@
 <!DOCTYPE html>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fee Dashboard</title>
+    <title>Fee</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
      <link rel="stylesheet" href=".../style.css">
@@ -36,8 +36,6 @@
                 <h3>Hi, <%= username %></h3>
                 
             </div>
-            
-            
             <nav class="menu">
                 <ul>
                    <li ><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
@@ -53,7 +51,7 @@
         <main class="main-content">
             <header>
                 <h1>Fee</h1>
-                <span>Overview</span>
+                
             </header>
              <div class="form-container">
         <h3>Fee Form</h3><br>
@@ -68,7 +66,7 @@
             </select>
 
             <label for="amount">Amount</label>
-            <input type="text" id="amount" name="amount" placeholder="Enter amount" />
+            <input type="text" id="amount" name="amount" placeholder="0.0" />
 
             <label for="feeDate">Date</label>
             <input type="date" id="feeDate" name="dateFee" placeholder="YYYY-MM-DD" />
@@ -83,8 +81,6 @@
              <input type="hidden" name="userid" value="<%= userid %>">
             </div>
 
-            
-           
         </form>
     </div>
             

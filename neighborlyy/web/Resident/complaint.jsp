@@ -5,7 +5,7 @@
 <!DOCTYPE html>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complaint Dashboard</title>
+    <title>Complaint</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
      <link rel="stylesheet" href=".../style.css">
@@ -28,10 +28,8 @@
             <div class="profile">
                 <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
                 <h3>Hi, <%= username %></h3>
-                
+
             </div>
-            
-            
             <nav class="menu">
                 <ul>
                     <li ><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
@@ -47,7 +45,6 @@
         <main class="main-content">
             <header>
                 <h1>Complaint</h1>
-                <span>Overview</span>
             </header>
             <div class="form-container">
                 <h3>Complaint Form</h3><br>
@@ -94,6 +91,7 @@
                             <th>Complaint Description</th>
                             <th>Complaint Date</th>
                             <th>Complaint Location</th>
+                            <th>Attachment</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>

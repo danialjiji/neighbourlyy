@@ -9,7 +9,7 @@
 <!DOCTYPE html>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
      <link rel="stylesheet" href=".../style.css">
@@ -30,7 +30,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="profile">
-                <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
+                <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
                 <h3>Hi, <%= username %></h3>
             </div>
             
@@ -49,7 +49,7 @@
         <main class="main-content">
             <header>
                 <h1>Profile</h1>
-                <span>Overview</span>
+              
             </header>
             
            <section class="data-table">

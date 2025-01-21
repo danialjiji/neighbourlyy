@@ -106,7 +106,7 @@ public class feeServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+           // request.getRequestDispatcher("error.jsp").forward(request, response);
         } catch (Exception e) { // Catch any Exception that may occur
             if (e instanceof ClassNotFoundException) {
                 // Handle ClassNotFoundException specifically
@@ -121,7 +121,7 @@ public class feeServlet extends HttpServlet {
 
             e.printStackTrace(); // Print the stack trace for debugging
             request.setAttribute("message", "An error occurred while processing your request");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+            //request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
     }

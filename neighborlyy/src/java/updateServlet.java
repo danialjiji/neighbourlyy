@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import util.DBConnection;
 
 /**
  *
@@ -26,12 +27,6 @@ import javax.servlet.http.Part;
 @MultipartConfig
 @WebServlet(urlPatterns = {"/updateServlet"})
 public class updateServlet extends HttpServlet {
-
-   // Helper method to load the Oracle driver and get a database connection
-    private Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("oracle.jdbc.OracleDriver"); // Load the Oracle JDBC driver
-        return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "neighborly", "system");
-    }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -71,7 +66,7 @@ public class updateServlet extends HttpServlet {
         try {
             int userId = Integer.parseInt(userIdStr);
             // Use the helper method to get a connection
-            try (Connection conn = getConnection()) {
+            try (Connection conn = DBConnection.createConnection()) {
                 String query = "UPDATE users SET email = ?, phoneNum = ? WHERE userID = ?";
                 try (PreparedStatement stmt = conn.prepareStatement(query)) {
                     stmt.setString(1, email);
@@ -81,18 +76,23 @@ public class updateServlet extends HttpServlet {
                     int rowsUpdated = stmt.executeUpdate();
 
                     if (rowsUpdated > 0) {
-                        request.setAttribute("message", "Profile successfully updated");
-                        request.getRequestDispatcher("profile.jsp").forward(request, response);
+                        response.sendRedirect("/neighborlyy/Resident/profile.jsp");
                     } else {
                         request.setAttribute("message", "No user found with the given ID");
                         request.getRequestDispatcher("error.jsp").forward(request, response);
                     }
                 }
             }
+     
         } catch (NumberFormatException e) {
             request.setAttribute("message", "Invalid user ID format");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         } catch (Exception e) {
+             if (e instanceof SQLException) {
+                System.out.println("A database error occurred: " + e.getMessage());
+            } else {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            }
             e.printStackTrace(); // Log error for debugging
             request.setAttribute("message", "An error occurred while processing your request");
             request.getRequestDispatcher("error.jsp").forward(request, response);

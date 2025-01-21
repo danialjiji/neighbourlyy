@@ -49,9 +49,8 @@
             <section class="dashboard-overview">
                <!-- Welcome Section -->
                <div class="welcome-box">
-                  <h2>Welcome to Neighborly!</h2>
                   <br>
-
+                  <br>
                   <p>Your one-stop platform for managing your residence.</p>
                   <br>
                </div>
