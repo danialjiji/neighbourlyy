@@ -56,6 +56,17 @@ public class VisitorController extends HttpServlet {
                 String purposeOfVisit = request.getParameter("purposeOfVisit");
                 String phoneNumber = request.getParameter("phoneNumber");
                 
+                //Bean Implementation
+                VisitorBean visitor = new VisitorBean();
+                visitor.setVisitorname(visitorName);
+                visitor.setIcpassport(visitorIC);
+                visitor.setPlateno(plateNumber);
+                visitor.setEntrytime(entryTime);
+                visitor.setExittime(exitTime);
+                visitor.setDatevisit(visitDate);
+                visitor.setPurposevisit(purposeOfVisit);
+                visitor.setPhoneno(phoneNumber);
+                
                 try{               
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO visitor (userID, visitor_name, visitor_ic, no_plate, entryTime, exitTime, dateOfVisit, purposeOfVisit, visitor_phonenum) VALUES (?, ?, ?, ?, TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), TO_DATE(?, 'YYYY:MM:DD'), ?, ?)");
@@ -91,6 +102,7 @@ public class VisitorController extends HttpServlet {
                 String visitDate = request.getParameter("visitDate");
                 String purposeOfVisit = request.getParameter("purposeOfVisit");
                 String phoneNumber = request.getParameter("phoneNumber");
+                               
         
             try{
                 Connection conn = DBConnection.createConnection();
