@@ -55,13 +55,7 @@ public class ReportController extends HttpServlet {
                     String fileName = filePart.getSubmittedFileName();
                     InputStream fileContent = filePart.getInputStream();
                     
-                    //Bean Implementation
-                    ReportBean report = new ReportBean();
-                    report.setDateofvisit(reportDate);
-                    report.setLocation(location);
-                    report.setRemarks(remarks);
-                    report.setAttachment(fileName);
-                    
+                                       
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO report (userID, dateOfVisit, \"location\", remarks, attachment) VALUES (?, TO_DATE(?, 'YYYY:MM:DD'), ?, ?, ?)");
             
@@ -74,6 +68,13 @@ public class ReportController extends HttpServlet {
                     stmt.executeUpdate();
                     conn.close();
                     stmt.close();
+                    
+                    //Bean Implementation
+                    ReportBean report = new ReportBean();
+                    report.setDateofvisit(reportDate);
+                    report.setLocation(location);
+                    report.setRemarks(remarks);
+                    report.setAttachment(fileName);
                     
                 }catch(Exception e){
                     if (e instanceof ClassNotFoundException) {
