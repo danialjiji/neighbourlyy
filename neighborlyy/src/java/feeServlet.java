@@ -28,11 +28,6 @@ import util.DBConnection;
 @WebServlet(urlPatterns = {"/feeServlet"})
 public class feeServlet extends HttpServlet {
 
-   private Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("oracle.jdbc.OracleDriver"); // Load the Oracle JDBC driver
-        return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "neighborly", "system");
-    }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -92,7 +87,7 @@ public class feeServlet extends HttpServlet {
             fee.setReceipt(fileName);
             
             
-             int statusid = 1;
+             int statusid = 50001;
 
             // Use the helper method to get a connection
             try (Connection conn = DBConnection.createConnection()) {
@@ -107,8 +102,7 @@ public class feeServlet extends HttpServlet {
                 stmt.executeUpdate();
             }
 
-            request.setAttribute("message", "Data successfully submitted");
-            request.getRequestDispatcher("feeTable.jsp").forward(request, response);
+            response.sendRedirect("/neighborlyy/Resident/fee.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
@@ -127,7 +121,7 @@ public class feeServlet extends HttpServlet {
 
             e.printStackTrace(); // Print the stack trace for debugging
             request.setAttribute("message", "An error occurred while processing your request");
-            //request.getRequestDispatcher("error.jsp").forward(request, response);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
     }

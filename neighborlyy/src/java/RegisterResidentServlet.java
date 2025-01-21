@@ -45,7 +45,7 @@ public class RegisterResidentServlet extends HttpServlet {
 
         // Check if the password and confirm password match
         if (!password.equals(confirmPassword)) {
-            response.sendRedirect("register.jsp?error=Passwords do not match");
+            response.sendRedirect("registerResident.jsp?error=Passwords do not match");
             return;
         }
 
@@ -71,7 +71,7 @@ public class RegisterResidentServlet extends HttpServlet {
             response.sendRedirect("dashboardAdmin.jsp");  
         } else {  
             request.setAttribute("error", "Registration failed");  
-            RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");  
+            RequestDispatcher dispatcher = request.getRequestDispatcher("registerResident.jsp");  
             dispatcher.forward(request, response);  
         }
     }

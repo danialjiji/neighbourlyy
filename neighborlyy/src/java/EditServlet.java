@@ -72,7 +72,7 @@ public class EditServlet extends HttpServlet {
 
             boolean success = dao.updateUser(user);  
             if (success) {  
-                response.sendRedirect("userlist.jsp"); // Redirect back to user list  
+                response.sendRedirect("./Admin/userllist1.jsp"); // Redirect back to user list  
             } else {  
                 response.getWriter().print("Update failed!"); // Error message  
             }  

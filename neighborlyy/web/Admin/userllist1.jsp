@@ -24,6 +24,20 @@
 
     
 <body>
+    <%
+            // Check if the session exists and if the user is logged in
+            if (session == null || session.getAttribute("userid") == null) {
+    %>
+            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
+    <%
+                return; // Stop rendering the page if the session is invalid
+            }
+            
+            // Retrieve the userid and username safely
+            Integer useridss = (Integer) session.getAttribute("userid"); // Use implicit session
+            String usernamess = (String) session.getAttribute("username");
+    %>
+        
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside style=" height: 100vh;" class="sidebar" >

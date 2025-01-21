@@ -46,6 +46,7 @@
             Integer useridss = (Integer) session.getAttribute("userid"); // Use implicit session
             String usernamess = (String) session.getAttribute("username");
         %>
+        
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -99,7 +100,7 @@
               <h3>Edit User Details</h3>
               <p>Please fill all the field required</p>
               
-              <form action="EditServlet" method="post">
+              <form action="/neighborlyy/EditServlet" method="post">
                <input type="hidden" name="userID" value="<%= user.getUserID() %>">  
              
                 <label for="Username">Username</label>

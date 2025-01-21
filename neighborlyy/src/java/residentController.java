@@ -26,12 +26,6 @@ import util.DBConnection;
 @MultipartConfig
 @WebServlet(urlPatterns = {"/residentController"})
 public class residentController extends HttpServlet {
-    
-     // Helper method to load the Oracle driver and get a database connection
-    private Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("oracle.jdbc.OracleDriver"); // Load the Oracle JDBC driver
-        return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "neighborly", "system");
-    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,7 +35,10 @@ public class residentController extends HttpServlet {
 
         if ("addComplaints".equalsIgnoreCase(accessType)) {
            addComplaints (request, response);
-        } else {
+        } else if ("deleteComplaint".equalsIgnoreCase(accessType)) {
+           deleteComplaints (request, response);
+        }else 
+        {
             try (PrintWriter out = response.getWriter()) {
                 out.println("<html>");
                 out.println("<head>");
@@ -58,11 +55,10 @@ public class residentController extends HttpServlet {
     private void addComplaints (HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        
         String complaintTypeStr = request.getParameter("complaintType");
-        String description = request.getParameter("description");
         String date = request.getParameter("dateComplaint");
         String location = request.getParameter("location");
+        String description = request.getParameter("description");
         String useridStr = request.getParameter("userid");
 
          if (complaintTypeStr == null || complaintTypeStr.trim().isEmpty() ||
@@ -70,10 +66,11 @@ public class residentController extends HttpServlet {
             date == null || date.trim().isEmpty() ||
             location == null || location.trim().isEmpty()) {
             request.setAttribute("message", "Please insert all values");
-            request.setAttribute("errorType", "add");
+            request.setAttribute("errorType", "addComplaints");
             request.getRequestDispatcher("error.jsp").forward(request, response);
             return;
         }
+         
          
           try {
             int userid = Integer.parseInt(useridStr);
@@ -85,26 +82,27 @@ public class residentController extends HttpServlet {
                 request.getRequestDispatcher("error.jsp").forward(request, response);
                 return;
             }
+            
             String fileName = filePart.getSubmittedFileName();
             InputStream fileContent = filePart.getInputStream();
             
-            int statusid = 1;
+            int statusid = 50001;
                   
             ComplaintBean cp = new ComplaintBean ();
             cp.setComplaintType(complaintType);
-            cp.setDate(sqlDate);
+            cp.setDateComplaint(sqlDate);
             cp.setAttachment(fileName);
             cp.setDescription(description);
             cp.setLocation(location);
            
             
-            System.out.println(statusid);
+            /*System.out.println(statusid);
             //System.out.println(complainttypeid);
             System.out.println(complaintType);
             System.out.println(description);
             System.out.println(date);
             System.out.println(location);
-            System.out.println(userid);
+            System.out.println(userid);*/
             
              try (Connection conn = DBConnection.createConnection()) {
                 String query = "INSERT INTO Complaint (USERID, STATUSID, COMPLAINT_TYPE_ID, COMPLAINT_DESCRIPTION, COMPLAINT_DATE, COMPLAINT_LOCATION, COMPLAINT_ATTACHMENT) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -119,8 +117,7 @@ public class residentController extends HttpServlet {
                 stmt.executeUpdate();
             }
                 
-            request.setAttribute("message", "Data successfully submitted");
-            request.getRequestDispatcher("complaintTable.jsp").forward(request, response);
+           response.sendRedirect("/neighborlyy/Resident/complaint.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
@@ -143,6 +140,45 @@ public class residentController extends HttpServlet {
         }
      }
         
+    private void deleteComplaints (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String complaintidStr = request.getParameter("id");
+
+        if (complaintidStr == null || complaintidStr.trim().isEmpty()) {
+            request.setAttribute("message", "Invalid complaint ID");
+            request.setAttribute("errorType", "deleteComplaint");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            int complaintId = Integer.parseInt(complaintidStr);
+
+            // Use the helper method to get a connection
+            try (Connection conn = DBConnection.createConnection()) {
+                String query = "DELETE FROM Complaint WHERE COMPLAINTID = ?";
+                PreparedStatement stmt = conn.prepareStatement(query);
+                stmt.setInt(1, complaintId);
+                int rowsAffected = stmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    response.sendRedirect("./Resident/complaint.jsp");
+                } else {
+                    request.setAttribute("message", "Complaint not found");
+                    request.setAttribute("errorType", "deleteComplaint");
+                    request.getRequestDispatcher("error.jsp").forward(request, response);
+                }
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            request.setAttribute("message", "Invalid complaint ID format");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("message", "An error occurred while deleting the complaint");
+            request.setAttribute("errorType", "deleteComplaint");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
 
     
     

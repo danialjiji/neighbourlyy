@@ -12,20 +12,20 @@ public class ComplaintBean implements Serializable {
     
     int complaintType;
     String description;
-    Date date;
+    Date dateComplaint;
     String location;
     String attachment;
 
     public ComplaintBean(int complaintType, String description, Date date, String location, String attachment) {
         this.complaintType = complaintType;
         this.description = description;
-        this.date = date;
+        this.dateComplaint = dateComplaint;
         this.location = location;
         this.attachment = attachment;
     }
 
     public ComplaintBean() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     public int getComplaintType() {
@@ -36,8 +36,8 @@ public class ComplaintBean implements Serializable {
         return description;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateComplaint() {
+        return dateComplaint;
     }
 
     public String getLocation() {
@@ -56,8 +56,8 @@ public class ComplaintBean implements Serializable {
         this.description = description;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateComplaint(Date date) {
+        this.dateComplaint = dateComplaint;
     }
 
     public void setLocation(String location) {

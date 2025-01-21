@@ -1,27 +1,48 @@
 <%-- 
-    Document   : registerGuard
-    Created on : Jan 18, 2025, 9:49:42 PM
+    Document   : registerGuard1
+    Created on : Jan 19, 2025, 3:18:14 AM
     Author     : USER
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>  
-<!DOCTYPE html>  
-    <meta charset="UTF-8">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Register</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-<html>  
-    <head>  
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
-        <title>Registration Guard</title>  
-    </head>  
-    
-    <body>  
+</head>
 
+ <script>  
+        function slideLeft() {  
+            const button = document.getElementById('switchButton');  
+            button.style.transform = 'translateX(0)';  
+            window.location.href = 'registerGuard1.jsp'; // Redirect to index.jsp  
+        }  
+
+        function slideRight() {  
+            const button = document.getElementById('switchButton');  
+            button.style.transform = 'translateX(100%)';  
+            window.location.href = 'registerResident1.jsp'; // Redirect to index2.jsp  
+        }  
+    </script> 
+    
+<body>
+    <%
+            // Check if the session exists and if the user is logged in
+            if (session == null || session.getAttribute("userid") == null) {
+        %>
+            <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
+        <%
+                return; // Stop rendering the page if the session is invalid
+            }
+            
+            // Retrieve the userid and username safely
+            Integer useridss = (Integer) session.getAttribute("userid"); // Use implicit session
+            String usernamess = (String) session.getAttribute("username");
+        %>
         
-        <div class="dashboard-container">
-        
+    <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="profile">
@@ -31,7 +52,7 @@
             </div>
             
             
-              <nav class="menu">
+            <nav class="menu">
                     <ul>
                         <li><a href="../dashboardAdmin.jsp">Dashboard</a></li>
                         <li><a href="Visitor.jsp">Visitor</a></li>
@@ -46,44 +67,63 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">         
+        <main class="main-content">
+            <header>
+                <h1>Dashboard</h1>
+                <span>Overview</span>
+            </header>     
+            <div class="switch" id="toggleSwitch">  
+                <div class="switch-button" id="switchButton"></div>  
+                <div class="label" onclick="slideLeft()">Register New Guard</div>  
+                <div class="label" style="float: right;" onclick="slideRight()">Register New Resident</div>  
+            </div> 
+            
+            <div class="form-container">
+              <h3>Registeration New Guard</h3>
+              <p>Please fill all the field required</p>
+              
+              <form action="/neighborlyy/RegisterGuardServlet" method="post">
+                <label for="name">Name</label>
+                <input type="text" name="name" placeholder="Name" required><br>  
 
-                                        
-             <div class="form-container">
-                <h3>Register Guard</h3>
-                
-               <form action="RegisterGuardServlet" method="post">  
+                <label for="email">Email Address</label> 
+                <input type="email" name="email" placeholder="Email" required><br> 
+            
+                <label for="icNumber">Identification Number</label>   
+                <input type="text" name="icNumber" placeholder="IC / Passport Number" required><br> 
 
-            Name:<input type="text" name="name" required><br>  
+                <label for="phoneNumbee">Phone Number</label>
+                <input type="text" name="phoneNumber" placeholder="Phone Number" required><br> 
 
-            Email:<input type="email" name="email" required><br> 
-            
-           Identification Number:<input type="text" name="icNumber" required><br> 
-            
-            Phone Number:<input type="text" name="phoneNumber" required><br> 
-            
-            Plate Vehicle Number: <input type="text" name="plateNumber" required><br>  
-            
-            Username:<input type="text" name="username" required><br>  
+                <label for="plateNumber">Plate Number</label>
+                <input type="text" name="plateNumber" placeholder="Vehicle Plate Number" required><br>  
 
-            Password:<input type="password" name="password" required><br>  
-            
-            Confirm Password:<input type="password" name="confirmpassword" required><br>  
+                <label for="Username">Username</label>
+                <input type="text" name="username" placeholder="Username" required><br>  
 
-            Shift:<input type="text" name="shift" required><br>  
-            
-            Post Location:<input type="text" name="postLocation" required><br> 
-            
-            <div class="btn-container">
-                <button type="submit" class="btn-submit" value="Confirm Registration">Confirm Registration</button>
-            </div>
-        
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Passowrd" required><br>  
+
+                <label for="confirmpassword">Confirm Password</label>
+                <input type="password" name="confirmpassword" placeholder="Confirm Password" required><br>  
+
+                <label for="shift">Shift</label>
+                <input type="text" name="shift" placeholder="Shift" required><br>  
+
+                <label for="postLocation">Post Location</label>
+                <input type="text" name="postLocation" placeholder="Post Location" required><br>  
+
+
+                <div class="btn-container">
+                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="button" class="btn-cancel">Cancel</button>
+                </div>
             </form>
         </div>
 
    
      </main>
    </div>
-        
-    </body>  
+</body>
 </html>
+
