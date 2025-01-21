@@ -1,6 +1,6 @@
 <%-- 
-    Document   : RegisterResidentBean
-    Created on : Jan 18, 2025, 10:46:41 PM
+    Document   : registerGuard
+    Created on : Jan 18, 2025, 9:49:42 PM
     Author     : USER
 --%>
 
@@ -14,11 +14,11 @@
 <html>  
     <head>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
-        <title>Registration Resident</title>  
+        <title>Registration Guard</title>  
     </head>  
     
     <body>  
-        
+
         
         <div class="dashboard-container">
         
@@ -31,17 +31,17 @@
             </div>
             
             
-            <nav class="menu">
-                <ul>
-                    <li><a href="Dashboard.jsp">Dashboard</a></li>
-                    <li><a href="Visitor.jsp">Visitor</a></li>
-                    <li><a href="Fee.jsp">Fee</a></li>
-                    <li><a href="Report.jsp">Report</a></li>
-                    <li><a href="Complaint.jsp">Complaints</a></li>  
-                    <li><a href="registerGuard.jsp">Register Guard</a></li>
-                    <li class="active"><a href="registerResident.jsp">Register Resident</a></li>
-                    <li><a href="LogoutServlet">Logout</a></li>
-                </ul>
+              <nav class="menu">
+                    <ul>
+                        <li><a href="../dashboardAdmin.jsp">Dashboard</a></li>
+                        <li><a href="Visitor.jsp">Visitor</a></li>
+                        <li><a href="Fee.jsp">Fee</a></li>
+                        <li><a href="Report.jsp">Report</a></li>
+                        <li><a href="Complaint.jsp">Complaints</a></li>  
+                        <li class="active"><a href="registerGuard.jsp">Registeration</a></li>
+                        <li><a href="userllist1.jsp">User List</a></li>
+                        <li><a href="../LogoutServlet">Logout</a></li>
+                    </ul>
             </nav>
         </aside>
 
@@ -50,34 +50,35 @@
 
                                         
              <div class="form-container">
-                <h3>Register Resident</h3>
+                <h3>Register Guard</h3>
                 
-                <form action="RegisterResidentServlet" method="post">  
+               <form action="RegisterGuardServlet" method="post">  
 
-            Name: <input type="text" name="name" required><br>  
+            Name:<input type="text" name="name" required><br>  
 
-            Email: <input type="email" name="email" required><br> 
+            Email:<input type="email" name="email" required><br> 
             
-            Identification Number: <input type="text" name="icNumber" required><br> 
+           Identification Number:<input type="text" name="icNumber" required><br> 
             
-            Phone Number: <input type="text" name="phoneNumber" required><br> 
+            Phone Number:<input type="text" name="phoneNumber" required><br> 
             
             Plate Vehicle Number: <input type="text" name="plateNumber" required><br>  
             
-            Username: <input type="text" name="username" required><br>  
+            Username:<input type="text" name="username" required><br>  
 
-            Password: <input type="password" name="password" required><br>  
+            Password:<input type="password" name="password" required><br>  
             
             Confirm Password:<input type="password" name="confirmpassword" required><br>  
 
-            Unit House:<input type="text" name="unitHouse" required><br>  
+            Shift:<input type="text" name="shift" required><br>  
             
-
+            Post Location:<input type="text" name="postLocation" required><br> 
+            
             <div class="btn-container">
                 <button type="submit" class="btn-submit" value="Confirm Registration">Confirm Registration</button>
             </div>
+        
             </form>
-               
         </div>
 
    

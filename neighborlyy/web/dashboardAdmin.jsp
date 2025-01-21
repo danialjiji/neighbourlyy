@@ -53,8 +53,8 @@
                     <li><a href="./Admin/Fee.jsp">Fee</a></li>
                     <li><a href="./Admin/Report.jsp">Report</a></li>
                     <li><a href="./Admin/Complaint.jsp">Complaints</a></li> 
-                    <li><a href="./Admin/registerGuard.jsp">Register Guard</a></li>
-                    <li><a href="./Admin/registerResident.jsp">Register Resident</a></li>
+                    <li><a href="./Admin/registerGuard.jsp">Registeration</a></li>
+                    <li><a href="./Admin/userllist1.jsp">List User</a></li>
                     <li><a href="LogoutServlet">Logout</a></li>
                 </ul>
             </nav>

@@ -99,8 +99,8 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
                         <li class="active"><a href="Fee.jsp">Fee</a></li>
                         <li><a href="Report.jsp">Report</a></li>
                         <li><a href="Complaint.jsp">Complaints</a></li>  
-                        <li><a href="registerGuard.jsp">Register Guard</a></li>
-                        <li><a href="registerResident.jsp">Register Resident</a></li>
+                        <li><a href="registerGuard.jsp">Registeration</a></li>
+                        <li><a href="userllist1.jsp">User List</a></li>
                         <li><a href="../LogoutServlet">Logout</a></li>
                     </ul>
                 </nav>
