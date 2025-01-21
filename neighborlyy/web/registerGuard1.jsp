@@ -12,6 +12,21 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 </head>
+
+ <script>  
+        function slideLeft() {  
+            const button = document.getElementById('switchButton');  
+            button.style.transform = 'translateX(0)';  
+            window.location.href = 'registerGuard1.jsp'; // Redirect to index.jsp  
+        }  
+
+        function slideRight() {  
+            const button = document.getElementById('switchButton');  
+            button.style.transform = 'translateX(100%)';  
+            window.location.href = 'registerResident1.jsp'; // Redirect to index2.jsp  
+        }  
+    </script> 
+    
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
@@ -43,7 +58,12 @@
                 <h1>Dashboard</h1>
                 <span>Overview</span>
             </header>     
-        
+            <div class="switch" id="toggleSwitch">  
+                <div class="switch-button" id="switchButton"></div>  
+                <div class="label" onclick="slideLeft()">Register New Guard</div>  
+                <div class="label" style="float: right;" onclick="slideRight()">Register New Resident</div>  
+            </div> 
+            
             <div class="form-container">
               <h3>Registeration New Guard</h3>
               <p>Please fill all the field required</p>
