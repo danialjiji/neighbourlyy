@@ -12,7 +12,8 @@
 
 <sql:setDataSource var="myDatasource" 
 driver="oracle.jdbc.OracleDriver"
-url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="system"/>
+url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
+
 <%
     String updateReportID = request.getParameter("reportID");
     

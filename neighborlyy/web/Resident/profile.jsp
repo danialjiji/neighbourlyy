@@ -126,6 +126,7 @@
                                 <td><%= plateId %></td>
                             </tr>
                         </table>
+                        <br>
                         <div class="profile-actions">
                             <form action="updateProfile.jsp" method="post">
                                 <input type="hidden" name="userID" value="<%= sessionUserId %>" />

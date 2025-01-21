@@ -31,7 +31,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="profile">
-                <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
+                <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
                 <h3>Hi, <%= username %></h3>
                 
             </div>
@@ -39,12 +39,12 @@
             
             <nav class="menu">
                 <ul>
-                    <li><a href="neighborlyy/ashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
                     <li><a href="RoundingReport.jsp">Rounding Report</a></li>
                     <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
                     <li><a href="VisitorForm.jsp">Visitor Form</a></li>
                     <li class="active"><a href="VisitorTable.jsp">Visitor List</a></li>
-                    <li><a href="/neighborlyy/LogoutServlet.java" class="btn-add-project">Logout</a></li>
+                    <li><a href="../LogoutServlet" class="btn-add-project">Logout</a></li>
                 </ul>
             </nav>
         </aside>

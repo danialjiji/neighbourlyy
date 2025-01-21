@@ -32,7 +32,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="profile">
-                <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
+                <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
                 <h3>Hi, <%= username %></h3>
                 
             </div>

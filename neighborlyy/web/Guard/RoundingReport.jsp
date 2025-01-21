@@ -27,7 +27,7 @@
             <!-- Sidebar -->
             <aside class="sidebar">
                 <div class="profile">
-                    <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
+                    <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
                     <h3>Hi, <%= username %></h3>
 
                 </div>
@@ -46,8 +46,9 @@
             </aside>
 
             <main class="main-content">
+              <h1>Rounding Report Form</h1>
                 <div class="form-container">
-                    <h3>Visitor Form</h3>
+                    <h3>Rounding Report Form</h3>
                     <p>Please fill all informations</p>
                                     <!-- change here -->
                     <form action="/neighborlyy/securityController" method="POST" enctype="multipart/form-data">
@@ -62,7 +63,6 @@
                         
                         <label for="attachment">Attachment</label>
                         <input type="file" name="attachment"/>
-                        <button type="button" class="upload-btn">Upload</button>
                         
                         <div class="btn-container">
                             <button type="submit" value="Submit" class="btn-submit" >Submit</button>

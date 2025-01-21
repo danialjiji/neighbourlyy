@@ -25,7 +25,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="profile">
-                <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
+                <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
                 <h3>Hi, <%= username %></h3>
                 
             </div>
@@ -38,12 +38,13 @@
                     <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
                     <li class="active"><a href="VisitorForm.jsp">Visitor Form</a></li>
                     <li><a href="VisitorTable.jsp">Visitor List</a></li>
-                    <li><a href="/neighborlyy/LogoutServlet.java" class="btn-add-project">Logout</a></li>
+                    <li><a href="../LogoutServlet" class="btn-add-project">Logout</a></li>
                 </ul>
             </nav>
         </aside>
         
         <main class="main-content">
+          <h1>Visitor Form</h1>
             <div class="form-container">
                 <h3>Visitor Form</h3>
                 <p>Please fill all informations</p>

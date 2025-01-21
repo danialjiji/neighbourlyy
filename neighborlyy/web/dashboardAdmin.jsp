@@ -252,45 +252,6 @@
                     </table>
                            
             </section>
-            
-        
-             <div class="form-container">
-                <h3>Basic Form Elements</h3>
-                <p>Basic form elements</p>
-                <form>
-                <label for="name">Name</label>
-                <input type="text" id="name" placeholder="Name">
-
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="Email">
-
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Password">
-
-                <label for="gender">Gender</label>
-                <select id="gender">
-                    <option>Male</option>
-                    <option>Female</option>
-                </select>
-
-                <label for="upload">File Upload</label>
-                <input type="file" id="upload">
-                <button type="button" class="upload-btn">Upload</button>
-
-                <label for="city">City</label>
-                <input type="text" id="city" placeholder="Location">
-
-                <label for="textarea">Textarea</label>
-                <textarea id="textarea" placeholder=""></textarea>
-
-                <div class="btn-container">
-                    <button type="submit" class="btn-submit">Submit</button>
-                    <button type="button" class="btn-cancel">Cancel</button>
-                </div>
-            </form>
-        </div>
-
-   
      </main>
    </div>
 </body>
