@@ -28,6 +28,22 @@
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ComplaintController</servlet-name>
+        <servlet-class>ComplaintController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FeeController</servlet-name>
+        <servlet-class>FeeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VisitorController</servlet-name>
+        <servlet-class>VisitorController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportController</servlet-name>
+        <servlet-class>ReportController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -55,6 +71,22 @@
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComplaintController</servlet-name>
+        <url-pattern>/ComplaintController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeeController</servlet-name>
+        <url-pattern>/FeeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VisitorController</servlet-name>
+        <url-pattern>/VisitorController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportController</servlet-name>
+        <url-pattern>/ReportController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
