@@ -7,6 +7,7 @@
  * and open the template in the editor.
  */
 
+import bean.ComplaintBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -19,6 +20,8 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 import java.io.InputStream;
 import util.DBConnection;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @MultipartConfig
 /**
@@ -56,10 +59,23 @@ public class ComplaintController extends HttpServlet {
                 String complaintStatus = request.getParameter("complaintStatus");
                 String location = request.getParameter("location");
                 
+                //To format the date 
+                SimpleDateFormat fullFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    
+                Date fullDate = (Date) fullFormat.parse(complaintDate);
+                                                                                                             
                 try{
                     Part filePart = request.getPart("attachment");
                     String fileName = filePart.getSubmittedFileName();
                     InputStream fileContent = filePart.getInputStream();
+                    
+                    //Implement Bean
+                    ComplaintBean complaint = new ComplaintBean();
+                    complaint.setComplaintType(Integer.parseInt(complaintTypeID));
+                    complaint.setDescription(description);
+                    complaint.setDateComplaint(fullDate);
+                    complaint.setAttachment(fileName);
                     
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("UPDATE complaint SET userID=?, statusID=?, complaint_type_ID=?, complaint_description=?, complaint_date=TO_DATE(?, 'YYYY:MM:DD'), complaint_status=?, complaint_location=?, complaint_attachment=? WHERE complaintID=?");

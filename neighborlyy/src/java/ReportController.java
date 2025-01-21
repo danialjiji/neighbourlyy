@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import bean.ReportBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -47,10 +48,19 @@ public class ReportController extends HttpServlet {
                 String location = request.getParameter("location");
                 String remarks = request.getParameter("remarks");
                 
+                
+                
                 try{
                     Part filePart = request.getPart("attachment");
                     String fileName = filePart.getSubmittedFileName();
                     InputStream fileContent = filePart.getInputStream();
+                    
+                    //Bean Implementation
+                    ReportBean report = new ReportBean();
+                    report.setDateofvisit(reportDate);
+                    report.setLocation(location);
+                    report.setRemarks(remarks);
+                    report.setAttachment(fileName);
                     
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO report (userID, dateOfVisit, \"location\", remarks, attachment) VALUES (?, TO_DATE(?, 'YYYY:MM:DD'), ?, ?, ?)");
@@ -89,7 +99,7 @@ public class ReportController extends HttpServlet {
                     Part filePart = request.getPart("attachment");
                     String fileName = filePart.getSubmittedFileName();
                     InputStream fileContent = filePart.getInputStream();
-                    
+                                                        
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("UPDATE report SET userID=?, dateOfVisit=TO_DATE(?, 'YYYY:MM:DD'), \"location\"=?, remarks=?, attachment=? WHERE reportID=?");
                     
