@@ -59,9 +59,9 @@
                 
                <!-- Dashboard Summary -->
               
-               <div class="overview-box fee-summary">
+               <section class="data-table">
     <h3>Your Process Fees</h3>
-    <table class="table-dashboard">
+    <table class="table">
         <thead>
             <tr>
                 <th>Fee Type</th>
@@ -109,6 +109,7 @@
             %>
         </tbody>
     </table>
+        </section>
 </div>
            
      </main>
