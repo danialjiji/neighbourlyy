@@ -40,7 +40,7 @@
                         <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
                         <li><a href="VisitorForm.jsp">Visitor Form</a></li>
                         <li><a href="VisitorTable.jsp">Visitor List</a></li>
-                        <li><a href="/neighborlyy/LogoutServlet.java" class="btn-add-project">Logout</a></li>
+                        <li><a href="../LogoutServlet" class="btn-add-project">Logout</a></li>
                     </ul>
                 </nav>
             </aside>

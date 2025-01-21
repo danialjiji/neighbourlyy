@@ -133,10 +133,10 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                                 <td><%= complaintAttachment %></td>                            
                                                 <td>                                          
                                                     <a class="btn-submit" href="UpdateComplaint.jsp?complaint_type_ID=<%= complaintID %>">
-                                                    <i class="ti ti-pencil me-1"></i> Edit</a>
+                                                        <i class="ti ti-pencil me-1"></i> Edit</a> <br><br>
                               
                                                     <a class="btn-submit" href="/neighborlyy/ComplaintController?accessType=delete&complaintID=<%= complaintID %>">
-                                                    <i class="ti ti-trash me-1"></i> Delete</a>
+                                                        <i class="ti ti-trash me-1"></i> Delete</a> <br>
                                                 </td>                           
                                             </tr>                                                                                                                                                                                                             
                                             <%                                   

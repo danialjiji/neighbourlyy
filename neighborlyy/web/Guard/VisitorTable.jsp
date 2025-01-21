@@ -15,6 +15,13 @@
         <link rel="stylesheet" href="..\style.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
     </head>
+    
+    <style>
+        .sidebar{
+            height:100vh;
+        }
+    </style>
+    
     <body>
         <div class="dashboard-container">
         <%
@@ -39,7 +46,7 @@
             
             <nav class="menu">
                 <ul>
-                    <li><a href="neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
                     <li><a href="RoundingReport.jsp">Rounding Report</a></li>
                     <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
                     <li><a href="VisitorForm.jsp">Visitor Form</a></li>

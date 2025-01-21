@@ -8,6 +8,13 @@
         <link rel="stylesheet" href="../style.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
     </head>
+    
+    <style>
+        .sidebar{
+            height:100vh;
+        }
+    </style>
+    
     <body>
     <div class="dashboard-container">
         <%
