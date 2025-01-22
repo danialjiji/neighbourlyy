@@ -79,7 +79,7 @@
                         }
 
                         // Query to get the total number of visitors for today
-                        String visitorsTodayQuery = "SELECT COUNT(*) AS visitorCount FROM visitor WHERE TRUNC(entrytime) = TRUNC(SYSDATE)";
+                        String visitorsTodayQuery = "SELECT COUNT(*) AS visitorCount FROM visitor WHERE TRUNC(dateofvisit) = TRUNC(SYSDATE)";
                         PreparedStatement visitorsTodayStmt = conn.prepareStatement(visitorsTodayQuery);
                         ResultSet visitorsTodayRs = visitorsTodayStmt.executeQuery();
                         int totalVisitors = 0;
@@ -88,7 +88,7 @@
                         }
 
                         // Query to get the total number of visitors who exited today
-                        String visitorsExitedQuery = "SELECT COUNT(*) AS exitedCount FROM visitor WHERE TRUNC(entrytime) = TRUNC(SYSDATE) AND exittime IS NOT NULL";
+                        String visitorsExitedQuery = "SELECT COUNT(*) AS exitedCount FROM visitor WHERE TRUNC(dateofvisit) = TRUNC(SYSDATE) AND exittime IS NOT NULL";
                         PreparedStatement visitorsExitedStmt = conn.prepareStatement(visitorsExitedQuery);
                         ResultSet visitorsExitedRs = visitorsExitedStmt.executeQuery();
                         int totalExitedVisitors = 0;

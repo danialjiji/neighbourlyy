@@ -9,10 +9,11 @@ public class VisitorBean {
     String datevisit;
     String purposevisit;
     String phoneno;
+    int userid;
     
     public VisitorBean(){}
 
-    public VisitorBean(String visitorname, String icpassport, String plateno, String entrytime, String exittime, String datevisit, String purposevisit, String phoneno) {
+    public VisitorBean(String visitorname, String icpassport, String plateno, String entrytime, String exittime, String datevisit, String purposevisit, String phoneno, int userid) {
         this.visitorname = visitorname;
         this.icpassport = icpassport;
         this.plateno = plateno;
@@ -21,6 +22,7 @@ public class VisitorBean {
         this.datevisit = datevisit;
         this.purposevisit = purposevisit;
         this.phoneno = phoneno;
+        this.userid = userid;
     }
 
     public String getVisitorname() {
@@ -85,6 +87,14 @@ public class VisitorBean {
 
     public void setPhoneno(String phoneno) {
         this.phoneno = phoneno;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
     
     

@@ -5,12 +5,14 @@ public class ReportBean {
     String location;
     String remarks;
     String attachment;
+    int userid;
 
-    public ReportBean(String dateofvisit, String location, String remarks, String attachment) {
+    public ReportBean(String dateofvisit, String location, String remarks, String attachment, int userid) {
         this.dateofvisit = dateofvisit;
         this.location = location;
         this.remarks = remarks;
         this.attachment = attachment;
+        this.userid = userid;
     }
 
     public ReportBean() {
@@ -46,6 +48,14 @@ public class ReportBean {
 
     public void setAttachment(String attachment) {
         this.attachment = attachment;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
     
     

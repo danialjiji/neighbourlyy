@@ -82,7 +82,7 @@
                                 Date dateOfVisit = rs.getDate("dateofvisit");
                                 String location = rs.getString("location");
                                 String remarks = rs.getString("remarks");
-                                Blob attachment = rs.getBlob("attachment");
+                                String attachment = rs.getString("attachment");
 
                                 // Format the date
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

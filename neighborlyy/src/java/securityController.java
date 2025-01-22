@@ -68,40 +68,36 @@ public class securityController extends HttpServlet {
             Part filePart = request.getPart("attachment");
             
             String fileName = filePart.getSubmittedFileName();
-            InputStream fileContent = filePart.getInputStream();
             
             ReportBean report = new ReportBean();
             report.setDateofvisit(dateReport);
             report.setLocation(location);
             report.setRemarks(remarks);
             report.setAttachment(fileName);
+            report.setUserid(userid);
 
-            // Use the helper method to get a connection
             try (Connection conn = DBConnection.createConnection()) {
                 String query = "INSERT INTO Report (USERID, DATEOFVISIT, LOCATION, REMARKS, ATTACHMENT) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.setInt(1, userid);
+                stmt.setInt(1, report.getUserid());
                 stmt.setString(2, report.getDateofvisit());
                 stmt.setString(3, report.getLocation());
                 stmt.setString(4, report.getRemarks());
-                stmt.setBlob(5, fileContent);
+                stmt.setString(5, report.getAttachment());
                 stmt.executeUpdate();
             }
             
-            //here, change direct this one instead of requestdispatcher to success.jsp, untuk setiap method
             response.sendRedirect("./Guard/RoundingReportTable.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
-        } catch (Exception e) { // Catch any Exception that may occur
+        } catch (Exception e) { 
             if (e instanceof SQLException) {
-                // Handle SQLException specifically
                 System.out.println("A database error occurred: " + e.getMessage());
             } else {
-                // Handle other exceptions
                 System.out.println("An unexpected error occurred: " + e.getMessage());
             }
-            e.printStackTrace(); // Print the stack trace for debugging
+            e.printStackTrace();
             request.setAttribute("message", "An error occurred while processing your request");
         }
 
@@ -128,13 +124,15 @@ public class securityController extends HttpServlet {
         visitor.setPurposevisit(purposeVisit);
         visitor.setPhoneno(phoneNo);
 
+
         try {
             int userid = Integer.parseInt(useridStr);
-
+            visitor.setUserid(userid);
+            
             try (Connection conn = DBConnection.createConnection()) {
                 String query = "INSERT INTO VISITOR (USERID, VISITOR_NAME, VISITOR_IC, NO_PLATE, ENTRYTIME, EXITTIME, DATEOFVISIT, PURPOSEOFVISIT, VISITOR_PHONENUM) VALUES (?, ?, ?, ?, TO_TIMESTAMP(?, 'HH24:MI'), ?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.setInt(1, userid);
+                stmt.setInt(1, visitor.getUserid());
                 stmt.setString(2, visitor.getVisitorname());
                 stmt.setString(3, visitor.getIcpassport());
                 stmt.setString(4, visitor.getPlateno());
@@ -164,24 +162,22 @@ public class securityController extends HttpServlet {
 
     //Exit Visitor
     private void handleEditVisitor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String visitorIdStr = request.getParameter("id"); // Assuming visitor ID is passed as a parameter
+        String visitorIdStr = request.getParameter("id");
 
 
         try {
             int visitorId = Integer.parseInt(visitorIdStr);
 
-            // Get the current time
             java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
             String exittime = currentTime.toString();
             visitor.setExittime(exittime);
             
 
-            // Use the helper method to get a connection
             try (Connection conn = DBConnection.createConnection()) {
                 String query = "UPDATE VISITOR SET EXITTIME = ? WHERE REGISTERID = ?";
                 PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.setTimestamp(1, currentTime); // Set the current time
-                stmt.setInt(2, visitorId); // Set the visitor ID
+                stmt.setTimestamp(1, currentTime);
+                stmt.setInt(2, visitorId);
 
                 int rowsUpdated = stmt.executeUpdate();
 
