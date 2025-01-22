@@ -55,12 +55,7 @@ public class FeeController extends HttpServlet {
                     Part filePart = request.getPart("attachment");
                     String fileName = filePart.getSubmittedFileName();
                     InputStream fileContent = filePart.getInputStream();
-                    
-                    //Bean Implementation
-                    FeeBean fee = new FeeBean();
-                    fee.setFeeType(Integer.parseInt(feeCategoryID));
-                    fee.setFeeType(feeAmount);
-                    fee.setReceipt(fileName);
+                  
                     
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO fee (userID, fee_category_ID, statusID, fee_date, fee_amount, fee_status, attachment) VALUES (?, ?, ?, TO_DATE(?, 'YYYY:MM:DD'), ?, ?, ?)");
@@ -77,6 +72,12 @@ public class FeeController extends HttpServlet {
                     stmt.executeUpdate();
                     conn.close();
                     stmt.close();
+                    
+                     //Bean Implementation
+                    FeeBean fee = new FeeBean();
+                    fee.setFeeType(Integer.parseInt(feeCategoryID));
+                    fee.setFeeType(feeAmount);
+                    fee.setReceipt(fileName);
                     
                 }catch(Exception e){
                     if (e instanceof ClassNotFoundException) {

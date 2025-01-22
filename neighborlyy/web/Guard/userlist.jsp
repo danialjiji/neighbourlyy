@@ -1,9 +1,3 @@
-<%-- 
-    Document   : registerResident1
-    Created on : Jan 20, 2025, 3:33:33 AM
-    Author     : USER
---%>
-
 <%@ page import="java.sql.*" %>  
 <%@ page import="java.util.*" %>  
 <%@ page import="util.DBConnection" %>   
@@ -34,8 +28,7 @@
             }
             
             // Retrieve the userid and username safely
-            Integer useridss = (Integer) session.getAttribute("userid"); // Use implicit session
-            String usernamess = (String) session.getAttribute("username");
+            String username = (String) session.getAttribute("username");
     %>
         
     <div class="dashboard-container">
@@ -43,20 +36,20 @@
         <aside style=" height: 100vh;" class="sidebar" >
             <div class="profile">
                 <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
-                <h3>Hi, Danial</h3>
+                <h3>Hi, <%= username %></h3>
                 
             </div>
             
             
             <nav class="menu">
                     <ul>
-                        <li><a href="../dashboardAdmin.jsp">Dashboard</a></li>
-                        <li><a href="Visitor.jsp">Visitor</a></li>
-                        <li><a href="Fee.jsp">Fee</a></li>
-                        <li><a href="Report.jsp">Report</a></li>
-                        <li><a href="Complaint.jsp">Complaints</a></li>  
-                        <li><a href="registerGuard.jsp">Registeration</a></li>
-                        <li  class="active"><a href="userllist1.jsp">User List</a></li>
+                        <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                        <li><a href="profileGuard.jsp">Profile</a></li>
+                        <li><a href="RoundingReport.jsp">Rounding Report</a></li>
+                        <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
+                        <li><a href="VisitorForm.jsp">Visitor Form</a></li>
+                        <li><a href="VisitorTable.jsp">Visitor List</a></li>
+                        <li class="active"><a href="userlist.jsp">Users List</a></li>
                         <li><a href="../LogoutServlet">Logout</a></li>
                     </ul>
             </nav>
@@ -73,16 +66,13 @@
                 <table class="table">  
                     <thead>  
                         <tr>  
-                            <th>UserID</th>  
-                            <th>Username</th>  
+                            <th>UserID</th>   
                             <th>Name</th>  
+                            <th>IC/Passport</th>
+                            <th>Phone Number</th>
+                            <th>Plate Number</th>
                             <th>Email</th>  
-                            <th>Role</th>  
-                            <th>Salary</th>  
-                            <th>Shift</th>  
-                            <th>Post Location</th>  
                             <th>House Unit</th>  
-                            <th>Action</th>  
                         </tr>  
                     </thead>  
                     <tbody>  
@@ -94,16 +84,9 @@
                             try {  
                                 conn = DBConnection.createConnection();  
 
-                                 String sql = "SELECT u.userID, u.username, u.\"name\", u.ic_passport, u.phoneNum, " +  
-                                                "u.email, u.plate_id, NVL(a.salary, 0) AS salary, NVL(g.shift, '-') AS shift, " +  
-                                                "NVL(g.post_location, '-') AS post_location, NVL(r.unit, '-') AS unit, " +   
-                                                "CASE WHEN a.userID IS NOT NULL THEN 'Admin' " +   
-                                                "WHEN g.userID IS NOT NULL THEN 'Guard' " +   
-                                                "WHEN r.userID IS NOT NULL THEN 'Resident' END AS role " +  
-                                                "FROM users u " +  
-                                                "LEFT JOIN admin a ON u.userID = a.userID " +  
-                                                "LEFT JOIN guard g ON u.userID = g.userID " +  
-                                                "LEFT JOIN resident r ON u.userID = r.userID";  
+                                String sql = "SELECT u.userid, u.\"name\", u.ic_passport, u.phonenum, u.email, u.plate_id, r.unit " +  
+                                             "FROM users u " +  
+                                             "JOIN resident r ON u.userid = r.userid ";
 
                                 System.out.println("Executing SQL: " + sql);  
 
@@ -113,50 +96,27 @@
                                 // Loop through the result set and display data  
                                 while (rs.next()) {  
                                     // Retrieve userID as an integer  
-                                    int userID = rs.getInt("userID");  
+                                    int userID = rs.getInt("userid");  
 
                                     // Retrieve other String values  
-                                    String username = rs.getString("username");  
-                                    String name = rs.getString("name");  
-                                    String email = rs.getString("email");  
+                                    String name = rs.getString("name");    
                                     String icPassport = rs.getString("ic_passport");  
                                     String phoneNum = rs.getString("phoneNum");  
+                                    String email = rs.getString("email");
                                     String plateNum = rs.getString("plate_id");  
 
-                                    // Retrieve salary as a double; check for NULL  
-                                    double salary = rs.getDouble("salary");  
-                                    if (rs.wasNull()) {  
-                                        salary = 0.0; // Handle null salary as needed  
-                                    }  
-
-                                    // Retrieve shift and unit as strings  
-                                    String shift = rs.getString("shift");
-                                    String postLocation = rs.getString("post_location");
                                     String unitHouse = rs.getString("unit");  
-                                    String role = rs.getString("role");  
 
-                                    // Handle additionalInfo; display salary if not zero, else show "N/A"  
-                                    String additionalInfo = salary != 0.0 ? String.valueOf(salary) : "-";  
                                %>  
             
                                 <tr>  
                                     <td><%= userID %></td>  
-                                    <td><%= username %></td>  
-                                    <td><%= name %></td>  
-                                    <td><%= email %></td>  
-                                    <td><%= role %></td>  
-                                    <td><%= additionalInfo %></td>  
-                                    <td><%= shift %></td>  
-                                    <td><%= postLocation %></td>  
+                                    <td><%= name %></td>
+                                    <td><%= icPassport %></td>  
+                                    <td><%= phoneNum %></td>
+                                    <td><%= plateNum %></td>
+                                    <td><%= email %></td>   
                                     <td><%= unitHouse %></td>  
-                                    <td>  
-                                        <form action="editUser.jsp" method="get" style="display:inline;">  
-                                            <input type="hidden" name="userID" value="<%= userID %>">  
-                                            <input type="hidden" name="role" value="<%= role %>">  
-                                            <button type="submit" class="btn-submit">Edit</button>  
-                                        </form>  
-                                       
-                                    </td> 
                                 </tr>  
                           <%  
                                 }  

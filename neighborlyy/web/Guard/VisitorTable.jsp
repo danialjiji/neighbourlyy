@@ -47,11 +47,13 @@
             <nav class="menu">
                 <ul>
                     <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="profileGuard.jsp">Profile</a></li>
                     <li><a href="RoundingReport.jsp">Rounding Report</a></li>
                     <li><a href="RoundingReportTable.jsp">Rounding Report List</a></li>
                     <li><a href="VisitorForm.jsp">Visitor Form</a></li>
                     <li class="active"><a href="VisitorTable.jsp">Visitor List</a></li>
-                    <li><a href="../LogoutServlet" class="btn-add-project">Logout</a></li>
+                    <li><a href="userlist.jsp">Users List</a></li>
+                    <li><a href="../LogoutServlet">Logout</a></li>
                 </ul>
             </nav>
         </aside>

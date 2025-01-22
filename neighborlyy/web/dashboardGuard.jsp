@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="util.DBConnection"%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -37,11 +38,13 @@
             <nav class="menu">
                 <ul>
                     <li class="active"><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="./Guard/profileGuard.jsp">Profile</a></li>
                     <li><a href="./Guard/RoundingReport.jsp">Rounding Report</a></li>
                     <li><a href="./Guard/RoundingReportTable.jsp">Rounding Report List</a></li>
                     <li><a href="./Guard/VisitorForm.jsp">Visitor Form</a></li>
                     <li><a href="./Guard/VisitorTable.jsp">Visitor List</a></li>
-                    <li><a href=LogoutServlet" class="btn-add-project">Logout</a></li>
+                    <li><a href="./Guard/userlist.jsp">Users List</a></li>
+                    <li><a href="LogoutServlet">Logout</a></li>
                 </ul>
             </nav>
         </aside>
@@ -92,6 +95,7 @@
                         if (visitorsExitedRs.next()) {
                             totalExitedVisitors = visitorsExitedRs.getInt("exitedCount");
                         }
+                        
                 %>
                 <section class="cards">
                     <div class="card">
@@ -105,13 +109,82 @@
                         <p class="amount">Visitor Out: <%= totalExitedVisitors %></p>
                     </div>
                 </section>
+
+                <section class="data-table">
+                    <h3>Visitors Entry List</h3>
+                <table class="table">
+                    <thead>
+                        <tr>    
+                            <th>ID</th>
+                            <th>Visitor's Name</th>
+                            <th>IC/Passport</th>
+                            <th>Plate Number</th>
+                            <th>Entry Time</th>
+                            <th>Exit Time</th>
+                            <th>Date</th>
+                            <th>Purpose</th>
+                            <th>Phone No</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    
                 <%
-                        conn.close();
+                    //Query to show visitor in
+                    PreparedStatement stmt = conn.prepareStatement("SELECT * FROM visitor WHERE exittime IS NULL ");
+                    ResultSet rs = stmt.executeQuery();
+
+                    while (rs.next()) {
+                        int registerID = rs.getInt("registerid");
+                        String visitorName = rs.getString("visitor_name");
+                        if (visitorName == null) visitorName = "N/A";
+
+                        String icpassport = rs.getString("visitor_ic");
+                        if (icpassport == null) icpassport = "N/A";
+
+                        String plateNo = rs.getString("no_plate");
+                        if (plateNo == null) plateNo = "N/A";
+
+                        Time entryTime = rs.getTime("entrytime");
+                        String entryTimeOnly = (entryTime != null) ? new SimpleDateFormat("HH:mm").format(entryTime) : "N/A";
+
+                        Time exitTime = rs.getTime("exittime");
+                        String exitTimeOnly = (exitTime != null) ? new SimpleDateFormat("HH:mm").format(exitTime) : "N/A";
+
+                        Date dateVisit = rs.getDate("dateofvisit");
+                        String onlyDate = (dateVisit != null) ? new SimpleDateFormat("yyyy-MM-dd").format(dateVisit) : "N/A";
+
+                        String purposeVisit = rs.getString("purposeofvisit");
+                        if (purposeVisit == null) purposeVisit = "N/A";
+
+                        String phoneNum = rs.getString("visitor_phonenum");
+                        if (phoneNum == null) phoneNum = "N/A";
+                %>
+                    
+                    <tbody>
+                        <tr>
+                           <td><%= registerID %></td>
+                           <td><%= visitorName %></td>
+                           <td><%= icpassport %></td>
+                           <td><%= plateNo %></td>
+                           <td><%= entryTimeOnly %></td>
+                           <td><%= exitTimeOnly %></td>
+                           <td><%= onlyDate %></td>
+                           <td><%= purposeVisit %></td>
+                           <td><%= phoneNum %></td>
+                           <td>
+                               <a href="/neighborlyy/securityController?accessType=editVisitor&id=<%= registerID %>" class="btn-submit">Exit</a>
+                               <a href="/neighborlyy/securityController?accessType=deleteVisitor&id=<%= registerID %>" class="btn-submit">Delete</a>
+                           </td>
+                        </tr>
+                   </tbody>
+                <%
+                        } conn.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                 %>
-
+                    </table>
+                </section>
             </main>
         </div>
     </body>
