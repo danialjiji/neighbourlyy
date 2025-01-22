@@ -135,14 +135,14 @@ public class securityController extends HttpServlet {
                 String query = "INSERT INTO VISITOR (USERID, VISITOR_NAME, VISITOR_IC, NO_PLATE, ENTRYTIME, EXITTIME, DATEOFVISIT, PURPOSEOFVISIT, VISITOR_PHONENUM) VALUES (?, ?, ?, ?, TO_TIMESTAMP(?, 'HH24:MI'), ?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, userid);
-                stmt.setString(2, visitorName);
-                stmt.setString(3, icPassport);
-                stmt.setString(4, plateNo);
-                stmt.setString(5, entryTime);
+                stmt.setString(2, visitor.getVisitorname());
+                stmt.setString(3, visitor.getIcpassport());
+                stmt.setString(4, visitor.getPlateno());
+                stmt.setString(5, visitor.getEntrytime());
                 stmt.setString(6, null);
-                stmt.setString(7, dateVisit);
-                stmt.setString(8, purposeVisit);
-                stmt.setString(9, phoneNo);
+                stmt.setString(7, visitor.getDatevisit());
+                stmt.setString(8, visitor.getPurposevisit());
+                stmt.setString(9, visitor.getPhoneno());
                 stmt.executeUpdate();
             }
 
