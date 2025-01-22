@@ -26,6 +26,11 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
+    <style>
+        .sidebar{
+            height:200vh;
+        }
+    </style>
     <body>
         
         <!-- Check for Session -->
@@ -164,24 +169,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                     String purposeOfVisit = rs.getString("purposeOfVisit");
                                     String phoneNumber = rs.getString("visitor_phonenum");
                                     
-                                    //To formate the entry and exit time
-                                    DateTimeFormatter fullFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-                                    
-                                    LocalDateTime entry = LocalDateTime.parse(entryTime, fullFormatter);
-                                    LocalDateTime exit = LocalDateTime.parse(exitTime, fullFormatter);
-                                    
-                                    String entryTimeOnly = entry.format(timeFormatter);
-                                    String exitTimeOnly = exit.format(timeFormatter);
-                                    
-                                    //To format the date 
-                                    SimpleDateFormat fullFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                    
-                                    Date fullDate = fullFormat.parse(dateOfVisit);
-                                    String onlyDate = dateFormat.format(fullDate);
-                                    
-                            
+                               
                                 
                                     %>    
                                                                     
@@ -190,14 +178,14 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                         <td><%= visitorName %></td>
                                         <td><%= visitorIC %></td>
                                         <td><%= plateNumber %></td>
-                                        <td><%= entryTimeOnly %></td>
-                                        <td><%= exitTimeOnly %></td>
-                                        <td><%= onlyDate %></td>
+                                        <td><%= entryTime %></td>
+                                        <td><%= exitTime %></td>
+                                        <td><%= dateOfVisit %></td>
                                         <td><%= purposeOfVisit %></td>
                                         <td><%= phoneNumber %></td>
                             
                                         <td>                                          
-                                            <a class="btn-submit" href="UpdateVisitor.jsp?registerID=<%= registerID %>">Edit</a>                            
+                                            <a class="btn-submit" href="UpdateVisitor.jsp?registerID=<%= registerID %>">Edit</a> <br> <br>                         
                               
                                             <a class="btn-submit" href="/neighborlyy/VisitorController?accessType=delete&registerID=<%= registerID %>">Delete</a>
                                 
