@@ -81,9 +81,9 @@ public class securityController extends HttpServlet {
                 String query = "INSERT INTO Report (USERID, DATEOFVISIT, LOCATION, REMARKS, ATTACHMENT) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, userid);
-                stmt.setString(2, dateReport);
-                stmt.setString(3, location);
-                stmt.setString(4, remarks);
+                stmt.setString(2, report.getDateofvisit());
+                stmt.setString(3, report.getLocation());
+                stmt.setString(4, report.getRemarks());
                 stmt.setBlob(5, fileContent);
                 stmt.executeUpdate();
             }
