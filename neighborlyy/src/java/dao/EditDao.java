@@ -55,7 +55,7 @@ public class EditDao {
 
             if (user.getShift() != null && !user.getShift().isEmpty() && user.getPostlocation() != null && !user.getPostlocation().isEmpty()) {  
                 // Update in guard table if exists  
-                String sqlGuard = "UPDATE guard SET shift = ? post_location = ? WHERE userID = ?";  
+                String sqlGuard = "UPDATE guard SET shift = ?, post_location = ? WHERE userID = ?";  
                 pstmt = conn.prepareStatement(sqlGuard);  
                 pstmt.setString(1, user.getShift()); 
                 pstmt.setString(2, user.getPostlocation());  
@@ -112,23 +112,22 @@ public class EditDao {
 
     try {  
         conn = DBConnection.createConnection();  
-        String sql = "SELECT u.userID, u.username, u.\"name\", u.ic_passport, u.phoneNum, u.email, u.plate_id, " +  
-                        "NVL(a.salary, 0) AS salary, " +  
-                        "NVL(g.shift, '-') AS shift, " +  
-                        "NVL(g.post_location, '-') AS post_location, " +  
-                        "NVL(r.unit, '-') AS unit, " +  
-                        "CASE " +  
-                        "WHEN a.userID IS NOT NULL THEN 'Admin' " +  
-                        "WHEN g.userID IS NOT NULL THEN 'Guard' " +  
-                        "WHEN r.userID IS NOT NULL THEN 'Resident' " +  
-                        "END AS role " +  
-                        "FROM users u " +  
-                        "LEFT JOIN admin a ON u.userID = a.userID " +  
-                        "LEFT JOIN guard g ON u.userID = g.userID " +  
-                        "LEFT JOIN resident r ON u.userID = r.userID " +  
-                        "WHERE u.userID = ? " +  // Add the placeholder for userID  
-                        "AND (g.shift IS NULL OR REGEXP_LIKE(g.shift, '^[0-9]+(\\.[0-9]+)?$')) " +  
-                        "AND (r.unit IS NULL OR REGEXP_LIKE(r.unit, '^[0-9]+(\\.[0-9]+)?$'))";
+         String sql = "SELECT u.userID, u.username, u.\"name\", u.ic_passport, u.phoneNum, u.email, u.plate_id, " +  
+                     "NVL(a.salary, 0) AS salary, " +  
+                     "NVL(g.shift, '-') AS shift, " +  
+                     "NVL(g.post_location, '-') AS post_location, " +  
+                     "NVL(r.unit, '-') AS unit, " +  
+                     "CASE " +  
+                     "WHEN a.userID IS NOT NULL THEN 'Admin' " +  
+                     "WHEN g.userID IS NOT NULL THEN 'Guard' " +  
+                     "WHEN r.userID IS NOT NULL THEN 'Resident' " +  
+                     "END AS role " +  
+                     "FROM users u " +  
+                     "LEFT JOIN admin a ON u.userID = a.userID " +  
+                     "LEFT JOIN guard g ON u.userID = g.userID " +  
+                     "LEFT JOIN resident r ON u.userID = r.userID " +  
+                     "WHERE u.userID = ? ";
+                    
         
         pstmt = conn.prepareStatement(sql);  
         pstmt.setInt(1, userID);  

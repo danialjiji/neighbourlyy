@@ -37,46 +37,50 @@ public class EditServlet extends HttpServlet {
     }  
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)  
-            throws ServletException, IOException {  
-        // Get action type  
-        String action = request.getParameter("action");  
+        throws ServletException, IOException {  
+    String action = request.getParameter("action");  
 
-        EditDao dao = new EditDao();  
+    EditDao dao = new EditDao();  
 
-        if ("update".equals(action)) {  
-            // Update user  
-            int userID = Integer.parseInt(request.getParameter("userID"));  
-            String username = request.getParameter("username");  
-            String name = request.getParameter("name");  
-            String icPassport = request.getParameter("ic_passport");  
-            String phoneNum = request.getParameter("phoneNum");  
-            String email = request.getParameter("email");  
-            String plateNumber = request.getParameter("plateNumber");
-            double salary = Double.parseDouble(request.getParameter("salary"));  
-            String shift = request.getParameter("shift"); 
-            String postlocation = request.getParameter("postlocation"); 
-            String unit = request.getParameter("unit");  
+    if ("update".equals(action)) {  
+        int userID = Integer.parseInt(request.getParameter("userID"));  
+        String username = request.getParameter("username");  
+        String name = request.getParameter("name");  
+        String icPassport = request.getParameter("ic_passport");  
+        String phoneNum = request.getParameter("phoneNum");  
+        String email = request.getParameter("email");  
+        String plateNumber = request.getParameter("plateNumber");  
 
-            EditBean user = new EditBean();  
-            user.setUserID(userID);  
-            user.setUsername(username);  
-            user.setName(name);  
-            user.setIcPassport(icPassport);  
-            user.setPhoneNum(phoneNum);  
-            user.setEmail(email);  
-            user.setPlateNumber(plateNumber);  
-            user.setSalary(salary);  
-            user.setShift(shift);  
-            user.setPostlocation(postlocation); 
-            user.setUnit(unit);  
+        // Initialize salary to 0 or handle error  
+        double salary = 0.0;  
+        String salaryParam = request.getParameter("salary");  
+       
+        
+        String shift = request.getParameter("shift");   
+        String postlocation = request.getParameter("postlocation");   
+        String unit = request.getParameter("unit");  
 
-            boolean success = dao.updateUser(user);  
-            if (success) {  
-                response.sendRedirect("./Admin/userllist1.jsp"); // Redirect back to user list  
-            } else {  
-                response.getWriter().print("Update failed!"); // Error message  
-            }  
-        } 
+        EditBean user = new EditBean();  
+        user.setUserID(userID);  
+        user.setUsername(username);  
+        user.setName(name);  
+        user.setIcPassport(icPassport);  
+        user.setPhoneNum(phoneNum);  
+        user.setEmail(email);  
+        user.setPlateNumber(plateNumber);  
+        user.setSalary(salary);  
+        user.setShift(shift);  
+        user.setPostlocation(postlocation);   
+        user.setUnit(unit);  
+
+        boolean success = dao.updateUser(user);  
+        if (success) {  
+            response.sendRedirect("./Admin/userllist1.jsp"); // Redirect back to user list  
+        } else {  
+            response.getWriter().print("Update failed!"); // Error message  
+        }  
+    }   
+ 
         }  
  
 
