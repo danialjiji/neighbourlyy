@@ -9,7 +9,7 @@
  * and open the template in the editor.
  */
 
-import bean.VisitorBean;
+import bean.VisitorBean2;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -62,29 +62,23 @@ public class VisitorController extends HttpServlet {
                 String phoneNumber = request.getParameter("phoneNumber");
                 
                 //Bean Implementation
-                VisitorBean visitor = new VisitorBean();
-                visitor.setVisitorname(visitorName);
-                visitor.setIcpassport(visitorIC);
-                visitor.setPlateno(plateNumber);
-                visitor.setEntrytime(entryTime);
-                visitor.setExittime(exitTime);
-                visitor.setDatevisit(visitDate);
-                visitor.setPurposevisit(purposeOfVisit);
-                visitor.setPhoneno(phoneNumber);
+                VisitorBean2 visitor = new VisitorBean2();
+                visitor = new VisitorBean2(userID, visitorName, visitorIC, plateNumber, entryTime, exitTime, visitDate, purposeOfVisit, phoneNumber);
+                
                 
                 try{               
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO visitor (userID, visitor_name, visitor_ic, no_plate, entryTime, exitTime, dateOfVisit, purposeOfVisit, visitor_phonenum) VALUES (?, ?, ?, ?, TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), TO_DATE(?, 'YYYY:MM:DD'), ?, ?)");
             
-                    stmt.setInt(1, Integer.parseInt(userID));
-                    stmt.setString(2, visitorName);
-                    stmt.setString(3, visitorIC);
-                    stmt.setString(4, plateNumber);
-                    stmt.setString(5, entryTime);
-                    stmt.setString(6, exitTime);
-                    stmt.setString(7, visitDate);
-                    stmt.setString(8, purposeOfVisit);
-                    stmt.setString(9, phoneNumber);
+                    stmt.setInt(1, Integer.parseInt(visitor.getUserID()));
+                    stmt.setString(2, visitor.getVisitorName());
+                    stmt.setString(3, visitor.getVisitorIC());
+                    stmt.setString(4, visitor.getNoPlate());
+                    stmt.setString(5, visitor.getEntryTime());
+                    stmt.setString(6, visitor.getExitTime());
+                    stmt.setString(7, visitor.getDateOfVisit());
+                    stmt.setString(8, visitor.getPurposeOfVisit());
+                    stmt.setString(9, visitor.getVisitorPhoneNum());
                     
                     stmt.executeUpdate();
                     stmt.close();
