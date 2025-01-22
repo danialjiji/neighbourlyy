@@ -171,7 +171,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                                     
                                                 <td>                                          
                                                     <a class="btn-submit" href="UpdateReport.jsp?reportID=<%= reportID %>">
-                                                    <i class="ti ti-pencil me-1"></i> Edit</a>
+                                                        <i class="ti ti-pencil me-1"></i> Edit</a> <br> <br>
                               
                                                     <a class="btn-submit" href="/neighborlyy/ReportController?accessType=delete&reportID=<%= reportID %>">
                                                     <i class="ti ti-trash me-1"></i> Delete</a>

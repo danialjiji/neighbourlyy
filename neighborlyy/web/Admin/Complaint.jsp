@@ -21,6 +21,11 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 <html>
+    <style>
+        .sidebar{
+            height:100vh;
+        }
+    </style>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
