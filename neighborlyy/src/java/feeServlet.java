@@ -94,11 +94,11 @@ public class feeServlet extends HttpServlet {
                 String query = "INSERT INTO Fee (USERID, FEE_CATEGORY_ID, STATUSID, FEE_DATE, FEE_AMOUNT, ATTACHMENT) VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, userid);
-                stmt.setInt(2, feeType);
+                stmt.setInt(2, fee.getFeeType());
                 stmt.setInt(3, statusid);
-                stmt.setDate (4, sqlDate);
-                stmt.setDouble(5, amount);
-                stmt.setString(6, fileName);
+                stmt.setDate (4, fee.getDateFee());
+                stmt.setDouble(5, fee.getAmount());
+                stmt.setString(6, fee.getReceipt());
                 stmt.executeUpdate();
             }
 

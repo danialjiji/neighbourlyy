@@ -109,11 +109,11 @@ public class residentController extends HttpServlet {
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, userid);
                 stmt.setInt(2, statusid);
-                stmt.setInt(3, complaintType);
-                stmt.setString(4, description);
+                stmt.setInt(3, cp.getComplaintType());
+                stmt.setString(4, cp.getDescription());
                 stmt.setDate (5, sqlDate);
-                stmt.setString(6, location);
-                stmt.setString(7, fileName);
+                stmt.setString(6, cp.getLocation ());
+                stmt.setString(7, cp.getAttachment());
                 stmt.executeUpdate();
             }
                 
