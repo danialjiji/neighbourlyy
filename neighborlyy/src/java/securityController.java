@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
-import java.io.InputStream;
 import util.DBConnection;
 
 
@@ -62,6 +61,7 @@ public class securityController extends HttpServlet {
         String location = request.getParameter("location");
         String remarks = request.getParameter("remarks");
         String useridStr = request.getParameter("userid");
+        
 
         try {
             int userid = Integer.parseInt(useridStr);
@@ -87,18 +87,13 @@ public class securityController extends HttpServlet {
                 stmt.executeUpdate();
             }
             
-            response.sendRedirect("./Guard/RoundingReportTable.jsp");
+            response.sendRedirect("./Guard/RoundingReport.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            request.setAttribute("message", "Invalid user ID format");
         } catch (Exception e) { 
             if (e instanceof SQLException) {
-                System.out.println("A database error occurred: " + e.getMessage());
-            } else {
-                System.out.println("An unexpected error occurred: " + e.getMessage());
             }
             e.printStackTrace();
-            request.setAttribute("message", "An error occurred while processing your request");
         }
 
     }
@@ -144,7 +139,7 @@ public class securityController extends HttpServlet {
                 stmt.executeUpdate();
             }
 
-            response.sendRedirect("./Guard/VisitorTable.jsp");
+            response.sendRedirect("./Guard/VisitorForm.jsp");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");
@@ -182,10 +177,9 @@ public class securityController extends HttpServlet {
                 int rowsUpdated = stmt.executeUpdate();
 
                 if (rowsUpdated > 0) {
-                    response.sendRedirect("./Guard/VisitorTable.jsp");
+                    response.sendRedirect("./Guard/VisitorForm.jsp");
                 } else {
                     request.setAttribute("message", "No visitor found with the specified ID");
-                    request.getRequestDispatcher("error.jsp").forward(request, response);
                 }
             }
         } catch (NumberFormatException e) {
@@ -217,7 +211,7 @@ public class securityController extends HttpServlet {
                 int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    response.sendRedirect("./Guard/RoundingReportTable.jsp");
+                    response.sendRedirect("./Guard/RoundingReport.jsp");
                 } else {
                     request.setAttribute("message", "Report not found");
                 }
@@ -246,7 +240,7 @@ public class securityController extends HttpServlet {
                 int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    response.sendRedirect("./Guard/VisitorTable.jsp");
+                    response.sendRedirect("./Guard/VisitorForm.jsp");
                 } else {
                     request.setAttribute("message", "Report not found");
                 }

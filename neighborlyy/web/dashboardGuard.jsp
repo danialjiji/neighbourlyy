@@ -40,9 +40,7 @@
                     <li class="active"><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
                     <li><a href="./Guard/profileGuard.jsp">Profile</a></li>
                     <li><a href="./Guard/RoundingReport.jsp">Rounding Report</a></li>
-                    <li><a href="./Guard/RoundingReportTable.jsp">Rounding Report List</a></li>
                     <li><a href="./Guard/VisitorForm.jsp">Visitor Form</a></li>
-                    <li><a href="./Guard/VisitorTable.jsp">Visitor List</a></li>
                     <li><a href="./Guard/userlist.jsp">Users List</a></li>
                     <li><a href="LogoutServlet">Logout</a></li>
                 </ul>
