@@ -339,7 +339,7 @@
                                        "FROM FEE f " +
                                        "JOIN FEE_CATEGORY fc ON f.FEE_CATEGORY_ID = fc.FEE_CATEGORY_ID " +
                                        "JOIN STATUS s ON f.STATUSID = s.STATUSID " +
-                                       "WHERE f.USERID = ?";
+                                       "WHERE f.USERID = ? AND F.STATUSID = 50001";
 
                          PreparedStatement pstmt = conn.prepareStatement(query);
                          pstmt.setInt(1, userid);
