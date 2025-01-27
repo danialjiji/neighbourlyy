@@ -28,7 +28,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
     
     
     try{
-        Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "proj_neighborly", "system");
+        Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "neighborly", "system");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fee WHERE feeID=?");
         stmt.setInt(1, Integer.parseInt(updateFeeID));
         ResultSet rs = stmt.executeQuery();
@@ -62,6 +62,11 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
+    <style>
+        div.content{
+            height:100vh;
+        }
+    </style>
     <body>
         
         <!-- Check for Session -->
@@ -82,6 +87,18 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
             
                         
         <div class="dashboard-container">
+            
+            <%
+                //To format the entry and exit time
+                DateTimeFormatter fullFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");                                  
+                //To format the date 
+                SimpleDateFormat fullFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                    
+                Date fullDate = fullFormat.parse(updateFeeDate);
+                String onlyDate = dateFormat.format(fullDate);
+            %>
             
             <!-- Sidebar -->
             <aside class="sidebar">
@@ -124,7 +141,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     <br><label for="defaultSelect" class="form-label">User ID:</label>
                     <select name="userID" class="form-select">
                         <sql:query var="result" dataSource="${myDatasource}">
-                            SELECT userID FROM admin
+                            SELECT userID FROM resident
                         </sql:query>
                                                 
                         <option value="<%= updateUserID %>" required><%= updateUserID %></option>
@@ -184,7 +201,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     </select>
 
                     <br><label>Date:</label>
-                    <input type="date" class="form-control" id="basic-default-fullname" name="feeDate" value="<%= updateFeeDate %>" required>
+                    <input type="date" class="form-control" id="basic-default-fullname" name="feeDate" value="<%= onlyDate %>" required>
             
                     <br><label class="form-label" for="basic-default-company">Fee Amount:</label>
                     <input type="number" class="form-control" id="basic-default-company" name="feeAmount" placeholder="0.00" value="<%= updateFeeAmount %>" required>

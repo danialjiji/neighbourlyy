@@ -101,7 +101,7 @@
                     placeholder="Enter location or remarks" 
                     value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
                 <button type="submit" class="btn-submit">Search</button>
-                <button><a href="RoundingReport.jsp" class="btn-submit">Reset</a></button>
+              <a href="RoundingReport.jsp" class="btn-submit">Reset</a>
             </form>
         </div>
                 <div>

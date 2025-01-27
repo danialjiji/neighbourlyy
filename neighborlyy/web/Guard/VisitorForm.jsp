@@ -114,7 +114,7 @@
                     placeholder="Enter name, ic/passport, plate number or phone number" 
                     value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
                 <button type="submit" class="btn-submit">Search</button>
-                <button><a href="VisitorForm.jsp" class="btn-submit">Reset</a></button>
+               <a href="VisitorForm.jsp" class="btn-submit">Reset</a>
             </form>
         </div>
                 <div>
