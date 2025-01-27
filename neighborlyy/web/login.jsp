@@ -26,7 +26,15 @@
             justify-content: center;  
             align-items: center;  
             height: 100vh;  
-            background-color: #f4f4f4; /* Light background color */  
+            background: 
+            linear-gradient(
+                rgba(145, 92, 182, 0.7), /* Soft purple with slight transparency */
+                rgba(224, 187, 228, 0.7) /* Lilac with slight transparency */
+            ), 
+            url('assets/images/hs.jpg');/* Path to your background image */
+            background-size: cover; /* Makes the image cover the entire background */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents tiling */
         }  
         
         </style>
