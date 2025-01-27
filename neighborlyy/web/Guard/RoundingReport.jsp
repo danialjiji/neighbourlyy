@@ -1,185 +1,268 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="util.DBConnection"%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="javax.servlet.http.HttpSession"%> <!-- here -->
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="styless.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rounding Report Form</title>
+        <link rel="stylesheet" href="../styless.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-        <title>Dashboard</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .chart-container {
+                width: 68%; /* Adjust width as needed */
+                height: 400px;
+                margin: 20px auto; /* Center the chart on the page */
+            }
+            canvas#myChart {
+                max-width: 100%; /* Ensure the chart doesn't overflow */
+                height: 100px; /* Set a fixed height */
+            }
+        </style>
     </head>
     <body>
         <div class="dashboard-container">
+            <!-- here -->
         <%
-            // Check if the session exists and if the user is logged in
             if (session == null || session.getAttribute("userid") == null) {
         %>
             <p>Session expired or not logged in. Please <a href="login.jsp">log in</a>.</p>
         <%
-                return; // Stop rendering the page if the session is invalid
+                return;
             }
-            
             // Retrieve the userid and username safely
-            Integer userid = (Integer) session.getAttribute("userid"); // Use implicit session
+            Integer userid = (Integer) session.getAttribute("userid");
             String username = (String) session.getAttribute("username");
         %>
+        <!-- untill here -->
         
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="profile">
-                <img style="height:60px; width:60x; margin-right: 10px;" src="assets/images/profile1.png" alt="logo"> 
-                <h3>Hi, <%= username %></h3>
-                
-            </div>
-                <div>
-                    <a href="/neighborlyy/dashboardGuard.jsp" class="active">Dashboard</a>
-                    <a href="./Guard/profileGuard.jsp">Profile</a>
-                    <a href="./Guard/RoundingReport.jsp">Rounding Report</a>
-                    <a href="./Guard/VisitorForm.jsp">Visitor Form</a>
-                    <a href="./Guard/userlist.jsp">Users List</a>
-                    <a href="LogoutServlet">Logout</a>
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="profile">
+                    <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
+                    <h3>Hi, <%= username %></h3>
                 </div>
-        </aside>
-        
+                <div>
+                    <a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a>
+                    <a href="profileGuard.jsp">Profile</a>
+                    <a href="RoundingReport.jsp" class="active">Rounding Report</a>
+                    <a href="VisitorForm.jsp">Visitor Form</a>
+                    <a href="userlist.jsp">Users List</a>
+                    <a href="../LogoutServlet">Logout</a>
+                </div>
+            </aside>
+
             <div class="content">
-            <header class="cardheader">
-                <h1>Welcome to the Dashboard, <%= username %>!</h1>
-                <span>Your User ID: <%= userid %></span>
-            </header>
-                <%
-                    try {
-                        Connection conn = DBConnection.createConnection();
-
-                        // Query to get the count of reports for the user
-                        String reportCountQuery = "SELECT COUNT(*) AS reportCount FROM report WHERE userid = ?";
-                        PreparedStatement reportCountStmt = conn.prepareStatement(reportCountQuery);
-                        reportCountStmt.setInt(1, userid);
-                        ResultSet reportCountRs = reportCountStmt.executeQuery();
-                        int totalReports = 0;
-                        if (reportCountRs.next()) {
-                            totalReports = reportCountRs.getInt("reportCount");
-                        }
-
-                        // Query to check if the user has submitted a report for today
-                        String todayReportQuery = "SELECT COUNT(*) AS todayReports FROM report WHERE userid = ? AND TRUNC(dateofvisit) = TRUNC(SYSDATE)";
-                        PreparedStatement todayReportStmt = conn.prepareStatement(todayReportQuery);
-                        todayReportStmt.setInt(1, userid);
-                        ResultSet todayReportRs = todayReportStmt.executeQuery();
-                        int submittedToday = 0;
-                        if (todayReportRs.next()) {
-                            submittedToday = todayReportRs.getInt("todayReports");
-                        }
-
-                        // Query to get the total number of visitors for today
-                        String visitorsTodayQuery = "SELECT COUNT(*) AS visitorCount FROM visitor WHERE TRUNC(dateofvisit) = TRUNC(SYSDATE)";
-                        PreparedStatement visitorsTodayStmt = conn.prepareStatement(visitorsTodayQuery);
-                        ResultSet visitorsTodayRs = visitorsTodayStmt.executeQuery();
-                        int totalVisitors = 0;
-                        if (visitorsTodayRs.next()) {
-                            totalVisitors = visitorsTodayRs.getInt("visitorCount");
-                        }
-
-                        // Query to get the total number of visitors who exited today
-                        String visitorsExitedQuery = "SELECT COUNT(*) AS exitedCount FROM visitor WHERE TRUNC(dateofvisit) = TRUNC(SYSDATE) AND exittime IS NOT NULL";
-                        PreparedStatement visitorsExitedStmt = conn.prepareStatement(visitorsExitedQuery);
-                        ResultSet visitorsExitedRs = visitorsExitedStmt.executeQuery();
-                        int totalExitedVisitors = 0;
-                        if (visitorsExitedRs.next()) {
-                            totalExitedVisitors = visitorsExitedRs.getInt("exitedCount");
-                        }
+                <div class="form-container">
+                <!-- Chart Container -->
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
+                    <h3>Rounding Report Form</h3>
+                    <p>Please fill all informations</p>
+                                    <!-- change here -->
+                    <form action="/neighborlyy/securityController" method="POST" enctype="multipart/form-data">
+                        <label for="dateReport">Date of Report</label>
+                        <input type="date" name ="dateReport" placeholder="YYYY-MM-DD"/>
+                        <p></p>
+                        <label for="location">Location</location>
+                        <input type="text" name="location" placeholder="Location"/>
                         
-                %>
-                <section class="cards">
-                    <div class="card">
-                        <h2>Rounding Reports</h2>
-                        <p class="amount">Submitted Today: <%= submittedToday %></p>
-                        <p class="status increased">Total Reports Submitted  <%= totalReports %></p>
-                    </div>
-                    <div class="card">
-                        <h2>Visitors</h2>
-                        <p class="amount">Visitor In: <%= totalVisitors %></p>
-                        <p class="amount">Visitor Out: <%= totalExitedVisitors %></p>
-                    </div>
-                </section>
-
+                        <label for="remarks">Remarks</label>
+                        <input type="text" name="remarks" placeholder="Remarks"/>
+                        
+                        <label for="attachment">Attachment</label>
+                        <input type="file" name="attachment"/>
+                        
+                        <div class="btn-container">
+                            <button type="submit" value="Submit" class="btn-submit" >Submit</button>
+                            <button type="reset" class="btn-cancel" >Cancel</button>
+                        </div>
+                        <input type="hidden" name="accessType" value="addReport">
+                        <input type="hidden" name="userid" value="<%= userid %>"> <!-- here -->
+                    </form>
+                </div>
+                    
+                <div>
                 <section class="data-table">
-                    <h3>Visitors Entry List</h3>
-                <table class="table">
+                    <form action="RoundingReport.jsp" method="GET">
+                        <label for="searchKeyword">Search:</label>
+                        <input 
+                            type="text" 
+                            id="searchKeyword" 
+                            name="searchKeyword" 
+                            placeholder="Enter location or remarks" 
+                            value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
+                        <button type="submit">Search</button>
+                        <button><a href="RoundingReport.jsp" class="btn-reset">Reset</a></button> <!-- Reset button -->
+                    </form>
+
+                    <table class="table">
                     <thead>
-                        <tr>    
+                        <tr>
                             <th>ID</th>
-                            <th>Visitor's Name</th>
-                            <th>IC/Passport</th>
-                            <th>Plate Number</th>
-                            <th>Entry Time</th>
-                            <th>Exit Time</th>
                             <th>Date</th>
-                            <th>Purpose</th>
-                            <th>Phone No</th>
+                            <th>Location</th>
+                            <th>Remarks</th>
+                            <th>Attachment</th>
                             <th>Action</th>
+
                         </tr>
                     </thead>
-                    
-                <%
-                    //Query to show visitor in
-                    PreparedStatement stmt = conn.prepareStatement("SELECT * FROM visitor WHERE exittime IS NULL ");
-                    ResultSet rs = stmt.executeQuery();
+                    <%
+                       try {
+                           Connection conn = DBConnection.createConnection();
 
-                    while (rs.next()) {
-                        int registerID = rs.getInt("registerid");
-                        String visitorName = rs.getString("visitor_name");
-                        if (visitorName == null) visitorName = "N/A";
+                           // Get the search keyword from the request
+                           String searchKeyword = request.getParameter("searchKeyword");
+                           String query;
 
-                        String icpassport = rs.getString("visitor_ic");
-                        if (icpassport == null) icpassport = "N/A";
+                           if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+                               query = "SELECT * FROM report WHERE userid = ? AND (location LIKE ? OR remarks LIKE ?)";
+                           } else {
+                               query = "SELECT * FROM report WHERE userid = ?";
+                           }
 
-                        String plateNo = rs.getString("no_plate");
-                        if (plateNo == null) plateNo = "N/A";
+                           PreparedStatement stmt = conn.prepareStatement(query);
+                           stmt.setInt(1, userid);
 
-                        Time entryTime = rs.getTime("entrytime");
-                        String entryTimeOnly = (entryTime != null) ? new SimpleDateFormat("HH:mm").format(entryTime) : "N/A";
+                           if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+                               String keywordPattern = "%" + searchKeyword + "%";
+                               stmt.setString(2, keywordPattern);
+                               stmt.setString(3, keywordPattern);
+                           }
 
-                        Time exitTime = rs.getTime("exittime");
-                        String exitTimeOnly = (exitTime != null) ? new SimpleDateFormat("HH:mm").format(exitTime) : "N/A";
+                           ResultSet rs = stmt.executeQuery();
 
-                        Date dateVisit = rs.getDate("dateofvisit");
-                        String onlyDate = (dateVisit != null) ? new SimpleDateFormat("yyyy-MM-dd").format(dateVisit) : "N/A";
+                           while (rs.next()) {
+                               int reportID = rs.getInt("reportid");
+                               Date dateOfVisit = rs.getDate("dateofvisit");
+                               String location = rs.getString("location");
+                               String remarks = rs.getString("remarks");
+                               String attachment = rs.getString("attachment");
 
-                        String purposeVisit = rs.getString("purposeofvisit");
-                        if (purposeVisit == null) purposeVisit = "N/A";
-
-                        String phoneNum = rs.getString("visitor_phonenum");
-                        if (phoneNum == null) phoneNum = "N/A";
-                %>
-                    
+                               // Format the date
+                               SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                               String onlyDate = dateFormat.format(dateOfVisit);
+                   %>
                     <tbody>
                         <tr>
-                           <td><%= registerID %></td>
-                           <td><%= visitorName %></td>
-                           <td><%= icpassport %></td>
-                           <td><%= plateNo %></td>
-                           <td><%= entryTimeOnly %></td>
-                           <td><%= exitTimeOnly %></td>
-                           <td><%= onlyDate %></td>
-                           <td><%= purposeVisit %></td>
-                           <td><%= phoneNum %></td>
-                           <td>
-                               <a href="/neighborlyy/securityController?accessType=editVisitor&id=<%= registerID %>" class="btn-submit">Exit</a>
-                               <a href="/neighborlyy/securityController?accessType=deleteVisitor&id=<%= registerID %>" class="btn-submit">Delete</a>
-                           </td>
+                            <td><%= reportID %></td>
+                            <td><%= onlyDate %></td>
+                            <td><%= location %></td>
+                            <td><%= remarks %></td>
+                            <td>
+                                <% if (attachment != null && !attachment.isEmpty()) { %>
+                                    <a href="uploads/<%= attachment %>">View</a>
+                                <% } else { %>
+                                    No Attachment
+                                <% } %>
+                            </td>
+                           <td><a href="/neighborlyy/securityController?accessType=deleteReport&id=<%= reportID %>" class="btn-submit">Delete</a></td>
                         </tr>
-                   </tbody>
-                <%
-                        } conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                %>
+                    </tbody>
+                    <%
+                            }
+                            conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    %>
                     </table>
                 </section>
+                </div>
             </div>
         </div>
+        <%
+            Connection conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+
+            int[] roundingReportPerMonth = new int[12]; // Array to store complaints for 12 months, initialize to 0
+
+            try {
+                conn = DBConnection.createConnection();
+                String query = "SELECT EXTRACT(MONTH FROM dateofvisit) AS month, COUNT(*) AS total_reports " +
+                               "FROM report " +
+                               "GROUP BY EXTRACT(MONTH FROM dateofvisit) " +
+                               "ORDER BY month";
+
+                stmt = conn.prepareStatement(query);
+                rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    int month = rs.getInt("month"); // 1 for January, 2 for February, etc.
+                    int total = rs.getInt("total_reports");
+                    roundingReportPerMonth[month - 1] = total; // Map to the 0-based array index
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        %>
+
+        <!-- Chart.js Script -->
+        <script>
+            const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August','September', 'October', 'November', 'December'];
+            const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Rounding Reports',
+            data: <%= Arrays.toString(roundingReportPerMonth).replace("[", "[").replace("]", "]") %>,
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(201, 203, 207, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(201, 203, 207, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+
+        </script>
     </body>
 </html>
