@@ -7,7 +7,20 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-     
+         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .sidebar {
+                height: 100vh;
+            }
+            .chart-container {
+                width: 68%; /* Adjust width as needed */
+                margin: 20px auto; /* Center the chart on the page */
+            }
+            canvas#myChart {
+                max-width: 100%; /* Ensure the chart doesn't overflow */
+                height: 400px; /* Set a fixed height */
+            }
+        </style>
 </head>
 <body>
     <div class="dashboard-container">
@@ -75,7 +88,7 @@
                  
                         Connection conn = DBConnection.createConnection();
                         // Create SQL query with a WHERE clause
-                        String query = "SELECT f.FEEID, s.STATUS_DESCRIPTION, fc.FEE_CATEGORY_NAME, f.FEE_AMOUNT, f.FEE_DATE, f.ATTACHMENT " +
+                        String query = "SELECT f.FEEID, s.STATUS_DESCRIPTION, fc.FEE_CATEGORY_NAME, f.FEE_AMOUNT, f.FEE_DATE, f.ATTACHMENT, f.PAYFEE, f.REMARK " +
                                        "FROM FEE f " +
                                        "JOIN FEE_CATEGORY fc ON f.FEE_CATEGORY_ID = fc.FEE_CATEGORY_ID " +
                                        "JOIN STATUS s ON f.STATUSID = s.STATUSID " +

@@ -9,6 +9,19 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
      <link rel="stylesheet" href=".../style.css">
+     <style>
+            .sidebar {
+                height: 100vh;
+            }
+            .chart-container {
+                width: 68%; /* Adjust width as needed */
+                margin: 20px auto; /* Center the chart on the page */
+            }
+            canvas#myChart {
+                max-width: 100%; /* Ensure the chart doesn't overflow */
+                height: 400px; /* Set a fixed height */
+            }
+        </style>
 </head>
 <body>
     <div class="dashboard-container">

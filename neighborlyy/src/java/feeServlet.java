@@ -56,11 +56,14 @@ public class feeServlet extends HttpServlet {
         String feeTypestr = request.getParameter("feeType");
         double amount = Double.parseDouble (request.getParameter("amount"));
         String date = request.getParameter("dateFee");
+        double payFee = Double.parseDouble (request.getParameter("payFee"));
+        String remark = request.getParameter("remark");
         String useridStr = request.getParameter("userid");
 
         if (    feeTypestr == null || feeTypestr.trim().isEmpty() ||
                 date == null || date.trim().isEmpty() ||
-                amount <= 0 ){
+                amount <= 0 || payFee <= 0 || 
+                remark == null || remark.trim().isEmpty()){
             request.setAttribute("message", "Please insert all values");
             request.setAttribute("errorType", "addFee");
             request.getRequestDispatcher("error.jsp").forward(request, response);
@@ -85,13 +88,15 @@ public class feeServlet extends HttpServlet {
             fee.setAmount(amount);
             fee.setDateFee(sqlDate);
             fee.setReceipt(fileName);
+            fee.setPayFee(payFee);
+            fee.setRemark(remark);
             
             
              int statusid = 50001;
 
             // Use the helper method to get a connection
             try (Connection conn = DBConnection.createConnection()) {
-                String query = "INSERT INTO Fee (USERID, FEE_CATEGORY_ID, STATUSID, FEE_DATE, FEE_AMOUNT, ATTACHMENT) VALUES (?, ?, ?, ?, ?, ?)";
+                String query = "INSERT INTO Fee (USERID, FEE_CATEGORY_ID, STATUSID, FEE_DATE, FEE_AMOUNT, ATTACHMENT, PAYFEE, REMARK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, userid);
                 stmt.setInt(2, fee.getFeeType());
@@ -99,10 +104,14 @@ public class feeServlet extends HttpServlet {
                 stmt.setDate (4, fee.getDateFee());
                 stmt.setDouble(5, fee.getAmount());
                 stmt.setString(6, fee.getReceipt());
+                stmt.setDouble(7, fee.getPayFee());
+                stmt.setString(8, fee.getRemark());
+                
                 stmt.executeUpdate();
             }
 
             response.sendRedirect("/neighborlyy/Resident/fee.jsp");
+         
         } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Invalid user ID format");

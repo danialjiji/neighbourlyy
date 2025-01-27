@@ -18,12 +18,16 @@ public class FeeBean implements Serializable {
     double amount;
     Date dateFee;
     String receipt;
+    String remark;
+    double payFee;
 
-    public FeeBean (int feeType, double amount, Date dateFee, String receipt) {
+    public FeeBean (int feeType, double amount, Date dateFee, String receipt, String remark, double payFee) {
         this.feeType = feeType;
         this.amount = amount;
         this.dateFee = dateFee;
         this.receipt = receipt;
+        this.remark = remark;
+        this.payFee = payFee;
     }
 
     public FeeBean() {
@@ -45,6 +49,14 @@ public class FeeBean implements Serializable {
         return receipt;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public double getPayFee() {
+        return payFee;
+    }
+
     public void setFeeType(int feeType) {
         this.feeType = feeType;
     }
@@ -61,9 +73,14 @@ public class FeeBean implements Serializable {
         this.receipt = receipt;
     }
 
-    
-    
-    
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public void setPayFee(double payFee) {
+        this.payFee = payFee;
+    }
+
     
     
 }

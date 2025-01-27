@@ -49,9 +49,9 @@
             <nav class="menu">
                 <ul>
                     <li ><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
-                    <li class="active"><a href="profile.jsp">Profile</a></li>
+                    <li ><a href="profile.jsp">Profile</a></li>
                     <li ><a href="complaint.jsp">Complaint</a></li>
-                    <li><a href="fee.jsp">Fee</a></li>
+                    <li class="active"><a href="fee.jsp">Fee</a></li>
                     <li ><a href="/neighborlyy/LogoutServlet">Log Out</a></li>
                 </ul>
             </nav>
@@ -60,24 +60,27 @@
         <!-- Main Content -->
         <main class="main-content">
             <header>
-                <h1>Profile</h1>
+                <h1>Payment</h1>
               
             </header>
             <div class="form-container">
-                <h3>Update Profile</h3><br>
-                <p>Please Fill in the Form to Update Profile to Management</p>
-                <form action="/neighborlyy/updateServlet" method="POST" enctype="multipart/form-data">
+               
+                <p>Please Fill in the Form to Pay your Fee to Management</p>
+                <form action="/neighborlyy/updateFeeServlet" method="POST" enctype="multipart/form-data">
               
-                <label for="email">Email</label>
-                <input type="email" id="Email" placeholder="Email" name="email">
+                <label for="payFee">Amount</label>
+                <input type="text" id="payFee" placeholder="Enter Amount" name="payFee">
+                
+                <label for="receipt">Attachment</label>
+                <input type="file" id="receipt" name="receipt"/>
 
-                <label for="phoneNum">Phone Number</label>
-                <input type="text" id="phoneNum" placeholder="Phone Number" name="phoneNum"> 
+                <label for="remark">Remarks</label>
+                <input type="text" id="remark" placeholder="Enter remark" name="remark"> 
                 
                 <div class="btn-container">
                     <button type="submit" class="btn-submit">Submit</button>
                     <button type="button" class="btn-cancel">Cancel</button>
-                     <input type="hidden" name="accessType" value="updateProfile">
+                     <input type="hidden" name="accessType" value="payFee">
                     <input type="hidden" name="userid" value="<%= userid %>">
                 </div>
             </form>
