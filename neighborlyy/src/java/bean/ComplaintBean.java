@@ -15,13 +15,17 @@ public class ComplaintBean implements Serializable {
     Date dateComplaint;
     String location;
     String attachment;
+    int userid;
+    int statusid;
 
-    public ComplaintBean(int complaintType, String description, Date date, String location, String attachment) {
+    public ComplaintBean(int complaintType, String description, Date dateComplaint, String location, String attachment, int userid, int statusid) {
         this.complaintType = complaintType;
         this.description = description;
         this.dateComplaint = dateComplaint;
         this.location = location;
         this.attachment = attachment;
+        this.userid = userid;
+        this.statusid = statusid;
     }
 
     public ComplaintBean() {
@@ -48,6 +52,14 @@ public class ComplaintBean implements Serializable {
         return attachment;
     }
 
+    public int getUserid() {
+        return userid;
+    }
+
+    public int getStatusid() {
+        return statusid;
+    }
+
     public void setComplaintType(int complaintType) {
         this.complaintType = complaintType;
     }
@@ -67,8 +79,12 @@ public class ComplaintBean implements Serializable {
     public void setAttachment(String attachment) {
         this.attachment = attachment;
     }
-    
-    
-   
-    
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public void setStatusid(int statusid) {
+        this.statusid = statusid;
+    }
 }

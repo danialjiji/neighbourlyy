@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import bean.FeeBean;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -63,13 +67,6 @@ public class updateFeeServlet extends HttpServlet {
             String remark = request.getParameter("remark");
             String feeIdStr = request.getParameter("feeid");
 
-
-        if (feeIdStr == null || feeIdStr.trim().isEmpty()) {
-            request.setAttribute("message", "Fee ID is missing or invalid.");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-            return;
-        }
-
             try {
                 int feeId = Integer.parseInt(feeIdStr);
                 Part filePart = request.getPart("receipt");
@@ -78,16 +75,30 @@ public class updateFeeServlet extends HttpServlet {
                 request.getRequestDispatcher("error.jsp").forward(request, response);
                 return;
             }
+            
             String fileName = filePart.getSubmittedFileName();
-            InputStream fileContent = filePart.getInputStream();
+            
+             //for uploading file into specific folder
+            String uploadDirectory = "C:/Users/soleha/OneDrive/Documents/GitHub/neighbourlyy/neighborlyy/web/Resident/attachmentfile";
+
+            try (InputStream input = filePart.getInputStream()) {
+                Path filePath = Paths.get(uploadDirectory, fileName);
+                Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
+            } 
+          
+            FeeBean fee = new FeeBean();
+            fee.setReceipt(fileName);
+            fee.setPayFee(payfee);
+            fee.setRemark(remark);
+            fee.setFeeid(feeId);
             
                 try (Connection conn = DBConnection.createConnection()) {
                     String query = "UPDATE fee SET attachment = ?, payfee = ?, remark = ? WHERE feeID = ?";
                     try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                        stmt.setString(1, fileName);
-                        stmt.setDouble(2, payfee);
-                        stmt.setString(3, remark);
-                        stmt.setInt(4, feeId);
+                        stmt.setString(1, fee.getReceipt());
+                        stmt.setDouble(2, fee.getPayFee());
+                        stmt.setString(3, fee.getRemark());
+                        stmt.setInt(4, fee.getFeeid());
 
                         int rowsUpdated = stmt.executeUpdate();
 

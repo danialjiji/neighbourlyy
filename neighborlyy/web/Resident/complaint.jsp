@@ -144,9 +144,9 @@
                             
                              <td>
                                 <% if (attachment != null && !attachment.isEmpty()) { %>
-                                    <a href="<%= attachment %>" target="_blank">View Receipt</a>
+                                    <a href="attachmentfile/<%= attachment %>">View</a>
                                 <% } else { %>
-                                    N/A
+                                    No Attachment
                                 <% } %>
                             </td>
                         <td><%= statusDesc %></td>

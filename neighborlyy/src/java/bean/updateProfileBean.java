@@ -13,12 +13,17 @@ public class updateProfileBean {
     
     String email;
     String phoneNum;
+    int userid;
 
-    public updateProfileBean(String email, String phoneNum) {
+    public updateProfileBean(String email, String phoneNum, int userid) {
         this.email = email;
         this.phoneNum = phoneNum;
+        this.userid = userid;
     }
 
+    public updateProfileBean() {
+    }
+    
     public String getEmail() {
         return email;
     }
@@ -27,12 +32,20 @@ public class updateProfileBean {
         return phoneNum;
     }
 
+    public int getUserid() {
+        return userid;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
     
     

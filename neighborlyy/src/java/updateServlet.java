@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import bean.updateProfileBean;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -57,22 +57,24 @@ public class updateServlet extends HttpServlet {
         String phoneNum = request.getParameter("phoneNum");
         String userIdStr = request.getParameter("userid");
         
-        
-    if (userIdStr == null || userIdStr.trim().isEmpty()) {
-        request.setAttribute("message", "User ID is missing or invalid.");
-        request.getRequestDispatcher("error.jsp").forward(request, response);
-        return;
-    }
+       
 
         try {
             int userId = Integer.parseInt(userIdStr);
             // Use the helper method to get a connection
+            
+            updateProfileBean up = new updateProfileBean ();
+            up.setEmail(email);
+            up.setPhoneNum(phoneNum);
+            up.setUserid(userId);
+            
+            
             try (Connection conn = DBConnection.createConnection()) {
                 String query = "UPDATE users SET email = ?, phoneNum = ? WHERE userID = ?";
                 try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                    stmt.setString(1, email);
-                    stmt.setString(2, phoneNum);
-                    stmt.setInt(3, userId);
+                    stmt.setString(1, up.getEmail());
+                    stmt.setString(2, up.getPhoneNum());
+                    stmt.setInt(3, up.getUserid());
 
                     int rowsUpdated = stmt.executeUpdate();
 

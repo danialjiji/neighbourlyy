@@ -7,6 +7,10 @@ import bean.ComplaintBean;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,16 +65,6 @@ public class residentController extends HttpServlet {
         String description = request.getParameter("description");
         String useridStr = request.getParameter("userid");
 
-         if (complaintTypeStr == null || complaintTypeStr.trim().isEmpty() ||
-            description == null || description.trim().isEmpty() ||
-            date == null || date.trim().isEmpty() ||
-            location == null || location.trim().isEmpty()) {
-            request.setAttribute("message", "Please insert all values");
-            request.setAttribute("errorType", "addComplaints");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-            return;
-        }
-         
          
           try {
             int userid = Integer.parseInt(useridStr);
@@ -84,7 +78,14 @@ public class residentController extends HttpServlet {
             }
             
             String fileName = filePart.getSubmittedFileName();
-            InputStream fileContent = filePart.getInputStream();
+            
+             //for uploading file into specific folder
+            String uploadDirectory = "C:/Users/soleha/OneDrive/Documents/GitHub/neighbourlyy/neighborlyy/web/Resident/attachmentfile";
+
+            try (InputStream input = filePart.getInputStream()) {
+                Path filePath = Paths.get(uploadDirectory, fileName);
+                Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
+            } 
             
             int statusid = 50001;
                   
@@ -94,24 +95,18 @@ public class residentController extends HttpServlet {
             cp.setAttachment(fileName);
             cp.setDescription(description);
             cp.setLocation(location);
+            cp.setUserid(userid);
+            cp.setStatusid(statusid);
            
-            
-            /*System.out.println(statusid);
-            //System.out.println(complainttypeid);
-            System.out.println(complaintType);
-            System.out.println(description);
-            System.out.println(date);
-            System.out.println(location);
-            System.out.println(userid);*/
             
              try (Connection conn = DBConnection.createConnection()) {
                 String query = "INSERT INTO Complaint (USERID, STATUSID, COMPLAINT_TYPE_ID, COMPLAINT_DESCRIPTION, COMPLAINT_DATE, COMPLAINT_LOCATION, COMPLAINT_ATTACHMENT) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
-                stmt.setInt(1, userid);
-                stmt.setInt(2, statusid);
+                stmt.setInt(1, cp.getUserid());
+                stmt.setInt(2, cp.getStatusid());
                 stmt.setInt(3, cp.getComplaintType());
                 stmt.setString(4, cp.getDescription());
-                stmt.setDate (5, sqlDate);
+                stmt.setDate (5, cp.getDateComplaint());
                 stmt.setString(6, cp.getLocation ());
                 stmt.setString(7, cp.getAttachment());
                 stmt.executeUpdate();

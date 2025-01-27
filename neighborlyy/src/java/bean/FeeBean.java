@@ -7,6 +7,7 @@ package bean;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,14 +21,16 @@ public class FeeBean implements Serializable {
     String receipt;
     String remark;
     double payFee;
+    int feeid;
 
-    public FeeBean (int feeType, double amount, Date dateFee, String receipt, String remark, double payFee) {
+    public FeeBean(int feeType, double amount, Date dateFee, String receipt, String remark, double payFee, int feeid) {
         this.feeType = feeType;
         this.amount = amount;
         this.dateFee = dateFee;
         this.receipt = receipt;
         this.remark = remark;
         this.payFee = payFee;
+        this.feeid = feeid;
     }
 
     public FeeBean() {
@@ -57,6 +60,10 @@ public class FeeBean implements Serializable {
         return payFee;
     }
 
+    public int getFeeid() {
+        return feeid;
+    }
+
     public void setFeeType(int feeType) {
         this.feeType = feeType;
     }
@@ -81,6 +88,7 @@ public class FeeBean implements Serializable {
         this.payFee = payFee;
     }
 
-    
-    
+    public void setFeeid(int feeid) {
+        this.feeid = feeid;
+    }
 }

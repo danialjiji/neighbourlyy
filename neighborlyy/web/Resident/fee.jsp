@@ -118,25 +118,18 @@
                     <td><%= payFee %></td>
                     <td><%= remark %></td>
                     
-                  
-                    <td>
+                   <td>
                         <% if (receipt != null && !receipt.isEmpty()) { %>
-                            <a href="<%= receipt %>" target="_blank">View Receipt</a>
+                        <a href="attachmentfile/<%= receipt %>">View</a>
                         <% } else { %>
-                            N/A
+                            No Attachment
                         <% } %>
-                    </td>
+                     </td>
                     <td><%= statusDesc %></td>
                     
                     <td>
                          <div class="profile-actions">
                              <a class="btn-submit" href="feePay.jsp?accessType=payFee&feeid=<%= feeID %>">Pay</a>
-
-<!--                            <form action="feePay.jsp" method="post">
-                                <input type="hidden" name="accessType" value="payFee" />
-                                <input type="hidden" name="feeid" value="<%= feeID %>" />
-                                <button type="submit" class="btn-submit">Pay</button>
-                            </form>-->
 
                         </div>
                     </td>
