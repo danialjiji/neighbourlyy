@@ -62,6 +62,10 @@
         </aside>
         
         <div class="content">
+            <header class="cardheader">
+                <h1>Visitor</h1>
+             
+            </header>
             <div class="form-container">
             <div class="chart-container">
                 <canvas id="myChart"></canvas>

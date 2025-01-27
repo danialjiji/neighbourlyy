@@ -47,8 +47,11 @@
 
        <!-- Main Content -->
        <div class="content">  
+           <header class="cardheader">
                <h1>User List</h1>  
-               <span>Overview of Users</span>  
+               <span>Overview of Users</span> 
+           </header>
+                
            <section class="data-table">  
                <h3>Recent Users</h3>
                <form action="userlist.jsp" method="GET">

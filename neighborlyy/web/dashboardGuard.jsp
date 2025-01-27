@@ -9,6 +9,11 @@
         <link rel="stylesheet" href="styless.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
         <title>Dashboard</title>
+         <style>
+           div.content {
+                height: 100vh; /* Set a medium height */
+            }
+        </style>
     </head>
     <body>
         <div class="dashboard-container">

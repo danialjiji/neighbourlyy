@@ -93,7 +93,7 @@ public class securityController extends HttpServlet {
             report.setUserid(userid);
 
             try (Connection conn = DBConnection.createConnection()) {
-                String query = "INSERT INTO Report (USERID, DATEOFVISIT, LOCATION, REMARKS, ATTACHMENT) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?)";
+                String query = "INSERT INTO Report (USERID, DATEOFVISIT, \"location\", REMARKS, ATTACHMENT) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(query);
                 stmt.setInt(1, report.getUserid());
                 stmt.setString(2, report.getDateofvisit());

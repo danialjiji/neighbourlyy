@@ -119,19 +119,6 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
             
                     <input type="hidden" name="accessType" value="update">
             
-                    <%
-                        //To formate the entry and exit time
-                        DateTimeFormatter fullFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-                                                                                                                                      
-                        //To format the date 
-                        SimpleDateFormat fullFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                    
-                        Date fullDate = fullFormat.parse(updateFeeDate);
-                        String onlyDate = dateFormat.format(fullDate);
-                    %>
-            
                     Fee ID:<input type="text" name="feeID" value="<%= updateFeeID %>">
             
                     <br><label for="defaultSelect" class="form-label">User ID:</label>
@@ -197,7 +184,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     </select>
 
                     <br><label>Date:</label>
-                    <input type="date" class="form-control" id="basic-default-fullname" name="feeDate" value="<%= onlyDate %>" required>
+                    <input type="date" class="form-control" id="basic-default-fullname" name="feeDate" value="<%= updateFeeDate %>" required>
             
                     <br><label class="form-label" for="basic-default-company">Fee Amount:</label>
                     <input type="number" class="form-control" id="basic-default-company" name="feeAmount" placeholder="0.00" value="<%= updateFeeAmount %>" required>

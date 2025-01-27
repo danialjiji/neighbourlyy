@@ -46,7 +46,7 @@
 
         <!-- Main Content -->
         <div class="content">
-            <header>
+            <header class="cardheader">
                 <h1>Profile</h1>
                 <span>Overview</span>
             </header>

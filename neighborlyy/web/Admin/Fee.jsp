@@ -23,7 +23,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Fee</title>
     </head>
     <body>
         <%
@@ -80,7 +80,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     <label>User ID:</label>
                     <select name="userID">
                         <sql:query var="result" dataSource="${myDatasource}">
-                            SELECT userID FROM admin
+                            SELECT userID FROM resident
                         </sql:query>
                                                 
                         <option value="select" required>Select</option>
@@ -181,9 +181,8 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                             int userID = rs.getInt("userID");                                         
                                             String feeDate = rs.getString("fee_date");
                                             int feeAmount = rs.getInt("fee_amount"); 
-                                            String status_description = rs.getString("status_description");
-
-                       
+                                            String status_description = rs.getString("status_description");  
+                                            
                                     
                                             //To formate the entry and exit time
                                             DateTimeFormatter fullFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -205,6 +204,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                             <td><%= onlyDate %></td>
                                             <td>RM<%= feeAmount %></td> 
                                             <td><%= status_description %></td>
+                                            
                                                     
                                             <td>                                          
                                                 <a class="btn-submit" href="UpdateFee.jsp?feeID=<%= feeID %>">

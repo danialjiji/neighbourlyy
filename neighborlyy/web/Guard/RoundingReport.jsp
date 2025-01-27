@@ -58,6 +58,10 @@
             </aside>
 
             <div class="content">
+                <header class="cardheader">
+                    <h1>Rounding Report</h1>
+                    <span>Overview</span>
+                </header>
                 <div class="form-container">
                 <!-- Chart Container -->
                 <div class="chart-container">
@@ -158,7 +162,7 @@
                             <td><%= remarks %></td>
                             <td>
                                 <% if (attachment != null && !attachment.isEmpty()) { %>
-                                    <a href="uploads/<%= attachment %>">View</a>
+                                    <a href="attachment/<%= attachment %>">View</a>
                                 <% } else { %>
                                     No Attachment
                                 <% } %>
