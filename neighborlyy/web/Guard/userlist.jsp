@@ -14,7 +14,10 @@
 <style>  
    .body {
        height: 100%;
-   }   
+   }
+    div.content {
+         height: 100vh; /* Set a medium height */
+     }   
 </style>  
 <body>
    <%
@@ -51,20 +54,21 @@
                <h1>User List</h1>  
                <span>Overview of Users</span> 
            </header>
-                
+        <div class="form-container">
+          <h3>Search Users</h3>
+            <form action="userlist.jsp" method="GET">
+                <input 
+                    type="text" 
+                    id="searchKeyword" 
+                    name="searchKeyword" 
+                    placeholder="Enter name, ic/passport, plate number or phone number" 
+                    value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
+                <button type="submit" class="btn-submit">Search</button>
+                <button><a href="userlist.jsp" class="btn-submit">Reset</a></button>
+            </form>
+        </div>
            <section class="data-table">  
                <h3>Recent Users</h3>
-               <form action="userlist.jsp" method="GET">
-                   <label for="searchKeyword">Search:</label>
-                   <input 
-                       type="text" 
-                       id="searchKeyword" 
-                       name="searchKeyword" 
-                       placeholder="Enter location or remarks" 
-                       value="<%= searchKeyword %>">
-                   <button type="submit">Search</button>
-                   <button type="button" onclick="window.location.href='userlist.jsp';">Reset</button>
-               </form>
                <table class="table">  
                    <thead>  
                        <tr>  
@@ -91,7 +95,7 @@
                                             "JOIN resident r ON u.userid = r.userid ";
 
                                if (!searchKeyword.isEmpty()) {
-                                   sql += "WHERE LOWER(u.\"name\") LIKE ? OR LOWER(u.ic_passport) LIKE ? OR LOWER(r.unit) LIKE ?";
+                                   sql += "WHERE LOWER(u.\"name\") LIKE ? OR LOWER(u.ic_passport) LIKE ? OR LOWER(r.unit) LIKE ? OR u.PHONENUM LIKE ?";
                                }
 
                                stmt = conn.prepareStatement(sql);
@@ -101,6 +105,7 @@
                                    stmt.setString(1, keywordPattern);
                                    stmt.setString(2, keywordPattern);
                                    stmt.setString(3, keywordPattern);
+                                   stmt.setString(4, keywordPattern);
                                }
 
                                rs = stmt.executeQuery();

@@ -104,19 +104,21 @@
                     <input type="hidden" name="userid" value="<%= userid %>"> <!-- Set the userid dynamically -->
                 </form>
             </div>
+        <div class="form-container">
+          <h3>Search Visitor</h3>
+            <form action="VisitorForm.jsp" method="GET">
+                <input 
+                    type="text" 
+                    id="searchKeyword" 
+                    name="searchKeyword" 
+                    placeholder="Enter name, ic/passport, plate number or phone number" 
+                    value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
+                <button type="submit" class="btn-submit">Search</button>
+                <button><a href="VisitorForm.jsp" class="btn-submit">Reset</a></button>
+            </form>
+        </div>
                 <div>
                 <section class="data-table">
-                <form action="VisitorForm.jsp" method="GET">
-                    <label for="searchKeyword">Search:</label>
-                    <input 
-                        type="text" 
-                        id="searchKeyword" 
-                        name="searchKeyword" 
-                        placeholder="Enter location or remarks" 
-                        value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
-                    <button type="submit">Search</button>
-                    <button><a href="VisitorForm.jsp" class="btn-reset">Reset</a></button> <!-- Reset button -->
-                </form>
                 <table class="table">
                     <thead>
                         <tr>    
@@ -141,7 +143,7 @@
                             String query = "SELECT * FROM visitor";
 
                             if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-                                query += " WHERE visitor_name LIKE ? OR visitor_ic LIKE ? OR no_plate LIKE ?";
+                                query += " WHERE visitor_name LIKE ? OR visitor_ic LIKE ? OR no_plate LIKE ? OR PHONENUM LIKE ?";
                             }
 
                             PreparedStatement stmt = conn.prepareStatement(query);
@@ -151,6 +153,7 @@
                                 stmt.setString(1, searchPattern); // For visitor_name
                                 stmt.setString(2, searchPattern); // For visitor_ic
                                 stmt.setString(3, searchPattern); // For no_plate
+                                stmt.setString(4, searchPattern); //For phonenum
                             }
 
                             ResultSet rs = stmt.executeQuery();

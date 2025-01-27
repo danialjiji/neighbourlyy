@@ -91,20 +91,21 @@
                         <input type="hidden" name="userid" value="<%= userid %>"> <!-- here -->
                     </form>
                 </div>
-                    
+        <div class="form-container">
+          <h3>Search Rounding Report</h3>
+            <form action="RoundingReport.jsp" method="GET">
+                <input 
+                    type="text" 
+                    id="searchKeyword" 
+                    name="searchKeyword" 
+                    placeholder="Enter location or remarks" 
+                    value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
+                <button type="submit" class="btn-submit">Search</button>
+                <button><a href="RoundingReport.jsp" class="btn-submit">Reset</a></button>
+            </form>
+        </div>
                 <div>
                 <section class="data-table">
-                    <form action="RoundingReport.jsp" method="GET">
-                        <label for="searchKeyword">Search:</label>
-                        <input 
-                            type="text" 
-                            id="searchKeyword" 
-                            name="searchKeyword" 
-                            placeholder="Enter location or remarks" 
-                            value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
-                        <button type="submit">Search</button>
-                        <button><a href="RoundingReport.jsp" class="btn-reset">Reset</a></button> <!-- Reset button -->
-                    </form>
 
                     <table class="table">
                     <thead>

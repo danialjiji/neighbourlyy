@@ -60,7 +60,7 @@
 
                         try {
                             Connection conn = DBConnection.createConnection();
-                            String query = "SELECT u.username, u.\"name\", u.ic_passport, g.shift, g.post_location, u.phonenum, u.email " +
+                            String query = "SELECT u.username, u.\"name\", u.ic_passport, g.shift, g.post_location, u.phonenum, u.email, g.salary " +
                             "FROM users u " +
                             "JOIN guard g ON u.userid = g.userid " +
                             "WHERE u.userid = ?";
@@ -77,6 +77,7 @@
                                     String email = rs.getString("email");
                                     String shift = rs.getString("shift");
                                     String postlocation = rs.getString("post_location");
+                                    String salary = rs.getString("salary");
                         %>
                         <!-- Profile Display -->
                         <table class="profile-table">
@@ -107,6 +108,10 @@
                             <tr>
                                 <th>Post Location:</th>
                                 <td><%= postlocation %></td>
+                            </tr>
+                            <tr>
+                                <th>Salary:</th>
+                                <td><%= salary %></td>
                             </tr>
                         </table>
                         <%
