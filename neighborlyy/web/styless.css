@@ -40,12 +40,14 @@ and open the template in the editor.
   height: 100%;
   overflow: auto;
   font-family: "Ubuntu", sans-serif;
+  background-color: #be5dba;
+  color: #fff;
 }
 
 /* Sidebar links */
 .sidebar a {
   margin: 10px 0;  
-  color: #333; 
+  color: #ffffff; 
   padding: 10px 10px;  
   display: block;  
   border-radius: 5px;  
@@ -60,8 +62,8 @@ and open the template in the editor.
 
 /* Links on mouse-over */
 .sidebar a:hover:not(.active) {
-  background-color: #555;
-  color: white;
+  background-color: #e3e3e3;
+  color: #000;
 }
 
 /* Other existing styles */  
@@ -79,7 +81,7 @@ div.content {
   padding: 20px;
   padding-right:40px;
   height: 100%;
-  background-color: #f4f4f9;
+  background-color: #eae6f5;
   overflow: auto;
 }
 
