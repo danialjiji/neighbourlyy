@@ -135,7 +135,10 @@
                     <input type="text" name="shift" value="<%= user.getShift() %>" required><br>  
                     
                     <label for="postlocation">Post Location</label> 
-                    <input type="text" name="postlocation" value="<%= user.getPostlocation() %>" required><br>  
+                    <input type="text" name="postlocation" value="<%= user.getPostlocation() %>" required><br> 
+                    
+                    <label for="salary">Salary</label>
+                   <input type="number" name="salary" value="<%= user.getSalary() %>" required><br>
                 <%  
                     } else if ("resident".equalsIgnoreCase(userType)) {  
                 %>  

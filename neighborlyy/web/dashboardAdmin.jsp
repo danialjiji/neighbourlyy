@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -44,24 +44,22 @@
                 <h3>Hi, <%= username %></h3>
                 
             </div>
-            
-            
-            <nav class="menu">
-                <ul>
-                    <li class="active"><a href="dashboardAdmin.jsp">Dashboard</a></li>
-                    <li><a href="./Admin/Visitor.jsp">Visitor</a></li>
-                    <li><a href="./Admin/Fee.jsp">Fee</a></li>
-                    <li><a href="./Admin/Report.jsp">Report</a></li>
-                    <li><a href="./Admin/Complaint.jsp">Complaints</a></li> 
-                    <li><a href="./Admin/registerGuard.jsp">Registeration</a></li>
-                    <li><a href="./Admin/userllist1.jsp">List User</a></li>
-                    <li><a href="LogoutServlet">Logout</a></li>
-                </ul>
-            </nav>
+                
+                <div>
+                    <a class="active" href="dashboardAdmin.jsp">Dashboard</a>
+                    <a href="./Admin/Visitor.jsp">Visitor</a>
+                    <a href="./Admin/Fee.jsp">Fee</a>
+                    <a href="./Admin/Report.jsp">Report</a>
+                    <a href="./Admin/Complaint.jsp">Complaints</a>
+                    <a href="./Admin/registerGuard.jsp">Registeration</a>
+                    <a href="./Admin/userllist1.jsp">List User</a>
+                    <a href="LogoutServlet">Logout</a>
+       
+                </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <div class="content">
             <header>
                 <h1>Dashboard</h1>
                 <span>Overview</span>
@@ -252,7 +250,7 @@
                     </table>
                            
             </section>
-     </main>
+     </div>
    </div>
 </body>
 </html>
