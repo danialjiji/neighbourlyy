@@ -3,6 +3,10 @@ import bean.ComplaintBean2;
 import java.io.IOException;  
 import java.io.InputStream;  
 import java.io.PrintWriter;  
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;  
 import javax.servlet.ServletException;  
 import javax.servlet.annotation.MultipartConfig;  
@@ -37,13 +41,22 @@ public class ComplaintController extends HttpServlet {
                 // Prepare date parsing  
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
                 java.util.Date parsedDate = dateFormat.parse(complaintDate);  
-                java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());  
+                java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime()); 
+                
+                Part filePart = request.getPart("attachment");
+            
+                String fileName = filePart.getSubmittedFileName();
+            
+                //for uploading file into specific folder
+                String uploadDirectory = "C:/Users/Dean Ardley/Documents/GitHub/neighbourlyy/neighborlyy/web/Admin/uploads";
 
-                try {  
-                    Part filePart = request.getPart("attachment");  
-                    String fileName = filePart.getSubmittedFileName();  
-                    InputStream fileContent = filePart.getInputStream();  
-
+                try (InputStream input = filePart.getInputStream()) {
+                    Path filePath = Paths.get(uploadDirectory, fileName);
+                    Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
+                } 
+                              
+                try {                   
+            
                     // Bean setup  
                     ComplaintBean2 complaint = new ComplaintBean2(userID, statusID, complaintTypeID, description, complaintDate, location, fileName);
 

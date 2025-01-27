@@ -94,7 +94,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                 <div class="chart-container">
                     <canvas id="myChart"></canvas>
                 </div>
-                                                                      
+                                                                     
                     <section class="data-table">                    
                         <table class="table">
                             
@@ -106,8 +106,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                     <th>Complaint ID</th>
                                     <th>User ID</th>                                  
                                     <th>Description</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
+                                    <th>Date</th>                                  
                                     <th>Location</th>
                                     <th>Attachment</th>
                                     <th>Action</th>
@@ -156,7 +155,13 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                                 <td><%= complaintDescription %></td>
                                                 <td><%= onlyDate %></td>
                                                 <td><%= complaintLocation %></td>
-                                                <td><%= complaintAttachment %></td>                            
+                                                <td>
+                                                    <% if (complaintAttachment != null && !complaintAttachment.isEmpty()) { %>
+                                                    <a href="uploads/<%= complaintAttachment %>">View</a>
+                                                    <% } else { %>
+                                                        No Attachment
+                                                    <% } %>
+                                                </td>                         
                                                 <td>                                          
                                                     <a class="btn-submit" href="UpdateComplaint.jsp?complaint_type_ID=<%= complaintID %>">
                                                         <i class="ti ti-pencil me-1"></i> Edit</a> <br><br>

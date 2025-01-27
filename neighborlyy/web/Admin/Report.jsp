@@ -165,7 +165,13 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                                 <td><%= onlyDate %></td>
                                                 <td><%= location %></td>
                                                 <td><%= remarks %></td>
-                                                <td><%= attachment %></td>
+                                                <td>
+                                                    <% if (attachment != null && !attachment.isEmpty()) { %>
+                                                    <a href="uploads/<%= attachment %>">View</a>
+                                                    <% } else { %>
+                                                        No Attachment
+                                                    <% } %>
+                                                </td>
                                                     
                                                 <td>                                          
                                                     <a class="btn-submit" href="UpdateReport.jsp?reportID=<%= reportID %>">

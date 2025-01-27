@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import util.DBConnection;
 
 @MultipartConfig
@@ -49,12 +53,21 @@ public class ReportController extends HttpServlet {
                 String location = request.getParameter("location");
                 String remarks = request.getParameter("remarks");
                 
-                
+               
+            Part filePart = request.getPart("attachment");
+            
+            String fileName = filePart.getSubmittedFileName();
+            
+            //for uploading file into specific folder
+            String uploadDirectory = "C:/Users/Dean Ardley/Documents/GitHub/neighbourlyy/neighborlyy/web/Admin/uploads";
+
+            try (InputStream input = filePart.getInputStream()) {
+                Path filePath = Paths.get(uploadDirectory, fileName);
+                Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
+            } 
                 
                 try{
-                    Part filePart = request.getPart("attachment");
-                    String fileName = filePart.getSubmittedFileName();
-                    InputStream fileContent = filePart.getInputStream();
+                    
                     
                     //Bean Implementation
                     ReportBean2 report = new ReportBean2(userID, reportDate, location, remarks, fileName);
