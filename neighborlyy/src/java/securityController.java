@@ -2,6 +2,10 @@ import bean.ReportBean;
 import bean.VisitorBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
+import static jdk.nashorn.tools.ShellFunctions.input;
 import util.DBConnection;
+import java.io.InputStream;
 
 
 @MultipartConfig
@@ -68,6 +74,16 @@ public class securityController extends HttpServlet {
             Part filePart = request.getPart("attachment");
             
             String fileName = filePart.getSubmittedFileName();
+            
+            //for uploading file into specific folder
+            String uploadDirectory = "C:/Users/HP/Documents/GitHub/neighbourlyy/neighborlyy/web/Guard/uploads";
+
+            try (InputStream input = filePart.getInputStream()) {
+                Path filePath = Paths.get(uploadDirectory, fileName);
+                Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
+            } 
+
+
             
             ReportBean report = new ReportBean();
             report.setDateofvisit(dateReport);

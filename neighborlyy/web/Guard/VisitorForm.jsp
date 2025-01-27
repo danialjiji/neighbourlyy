@@ -18,8 +18,9 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             .sidebar {
-                height: 100vh;
+                height: 100vh; /* Full height of the viewport */
             }
+
             .chart-container {
                 width: 68%; /* Adjust width as needed */
                 margin: 20px auto; /* Center the chart on the page */
@@ -30,12 +31,6 @@
             }
         </style>
     </head>
-    
-    <style>
-        .sidebar{
-            height:100vh;
-        }
-    </style>
     
     <body>
     <div class="dashboard-container">
@@ -198,6 +193,10 @@
                         <td><%= onlyDate %></td>
                         <td><%= purposeVisit %></td>
                         <td><%= phoneNum %></td>
+                        <td>
+                            <a href="/neighborlyy/securityController?accessType=editVisitor&id=<%= registerID %>" class="btn-submit">Exit</a>
+                            <a href="/neighborlyy/securityController?accessType=deleteVisitor&id=<%= registerID %>" class="btn-submit">Delete</a>
+                        </td>
                     </tr>
                     <%
                             }

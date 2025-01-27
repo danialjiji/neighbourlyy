@@ -8,6 +8,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Rounding Report Form</title>
         <link rel="stylesheet" href="../style.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
@@ -160,7 +161,14 @@
                             <td><%= onlyDate %></td>
                             <td><%= location %></td>
                             <td><%= remarks %></td>
-                            <td><%= attachment %></td>
+                            <td>
+                                <% if (attachment != null && !attachment.isEmpty()) { %>
+                                    <a href="uploads/<%= attachment %>">View</a>
+                                <% } else { %>
+                                    No Attachment
+                                <% } %>
+                            </td>
+
                             <td><a href="/neighborlyy/securityController?accessType=deleteReport&id=<%= reportID %>" class="btn-submit">Delete</a></td>
                         </tr>
                     </tbody>
