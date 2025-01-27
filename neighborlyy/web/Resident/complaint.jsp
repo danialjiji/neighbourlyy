@@ -54,7 +54,7 @@
 
         <!-- Main Content -->
        <div class="content">
-            <header>
+            <header class="cardheader">
                 <h1>Complaint</h1>
             </header>
             <div class="form-container">
@@ -142,7 +142,7 @@
                             
                              <td>
                                 <% if (attachment != null && !attachment.isEmpty()) { %>
-                                    <a href="attachmentfile/<%= attachment %>">View</a>
+                                    <a href="attachment/<%= attachment %>">View</a>
                                 <% } else { %>
                                     No Attachment
                                 <% } %>

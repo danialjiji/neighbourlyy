@@ -73,12 +73,12 @@
             <h1>User List</h1>
             <span>Overview of Users</span>
         </header>
-
-        <!-- Search Form -->
-        <div class="search-form">
+        
+        <div class="form-container">
+          <h3>Search Visitor</h3>
             <form method="get" action="userllist1.jsp">
                 <input type="text" name="search" placeholder="Search by Name" value="<%= request.getParameter("search") != null ? request.getParameter("search") : "" %>">
-                <button type="submit">Search</button>
+                <button type="submit" class="btn-submit">Search</button>
             </form>
         </div>
 

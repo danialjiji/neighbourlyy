@@ -167,7 +167,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                                 <td><%= remarks %></td>
                                                 <td>
                                                     <% if (attachment != null && !attachment.isEmpty()) { %>
-                                                    <a href="uploads/<%= attachment %>">View</a>
+                                                    <a href="attachment/<%= attachment %>">View</a>
                                                     <% } else { %>
                                                         No Attachment
                                                     <% } %>

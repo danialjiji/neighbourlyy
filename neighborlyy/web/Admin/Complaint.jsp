@@ -24,7 +24,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Complaint</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             .chart-container {
@@ -157,7 +157,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                                 <td><%= complaintLocation %></td>
                                                 <td>
                                                     <% if (complaintAttachment != null && !complaintAttachment.isEmpty()) { %>
-                                                    <a href="uploads/<%= complaintAttachment %>">View</a>
+                                                    <a href="attachment/<%= complaintAttachment %>">View</a>
                                                     <% } else { %>
                                                         No Attachment
                                                     <% } %>

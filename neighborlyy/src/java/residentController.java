@@ -80,7 +80,7 @@ public class residentController extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
             
              //for uploading file into specific folder
-            String uploadDirectory = "C:/Users/soleha/OneDrive/Documents/GitHub/neighbourlyy/neighborlyy/web/Resident/attachmentfile";
+            String uploadDirectory = "C:/Users/Nurin Atikah/Documents/GitHub/neighbourlyy/neighborlyy/web/Resident/attachment";
 
             try (InputStream input = filePart.getInputStream()) {
                 Path filePath = Paths.get(uploadDirectory, fileName);

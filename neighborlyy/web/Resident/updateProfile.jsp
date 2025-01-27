@@ -8,11 +8,11 @@
     <title>Update Profile</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href=".../style.css">
-     <style>
-            .sidebar {
-                height: 100vh;
-            }
+   <link rel="stylesheet" href="../styless.css">
+      <style>
+         div.content{
+            height : 100vh;
+         }
             .chart-container {
                 width: 68%; /* Adjust width as needed */
                 margin: 20px auto; /* Center the chart on the page */
@@ -21,9 +21,8 @@
                 max-width: 100%; /* Ensure the chart doesn't overflow */
                 height: 400px; /* Set a fixed height */
             }
-        </style>
+     </style>
 </head>
-<html>
 <body>
     <div class="dashboard-container">
          <%
@@ -42,27 +41,23 @@
             <div class="profile">
                 <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
                 <h3>Hi, <%= username %></h3>
-                
             </div>
             
-            
-            <nav class="menu">
-                <ul>
-                    <li ><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
-                    <li class="active"><a href="profile.jsp">Profile</a></li>
-                    <li ><a href="complaint.jsp">Complaint</a></li>
-                    <li><a href="fee.jsp">Fee</a></li>
-                    <li ><a href="/neighborlyy/LogoutServlet">Log Out</a></li>
-                </ul>
-            </nav>
+            <div>
+                    <a href="/neighborlyy/dashboardResident.jsp">Dashboard</a>
+                    <a class="active" href="./profile.jsp">Profile</a>
+                    <a href="./complaint.jsp">Complaint</a>
+                    <a href="./fee.jsp">Fee</a>
+                    <a href="/neighborlyy/LogoutServlet">Log Out</a>
+            </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
-            <header>
+        <div class="content">
+            <header class="cardheader">
                 <h1>Profile</h1>
-              
             </header>
+            
             <div class="form-container">
                 <h3>Update Profile</h3><br>
                 <p>Please Fill in the Form to Update Profile to Management</p>
@@ -83,5 +78,6 @@
             </form>
         </div>
       </div>
+    </div>
    </body>
 </html>

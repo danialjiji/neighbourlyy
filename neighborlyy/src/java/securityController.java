@@ -76,7 +76,7 @@ public class securityController extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
             
             //for uploading file into specific folder
-            String uploadDirectory = "C:/Users/HP/Documents/GitHub/neighbourlyy/neighborlyy/web/Guard/uploads";
+            String uploadDirectory = "C:/Users/Nurin Atikah/Documents/GitHub/neighbourlyy/neighborlyy/web/Guard/attachment";
 
             try (InputStream input = filePart.getInputStream()) {
                 Path filePath = Paths.get(uploadDirectory, fileName);

@@ -48,7 +48,7 @@ public class ComplaintController extends HttpServlet {
                 String fileName = filePart.getSubmittedFileName();
             
                 //for uploading file into specific folder
-                String uploadDirectory = "C:/Users/Dean Ardley/Documents/GitHub/neighbourlyy/neighborlyy/web/Admin/uploads";
+                String uploadDirectory = "C:/Users/Nurin Atikah/Documents/GitHub/neighbourlyy/neighborlyy/web/Resident/attachment";
 
                 try (InputStream input = filePart.getInputStream()) {
                     Path filePath = Paths.get(uploadDirectory, fileName);

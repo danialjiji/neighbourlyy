@@ -113,6 +113,8 @@
                 <label for="postLocation">Post Location</label>
                 <input type="text" name="postLocation" placeholder="Post Location" required><br>  
 
+                <label for="salary">Salary</label>
+                <input type="number" name="salary" placeholder="Salary" required><br>
 
                 <div class="btn-container">
                     <button type="submit" class="btn-submit">Submit</button>

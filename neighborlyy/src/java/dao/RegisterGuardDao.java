@@ -22,13 +22,13 @@ public class RegisterGuardDao {
 
   public boolean registerUser(RegisterGuardBean registerBean) {  
     String insertUserSQL = "INSERT INTO users (username, \"password\", \"name\", ic_passport, phonenum, email, plate_id) VALUES (?, ?, ?, ?, ?, ?, ?)";  
-    String insertChildSQL = "INSERT INTO guard (userID, shift, post_location) VALUES (?, ?, ?)";  
+    String insertChildSQL = "INSERT INTO guard (userID, shift, post_location, salary) VALUES (?, ?, ?, ?)";  
     
     try {  
         // Inserting into the users table  
         PreparedStatement statementUser = connection.prepareStatement(insertUserSQL, new String[]{"userID"});  
         statementUser.setString(1, registerBean.getUsername());  
-        statementUser.setString(2, registerBean.getPassword()); // Ensure you hash the password before storing it  
+        statementUser.setString(2, registerBean.getPassword()); // Ensure hash the password before storing it  
         statementUser.setString(3, registerBean.getName());  
         statementUser.setString(4, registerBean.getIcNumber()); 
         statementUser.setString(5, registerBean.getPhoneNumber()); 
@@ -47,6 +47,7 @@ public class RegisterGuardDao {
                     statementGuard.setInt(1, userId);  
                     statementGuard.setString(2, registerBean.getShift()); // Add these fields to your RegisterBean  
                     statementGuard.setString(3, registerBean.getPostlocation());  
+                    statementGuard.setDouble(4, registerBean.getSalary()); 
                     return statementGuard.executeUpdate() > 0; // Return true if guard added successfully  
                 }  
             }  
