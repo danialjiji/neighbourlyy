@@ -32,7 +32,7 @@ and open the template in the editor.
 /* The side navigation menu */
 .sidebar {
   margin: 0;
-  width: 220px;
+  width: 250px;
   padding: 20px;  
   border-right: 1px solid #ddd;  
   background-color: #ffffff;   
@@ -75,9 +75,9 @@ and open the template in the editor.
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div.content {
   flex: 1;
-  margin-left: 220px;
+  margin-left: 250px;
   padding: 20px;
-  padding-right:40px;
+  padding-right:20px;
   height: 1000%;
   background-color: #f4f4f9;
 }
