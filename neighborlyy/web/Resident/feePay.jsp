@@ -81,6 +81,7 @@
                     <button type="submit" class="btn-submit">Submit</button>
                     <button type="button" class="btn-cancel">Cancel</button>
                      <input type="hidden" name="accessType" value="payFee">
+                     <input type="hidden" name="feeid" value="<%= request.getParameter("feeid") %>">
                     <input type="hidden" name="userid" value="<%= userid %>">
                 </div>
             </form>

@@ -102,7 +102,7 @@
 
                         // Iterate through the result set and display data
                         while (rs.next()) {
-                            //int feeID = rs.getInt("feeid");
+                            int feeID = rs.getInt("feeid");
                             String feeType = rs.getString("fee_category_name");
                             double feeAmount = rs.getDouble("fee_amount");
                             Date feeDate = rs.getDate("fee_date");
@@ -130,10 +130,14 @@
                     
                     <td>
                          <div class="profile-actions">
-                            <form action="feePay.jsp" method="post">
-                                <input type="hidden" name="userID" value="<%= sessionUserId %>" />
-                                <button type="submit" class="btn-submit" href="feePay.jsp">Pay</button>
-                            </form>
+                             <a class="btn-submit" href="feePay.jsp?accessType=payFee&feeid=<%= feeID %>">Pay</a>
+
+<!--                            <form action="feePay.jsp" method="post">
+                                <input type="hidden" name="accessType" value="payFee" />
+                                <input type="hidden" name="feeid" value="<%= feeID %>" />
+                                <button type="submit" class="btn-submit">Pay</button>
+                            </form>-->
+
                         </div>
                     </td>
                 </tr>
