@@ -10,20 +10,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Rounding Report Form</title>
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../styless.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
-            .sidebar {
-                height: 100vh;
-            }
             .chart-container {
                 width: 68%; /* Adjust width as needed */
+                height: 400px;
                 margin: 20px auto; /* Center the chart on the page */
             }
             canvas#myChart {
                 max-width: 100%; /* Ensure the chart doesn't overflow */
-                height: 400px; /* Set a fixed height */
+                height: 100px; /* Set a fixed height */
             }
         </style>
     </head>
@@ -49,20 +47,17 @@
                     <img style="height:60px; width:60x; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo"> 
                     <h3>Hi, <%= username %></h3>
                 </div>
-
-                <nav class="menu">
-                    <ul>
-                        <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
-                        <li><a href="profileGuard.jsp">Profile</a></li>
-                        <li class="active"><a href="RoundingReport.jsp">Rounding Report</a></li>
-                        <li><a href="VisitorForm.jsp">Visitor Form</a></li>
-                        <li><a href="userlist.jsp">Users List</a></li>
-                        <li><a href="../LogoutServlet">Logout</a></li>
-                    </ul>
-                </nav>
+                <div>
+                    <a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a>
+                    <a href="profileGuard.jsp">Profile</a>
+                    <a href="RoundingReport.jsp" class="active">Rounding Report</a>
+                    <a href="VisitorForm.jsp">Visitor Form</a>
+                    <a href="userlist.jsp">Users List</a>
+                    <a href="../LogoutServlet">Logout</a>
+                </div>
             </aside>
 
-            <main class="main-content">
+            <div class="content">
                 <div class="form-container">
                 <!-- Chart Container -->
                 <div class="chart-container">
@@ -168,8 +163,7 @@
                                     No Attachment
                                 <% } %>
                             </td>
-
-                            <td><a href="/neighborlyy/securityController?accessType=deleteReport&id=<%= reportID %>" class="btn-submit">Delete</a></td>
+                           <td><a href="/neighborlyy/securityController?accessType=deleteReport&id=<%= reportID %>" class="btn-submit">Delete</a></td>
                         </tr>
                     </tbody>
                     <%
@@ -182,7 +176,7 @@
                     </table>
                 </section>
                 </div>
-            </main>
+            </div>
         </div>
         <%
             Connection conn = null;
@@ -268,6 +262,7 @@
                 document.getElementById('myChart'),
                 config
             );
+
         </script>
     </body>
 </html>

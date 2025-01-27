@@ -13,81 +13,9 @@
     <link rel="stylesheet" href="styless.css">
     <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <style>
-                /* Improved Welcome Box with Lilac Theme */
-          .welcome-box {
-              background-color: #E1C6F1; /* Softer lilac background */
-              color: #ffffff; /* White text for contrast */
-              padding: 35px;
-              border-radius: 15px;
-              box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
-              text-align: center;
-              margin-bottom: 40px;
-              transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-          }
-
-          .welcome-box h2 {
-              font-size: 26px; /* Larger heading */
-              margin-bottom: 12px;
-              font-weight: 700;
-              color: #5A3D77; /* Darker lilac for contrast */
-              text-transform: uppercase;
-          }
-
-          .welcome-box p {
-              font-size: 18px; /* Slightly larger text for readability */
-              line-height: 1.6;
-              margin: 10px 0;
-              font-weight: 300;
-              color: #5A3D77; /* Dark lilac for text */
-          }
-
-          .welcome-box button {
-              padding: 14px 28px;
-              font-size: 18px;
-              background-color: #D1A2D8; /* Light lilac for button */
-              color: #ffffff;
-              border: none;
-              border-radius: 30px;
-              cursor: pointer;
-              font-weight: 600;
-              transition: background-color 0.3s ease, transform 0.2s ease;
-              text-transform: uppercase;
-          }
-
-          .welcome-box button:hover {
-              background-color: #C28AC0; /* Slightly darker lilac on hover */
-              transform: scale(1.05); /* Subtle button scale effect on hover */
-          }
-
-          .welcome-box:hover {
-              transform: translateY(-5px); /* Slightly stronger hover effect */
-              box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
-          }
-
-          /* Optional: Add media query for responsiveness */
-          @media (max-width: 768px) {
-              .welcome-box {
-                  padding: 20px;
-              }
-
-              .welcome-box h2 {
-                  font-size: 22px;
-              }
-
-              .welcome-box p {
-                  font-size: 16px;
-              }
-
-              .welcome-box button {
-                  font-size: 16px;
-              }
-          }
-        </style>
-</head>
+</head> 
 <body>
     <div class="dashboard-container">
           <%
@@ -119,7 +47,7 @@
 
         <!-- Main Content -->
         <div class="content">
-            <header>
+            <header class="cardheader">
                 <h1>Resident Dashboard</h1>
                 
             </header>
@@ -168,6 +96,7 @@
                         e.printStackTrace();
                     }
                 %>
+                
                         <div class="chart-container">
                             <canvas id="myChart"></canvas>
                         </div>
@@ -255,7 +184,7 @@
                             }
                         %>
 
-                       <div class="chart-container" style="width: 500px; height: 500px; margin: 0 auto;"> <!-- Adjusted size for medium chart -->
+                       <div class="chart-container"> <!-- Adjusted size for medium chart -->
                             <canvas id="feeChart"></canvas>
                         </div>
 
