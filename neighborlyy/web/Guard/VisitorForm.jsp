@@ -13,21 +13,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Visitor Form</title>
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../styless.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
-            .sidebar {
-                height: 100vh; /* Full height of the viewport */
-            }
-
             .chart-container {
                 width: 68%; /* Adjust width as needed */
+                height: 400px;
                 margin: 20px auto; /* Center the chart on the page */
             }
             canvas#myChart {
                 max-width: 100%; /* Ensure the chart doesn't overflow */
-                height: 400px; /* Set a fixed height */
+                height: 100px; /* Set a fixed height */
             }
         </style>
     </head>
@@ -54,20 +51,17 @@
                 
             </div>
             
-            
-            <nav class="menu">
-                <ul>
-                    <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
-                    <li><a href="profileGuard.jsp">Profile</a></li>
-                    <li><a href="RoundingReport.jsp">Rounding Report</a></li>
-                    <li class="active"><a href="VisitorForm.jsp">Visitor Form</a></li>
-                    <li><a href="userlist.jsp">Users List</a></li>
-                    <li><a href="../LogoutServlet">Logout</a></li>
-                </ul>
-            </nav>
+                <div>
+                    <a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a>
+                    <a href="profileGuard.jsp">Profile</a>
+                    <a href="RoundingReport.jsp">Rounding Report</a>
+                    <a href="VisitorForm.jsp" class="active">Visitor Form</a>
+                    <a href="userlist.jsp">Users List</a>
+                    <a href="../LogoutServlet">Logout</a>
+                </div>
         </aside>
         
-        <main class="main-content">
+        <div class="content">
             <div class="form-container">
             <div class="chart-container">
                 <canvas id="myChart"></canvas>
@@ -211,7 +205,7 @@
             </section>
                     
                 </div>
-        </main>
+        </div>
     </div>
         <%
             PreparedStatement stmt = null;
