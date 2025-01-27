@@ -10,7 +10,7 @@
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styless.css">
     <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -108,19 +108,17 @@
                 <h3>Hi, <%= username %></h3>
             </div>
             
-            <nav class="menu">
-                <ul>
-                    <li class="active"><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
-                    <li ><a href="./Resident/profile.jsp">Profile</a></li>
-                    <li ><a href="./Resident/complaint.jsp">Complaint</a></li>
-                    <li ><a href="./Resident/fee.jsp">Fee</a></li>
-                    <li ><a href="LogoutServlet">Log Out</a></li>
-                </ul>
-            </nav>
+            <div>
+                    <a class="active" href="dashboardResident.jsp">Dashboard</a>
+                    <a href="./Resident/profile.jsp">Profile</a>
+                    <a href="./Resident/complaint.jsp">Complaint</a>
+                    <a href="./Resident/fee.jsp">Fee</a>
+                    <a href="LogoutServlet">Log Out</a>
+            </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <div class="content">
             <header>
                 <h1>Resident Dashboard</h1>
                 
@@ -341,7 +339,7 @@
                                        "FROM FEE f " +
                                        "JOIN FEE_CATEGORY fc ON f.FEE_CATEGORY_ID = fc.FEE_CATEGORY_ID " +
                                        "JOIN STATUS s ON f.STATUSID = s.STATUSID " +
-                                       "WHERE f.USERID = ?";
+                                       "WHERE f.USERID = ? AND F.STATUSID = 50001";
 
                          PreparedStatement pstmt = conn.prepareStatement(query);
                          pstmt.setInt(1, userid);
@@ -372,7 +370,7 @@
              </table>
           </section>
         </div>   
-     </main>
+     </div>
    </div>
 </body>
 </html>

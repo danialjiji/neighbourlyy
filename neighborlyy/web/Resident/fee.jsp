@@ -113,9 +113,9 @@
                 %>
                 <tr>
                     <td><%= feeType %></td>
-                    <td><%= feeAmount %></td>
+                    <td>RM <%= feeAmount %></td>
                     <td><%= feeDate %></td>
-                    <td><%= payFee %></td>
+                    <td>RM <%= payFee %></td>
                     <td><%= remark %></td>
                     
                    <td>
