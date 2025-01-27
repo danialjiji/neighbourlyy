@@ -8,11 +8,11 @@
     <title>Complaint</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href=".../style.css">
+     <link rel="stylesheet" href="../styless.css">
      <style>
-            .sidebar {
-                height: 100vh;
-            }
+         .dashboard-container{
+             background-color: #f4f4f9;
+         }
             .chart-container {
                 width: 68%; /* Adjust width as needed */
                 margin: 20px auto; /* Center the chart on the page */
@@ -43,19 +43,17 @@
                 <h3>Hi, <%= username %></h3>
 
             </div>
-            <nav class="menu">
-                <ul>
-                    <li ><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
-                    <li ><a href="./profile.jsp">Profile</a></li>
-                    <li class="active"><a href="./complaint.jsp">Complaint</a></li>
-                    <li ><a href="./fee.jsp">Fee</a></li>
-                    <li ><a href="/neighborlyy/LogoutServlet">Log Out</a></li>
-                </ul>
-            </nav>
+            <div>
+                    <a href="/neighborlyy/dashboardResident.jsp">Dashboard</a>
+                    <a href="./profile.jsp">Profile</a>
+                    <a class="active" href="./complaint.jsp">Complaint</a>
+                    <a href="./fee.jsp">Fee</a>
+                    <a href="/neighborlyy/LogoutServlet">Log Out</a>
+            </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
+       <div class="content">
             <header>
                 <h1>Complaint</h1>
             </header>
@@ -161,7 +159,7 @@
             </tbody>
         </table>
     </section>
-     </main>
+     </div>
    </div>
 </body>
 </html>

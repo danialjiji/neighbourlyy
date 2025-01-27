@@ -52,8 +52,7 @@ public class EditServlet extends HttpServlet {
         String plateNumber = request.getParameter("plateNumber");  
 
         // Initialize salary to 0 or handle error  
-        double salary = 0.0;  
-        String salaryParam = request.getParameter("salary");  
+        double salary = Double.parseDouble(request.getParameter("salary"));
        
         
         String shift = request.getParameter("shift");   
