@@ -12,7 +12,7 @@
 
 <sql:setDataSource var="myDatasource" 
 driver="oracle.jdbc.OracleDriver"
-url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="system"/>
+url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
 
 <%
     String updateFeeID = request.getParameter("feeID");
@@ -54,8 +54,8 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
 <!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Fee</title>
+    <link rel="stylesheet" href="../styless.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 <html>
     <head>
@@ -91,24 +91,26 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
                 
                 </div>
             
-            
-                <nav class="menu">
+                <div>
                     <ul>
-                        <li><a href="../dashboardAdmin.jsp">Dashboard</a></li>
-                        <li><a href="Visitor.jsp">Visitor</a></li>
-                        <li class="active"><a href="Fee.jsp">Fee</a></li>
-                        <li><a href="Report.jsp">Report</a></li>
-                        <li><a href="Complaint.jsp">Complaints</a></li>  
-                        <li><a href="registerGuard.jsp">Registeration</a></li>
-                        <li><a href="userllist1.jsp">User List</a></li>
-                        <li><a href="../LogoutServlet">Logout</a></li>
+                        <a href="../dashboardAdmin.jsp">Dashboard</a>
+                        <a href="Visitor.jsp">Visitor</a>
+                        <a class="active" href="Fee.jsp">Fee</a>
+                        <a href="Report.jsp">Report</a>
+                        <a href="Complaint.jsp">Complaints</a>
+                        <a href="registerGuard.jsp">Registration</a>
+                        <a href="userllist1.jsp">User List</a>
+                        <a href="../LogoutServlet">Logout</a>
                     </ul>
-                </nav>
+                </div>
             </aside>
 
             <!-- Main Content -->
-            <main class="main-content">
-            
+            <div class="content">
+                <header class="cardheader">
+                    <h1>Fee</h1>
+                    <span>Overview</span>
+                </header>
             
                 <div class="form-container">
                     <h3>Fee Form</h3>
@@ -208,7 +210,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
 
             
                     
-            </main>
+            </div>
         </div>                
     </body>
 </html>

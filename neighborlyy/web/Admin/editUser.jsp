@@ -12,8 +12,8 @@
 <!DOCTYPE html>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="../styless.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 </head>
 
@@ -56,25 +56,24 @@
                 
             </div>
             
-            
-            <nav class="menu">
-                    <ul>
-                        <li><a href="../dashboardAdmin.jsp">Dashboard</a></li>
-                        <li><a href="Visitor.jsp">Visitor</a></li>
-                        <li><a href="Fee.jsp">Fee</a></li>
-                        <li><a href="Report.jsp">Report</a></li>
-                        <li><a href="Complaint.jsp">Complaints</a></li>  
-                        <li><a href="registerGuard.jsp">Registeration</a></li>
-                        <li  class="active"><a href="userllist1.jsp">User List</a></li>
-                        <li><a href="../LogoutServlet">Logout</a></li>
-                    </ul>
-            </nav>
+            <div>
+                <ul>
+                    <a href="../dashboardAdmin.jsp">Dashboard</a>
+                    <a href="Visitor.jsp">Visitor</a>
+                    <a href="Fee.jsp">Fee</a>
+                    <a href="Report.jsp">Report</a>
+                    <a href="Complaint.jsp">Complaints</a>
+                    <a href="registerGuard.jsp">Registration</a>
+                    <a class="active" href="userllist1.jsp">User List</a>
+                    <a href="../LogoutServlet">Logout</a>
+                </ul>
+            </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
-            <header>
-                <h1>Dashboard</h1>
+        <div class="content">
+            <header class="cardheader">
+                <h1>User List</h1>
                 <span>Overview</span>
             </header>     
 
@@ -158,7 +157,7 @@
         </div>
 
    
-     </main>
+     </div>
    </div>
 </body>
 </html>

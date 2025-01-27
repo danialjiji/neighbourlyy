@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styless.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -54,7 +54,6 @@
                     <a href="./Admin/registerGuard.jsp">Registeration</a>
                     <a href="./Admin/userllist1.jsp">List User</a>
                     <a href="LogoutServlet">Logout</a>
-       
                 </div>
         </aside>
 

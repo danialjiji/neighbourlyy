@@ -42,6 +42,7 @@ public class RegisterGuardServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirmpassword");
         String shift = request.getParameter("shift");
         String postLocation = request.getParameter("postLocation");
+        double salary = Double.parseDouble(request.getParameter("salary"));
 
         // Check if the password and confirm password match
         if (!password.equals(confirmPassword)) {
@@ -60,6 +61,7 @@ public class RegisterGuardServlet extends HttpServlet {
         registerGuardBean.setPassword(password);
         registerGuardBean.setShift(shift);
         registerGuardBean.setPostlocation(postLocation);
+        registerGuardBean.setSalary(salary);
  
 
         // Call the RegisterDao to insert the user data into the database

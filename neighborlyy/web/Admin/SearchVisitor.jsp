@@ -14,13 +14,13 @@
 
 <sql:setDataSource var="myDatasource" 
 driver="oracle.jdbc.OracleDriver"
-url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="system"/>
+url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
 
 <!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styless.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
 <html>
     <head>
@@ -28,9 +28,6 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
         <title>JSP Page</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
-            .sidebar {
-                height: 100vh;
-            }
             .chart-container {
                 width: 68%; /* Adjust width as needed */
                 margin: 20px auto; /* Center the chart on the page */
@@ -41,11 +38,6 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
             }
         </style>
     </head>
-    <style>
-        .sidebar{
-            height:200vh;
-        }
-    </style>
     <body>
         
         <!-- Check for Session -->
@@ -71,23 +63,26 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
                 
                 </div>
             
-            
-                <nav class="menu">
+                <div>
                     <ul>
-                        <li><a href="../dashboardAdmin.jsp">Dashboard</a></li>
-                        <li class="active"><a href="Visitor.jsp">Visitor</a></li>
-                        <li><a href="Fee.jsp">Fee</a></li>
-                        <li><a href="Report.jsp">Report</a></li>
-                        <li><a href="Complaint.jsp">Complaints</a></li>  
-                        <li><a href="registerGuard.jsp">Registeration</a></li>
-                        <li><a href="userllist1.jsp">User List</a></li>
-                        <li><a href="../LogoutServlet">Logout</a></li>
+                        <a href="../dashboardAdmin.jsp">Dashboard</a>
+                        <a class="active" href="Visitor.jsp">Visitor</a>
+                        <a href="Fee.jsp">Fee</a>
+                        <a href="Report.jsp">Report</a>
+                        <a href="Complaint.jsp">Complaints</a>
+                        <a href="registerGuard.jsp">Registration</a>
+                        <a href="userllist1.jsp">User List</a>
+                        <a href="../LogoutServlet">Logout</a>
                     </ul>
-                </nav>
+                </div>
             </aside>
 
             <!-- Main Content -->
-            <main class="main-content">
+            <div class="content">
+                <header class="cardheader">
+                    <h1>Visitor</h1>
+                    <span>Overview</span>
+                </header>
                 <div class="form-container">
                     
                     <h3>Search Visitor</h3>
@@ -181,7 +176,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
                     </table>
                 </section>
             </div>
-        </main>
+        </div>
                                                                            
     </body>
 </html>

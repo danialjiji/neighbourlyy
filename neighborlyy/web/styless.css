@@ -77,9 +77,10 @@ div.content {
   flex: 1;
   margin-left: 250px;
   padding: 20px;
-  padding-right:20px;
-  height: 1000%;
+  padding-right:40px;
+  height: 100%;
   background-color: #f4f4f9;
+  overflow: auto;
 }
 
 

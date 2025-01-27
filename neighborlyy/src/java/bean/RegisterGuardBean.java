@@ -19,12 +19,13 @@ public class RegisterGuardBean implements Serializable {
     private String password;
     private String shift;
     private String postlocation;
+    private Double salary;
 
     public RegisterGuardBean(){
         
     }
     
-    public RegisterGuardBean(String name, String email, String icNumber, String phoneNumber, String plateNumber, String username, String password, String shift, String postlocation) {
+    public RegisterGuardBean(String name, String email, String icNumber, String phoneNumber, String plateNumber, String username, String password, String shift, String postlocation, Double salary) {
         this.name = name;
         this.email = email;
         this.icNumber = icNumber;
@@ -34,6 +35,7 @@ public class RegisterGuardBean implements Serializable {
         this.password = password;
         this.shift = shift;
         this.postlocation = postlocation;
+        this.salary = salary;
     }
 
     public String getName() {
@@ -108,6 +110,12 @@ public class RegisterGuardBean implements Serializable {
         this.postlocation = postlocation;
     }
 
-   
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
     
 }

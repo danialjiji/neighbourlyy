@@ -9,7 +9,6 @@
  * and open the template in the editor.
  */
 
-import bean.EditVisitorBean;
 import bean.VisitorBean2;
 import java.io.IOException;
 import java.io.PrintWriter;

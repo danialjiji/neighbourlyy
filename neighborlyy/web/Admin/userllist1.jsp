@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styless.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -53,22 +53,22 @@
             <img style="height:60px; width:60px; margin-right: 10px;" src="../assets/images/profile1.png" alt="logo">
             <h3>Hi, Danial</h3>
         </div>
-        <nav class="menu">
+        <div>
             <ul>
-                <li><a href="../dashboardAdmin.jsp">Dashboard</a></li>
-                <li><a href="Visitor.jsp">Visitor</a></li>
-                <li><a href="Fee.jsp">Fee</a></li>
-                <li><a href="Report.jsp">Report</a></li>
-                <li><a href="Complaint.jsp">Complaints</a></li>
-                <li><a href="registerGuard.jsp">Registration</a></li>
-                <li class="active"><a href="userllist1.jsp">User List</a></li>
-                <li><a href="../LogoutServlet">Logout</a></li>
+                <a href="../dashboardAdmin.jsp">Dashboard</a></li>
+                <a href="Visitor.jsp">Visitor</a></li>
+                <a href="Fee.jsp">Fee</a></li>
+                <a href="Report.jsp">Report</a></li>
+                <a href="Complaint.jsp">Complaints</a></li>
+                <a href="registerGuard.jsp">Registration</a></li>
+                <a class="active" href="userllist1.jsp">User List</a></li>
+                <a href="../LogoutServlet">Logout</a></li>
             </ul>
-        </nav>
+        </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <div class="content">
         <header class="cardheader">
             <h1>User List</h1>
             <span>Overview of Users</span>
@@ -259,7 +259,7 @@
 
             const myChart = new Chart(document.getElementById('myChart'), config);
         </script>
-    </main>
+    </div>
 </div>
 </body>
 </html>
