@@ -9,6 +9,7 @@
  * and open the template in the editor.
  */
 
+import bean.EditVisitorBean;
 import bean.VisitorBean2;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import util.DBConnection;
 
 
@@ -47,6 +52,7 @@ public class VisitorController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         String accessType = request.getParameter("accessType");
+        String action = request.getParameter("action");
         
         try{
         
@@ -102,30 +108,31 @@ public class VisitorController extends HttpServlet {
                 String purposeOfVisit = request.getParameter("purposeOfVisit");
                 String phoneNumber = request.getParameter("phoneNumber");
                                
-        
-            try{
-                Connection conn = DBConnection.createConnection();
-                PreparedStatement stmt = conn.prepareStatement("UPDATE visitor SET userID=?, visitor_name=?, visitor_ic=?, no_plate=?, entryTime=TO_TIMESTAMP(?, 'HH24:MI'), exitTime=TO_TIMESTAMP(?, 'HH24:MI'), dateOfVisit=TO_DATE(?, 'YYYY:MM:DD'), purposeOfVisit=?, visitor_phonenum=? WHERE registerID=?");
+                VisitorBean2 editVisitor = new VisitorBean2(userID, visitorName, visitorIC, plateNumber, entryTime, exitTime, visitDate, purposeOfVisit, phoneNumber);
+                
+                try{
+                    Connection conn = DBConnection.createConnection();
+                    PreparedStatement stmt = conn.prepareStatement("UPDATE visitor SET userID=?, visitor_name=?, visitor_ic=?, no_plate=?, entryTime=TO_TIMESTAMP(?, 'HH24:MI'), exitTime=TO_TIMESTAMP(?, 'HH24:MI'), dateOfVisit=TO_DATE(?, 'YYYY:MM:DD'), purposeOfVisit=?, visitor_phonenum=? WHERE registerID=?");
             
-                stmt.setInt(1, Integer.parseInt(userID));
-                stmt.setString(2, visitorName);
-                stmt.setString(3, visitorIC);
-                stmt.setString(4, plateNumber);
-                stmt.setString(5, entryTime);
-                stmt.setString(6, exitTime);
-                stmt.setString(7, visitDate);
-                stmt.setString(8, purposeOfVisit);
-                stmt.setString(9, phoneNumber);
-                stmt.setInt(10, Integer.parseInt(registerID));
+                    stmt.setInt(1, Integer.parseInt(editVisitor.getUserID()));
+                    stmt.setString(2, editVisitor.getVisitorName());
+                    stmt.setString(3, editVisitor.getVisitorIC());
+                    stmt.setString(4, editVisitor.getNoPlate());
+                    stmt.setString(5, editVisitor.getEntryTime());
+                    stmt.setString(6, editVisitor.getExitTime());
+                    stmt.setString(7, editVisitor.getDateOfVisit());
+                    stmt.setString(8, editVisitor.getPurposeOfVisit());
+                    stmt.setString(9, editVisitor.getVisitorPhoneNum());
+                    stmt.setInt(10, Integer.parseInt(registerID));
             
-                stmt.executeUpdate();
-                stmt.close();
-                conn.close();
+                    stmt.executeUpdate();
+                    stmt.close();
+                    conn.close();
             
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            response.sendRedirect("./Admin/Visitor.jsp");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                response.sendRedirect("./Admin/Visitor.jsp");
             }else if(accessType.equals("delete")){
                 String registerID = request.getParameter("registerID");
                 
@@ -142,7 +149,15 @@ public class VisitorController extends HttpServlet {
                     e.printStackTrace();
                 }
                 response.sendRedirect("./Admin/Visitor.jsp");
+                
+            }else if(accessType.equals("search")){
+                String searchVisitorName = request.getParameter("searchVisitorName");
+
+                // Redirect to another JSP page with the visitor name in the query string
+                response.sendRedirect("./Admin/SearchVisitor.jsp?searchVisitorName=" + searchVisitorName);
             }
+            
+            
                 
         }catch(Exception e){
                 e.printStackTrace();

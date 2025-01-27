@@ -4,6 +4,7 @@
     Author     : Dean Ardley
 --%>
 
+<%@page import="java.util.Arrays"%>
 <%@page import="util.DBConnection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*, java.time.*, java.time.format.*, java.util.Date, java.text.SimpleDateFormat"%>
 
@@ -12,7 +13,7 @@
 
 <sql:setDataSource var="myDatasource" 
 driver="oracle.jdbc.OracleDriver"
-url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
+url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="system"/>
 
 <!DOCTYPE html>
     <meta charset="UTF-8">
@@ -29,6 +30,21 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            .sidebar {
+                height: 100vh;
+            }
+            .chart-container {
+                width: 68%; /* Adjust width as needed */
+                margin: 20px auto; /* Center the chart on the page */
+            }
+            canvas#myChart {
+                max-width: 100%; /* Ensure the chart doesn't overflow */
+                height: 600px; /* Set a fixed height */
+            }
+        </style>
+        
     </head>
     <body>
         <%
@@ -44,9 +60,10 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
         %>
         
         
-            
+        
         
         <div class="dashboard-container">
+            
             
             <!-- Sidebar -->
             <aside class="sidebar">
@@ -70,12 +87,23 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     </ul>
                 </nav>
             </aside>
+                    
+                    
+     
 
             <!-- Main Content -->
             <main class="main-content">
+                
+                <h3>Complaints per Month</h3>
+                <!-- Chart Container -->
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
                                                                       
                     <section class="data-table">                    
                         <table class="table">
+                            
+                            
                             <h3>List of Complaints</h3>
                             <thead>
                                 
@@ -156,6 +184,92 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                         </table>
                     </section>
             </main>
-        </div>                    
+        </div>     
+                                
+        <%
+            Connection conn = null;
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+
+            int[] complaintsPerMonth = new int[12]; // Array to store complaints for 12 months, initialize to 0
+
+            try {
+                conn = DBConnection.createConnection();
+                String query = "SELECT EXTRACT(MONTH FROM complaint_date) AS month, COUNT(*) AS total_complaints " +
+                            "FROM complaint " +
+                            "GROUP BY EXTRACT(MONTH FROM complaint_date) " +
+                            "ORDER BY month";
+
+                stmt = conn.prepareStatement(query);
+                rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    int month = rs.getInt("month"); // 1 for January, 2 for February, etc.
+                    int total = rs.getInt("total_complaints");
+                    complaintsPerMonth[month - 1] = total; // Map to the 0-based array index
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        %>
+        
+        <!-- Chart.js Script -->
+        <script>
+            const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August','September', 'October', 'November', 'December'];
+            const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Complaints',
+                data: <%= Arrays.toString(complaintsPerMonth).replace("[", "[").replace("]", "]") %>,
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(201, 203, 207, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        </script>
     </body>
 </html>

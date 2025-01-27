@@ -12,7 +12,7 @@
 
 <sql:setDataSource var="myDatasource" 
 driver="oracle.jdbc.OracleDriver"
-url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/> <!-- Change user -->
+url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="system"/> <!-- Change user -->
 
 <%
     String updateComplaintID = request.getParameter("complaint_type_ID");
@@ -40,8 +40,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/> 
             updateStatusID = rs.getInt("statusID");
             updateComplaintTypeID = rs.getInt("complaint_type_ID");
             updateComplaintDescription = rs.getString("complaint_description");
-            updateComplaintDate = rs.getString("complaint_date");
-            updateComplaintStatus = rs.getString("complaint_status");
+            updateComplaintDate = rs.getString("complaint_date");           
             updateComplaintLocation = rs.getString("complaint_location");
             updateComplaintAttachment = rs.getString("complaint_attachment");
             
@@ -199,15 +198,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/> 
                     <input type="text" class="form-control" id="basic-default-company" name="description" value="<%= updateComplaintDescription %>" required>
                                            
                     <br><label>Date:</label>
-                    <input type="date" class="form-control" id="basic-default-fullname" name="complaintDate" value="<%= onlyDate %>" required>
-            
-                    <br><label for="defaultSelect" class="form-label">Complaint Status:</label>
-                    <select name="complaintStatus" class="form-select">
-                        <option value="<%= updateComplaintStatus %>"><%= updateComplaintStatus %></option>
-                        <option value="Active">Active</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>    
-                    </select>    
+                    <input type="date" class="form-control" id="basic-default-fullname" name="complaintDate" value="<%= onlyDate %>" required>                                
                 
                     <br><label class="form-label" for="basic-default-company">Location:</label>
                     <input type="text" class="form-control" id="basic-default-company" name="location" value="<%= updateComplaintLocation %>" required>

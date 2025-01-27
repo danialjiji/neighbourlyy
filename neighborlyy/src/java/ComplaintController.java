@@ -1,4 +1,5 @@
 import bean.ComplaintBean;  
+import bean.ComplaintBean2;
 import java.io.IOException;  
 import java.io.InputStream;  
 import java.io.PrintWriter;  
@@ -30,8 +31,7 @@ public class ComplaintController extends HttpServlet {
                 String statusID = request.getParameter("statusID");  
                 String complaintTypeID = request.getParameter("complaintTypeID");  
                 String description = request.getParameter("description");  
-                String complaintDate = request.getParameter("complaintDate"); // Expects format "yyyy-MM-dd"  
-                String complaintStatus = request.getParameter("complaintStatus");  
+                String complaintDate = request.getParameter("complaintDate"); // Expects format "yyyy-MM-dd"                   
                 String location = request.getParameter("location");  
 
                 // Prepare date parsing  
@@ -45,28 +45,23 @@ public class ComplaintController extends HttpServlet {
                     InputStream fileContent = filePart.getInputStream();  
 
                     // Bean setup  
-                    ComplaintBean complaint = new ComplaintBean();  
-                    complaint.setComplaintType(Integer.parseInt(complaintTypeID));  
-                    complaint.setDescription(description);  
-                    complaint.setDateComplaint(sqlDate); // Set the correct SQL Date  
-                    complaint.setAttachment(fileName);  
+                    ComplaintBean2 complaint = new ComplaintBean2(userID, statusID, complaintTypeID, description, complaintDate, location, fileName);
 
                     // Database Update Query  
                     Connection conn = DBConnection.createConnection();  
                     String sql = "UPDATE complaint SET userID=?, statusID=?, complaint_type_ID=?, " +  
-                                 "complaint_description=?, complaint_date=?, complaint_status=?, " +  
+                                 "complaint_description=?, complaint_date=TO_DATE(?, 'YYYY:MM:DD'), " +  
                                  "complaint_location=?, complaint_attachment=? WHERE complaintID=?";  
                     PreparedStatement stmt = conn.prepareStatement(sql);  
 
-                    stmt.setInt(1, Integer.parseInt(userID));  
-                    stmt.setInt(2, Integer.parseInt(statusID));  
-                    stmt.setInt(3, Integer.parseInt(complaintTypeID));  
-                    stmt.setString(4, description);  
-                    stmt.setDate(5, sqlDate); // Correctly setting the SQL Date  
-                    stmt.setString(6, complaintStatus);  
-                    stmt.setString(7, location);  
-                    stmt.setString(8, fileName);  
-                    stmt.setInt(9, Integer.parseInt(complaintID));  
+                    stmt.setInt(1, Integer.parseInt(complaint.getUserID()));  
+                    stmt.setInt(2, Integer.parseInt(complaint.getStatusID()));  
+                    stmt.setInt(3, Integer.parseInt(complaint.getComplaintTypeID()));  
+                    stmt.setString(4, complaint.getComplaintDescription());  
+                    stmt.setString(5, complaint.getComplaintDate()); // Correctly setting the SQL Date                     
+                    stmt.setString(6, complaint.getComplaintLocation());  
+                    stmt.setString(7, complaint.getComplaintAttachment());  
+                    stmt.setInt(8, Integer.parseInt(complaintID));  
 
                     stmt.executeUpdate();  
                     // Properly close resources  

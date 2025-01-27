@@ -12,7 +12,7 @@
 
 <sql:setDataSource var="myDatasource" 
 driver="oracle.jdbc.OracleDriver"
-url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
+url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="system"/>
 
 <%
     String updateFeeID = request.getParameter("feeID");
@@ -38,8 +38,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
             updateFeeCategoryID = rs.getInt("fee_category_ID");
             updateStatusID = rs.getInt("statusID");
             updateFeeDate = rs.getString("fee_date");
-            updateFeeAmount = rs.getInt("fee_amount");
-            updateFeeStatus = rs.getString("fee_status");
+            updateFeeAmount = rs.getInt("fee_amount");          
             updateAttachment = rs.getString("attachment");
         }
         
@@ -200,18 +199,8 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
             
                     <br><label class="form-label" for="basic-default-company">Fee Amount:</label>
                     <input type="number" class="form-control" id="basic-default-company" name="feeAmount" placeholder="0.00" value="<%= updateFeeAmount %>" required>
-
-                    <br><label for="defaultSelect" class="form-label">Fee Status:</label>
-                    <select name="feeStatus" class="form-select">
-                        <option value="<%= updateFeeStatus %>"><%= updateFeeStatus %></option>
-                        <option value="Active">Active</option>
-                    <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>                                                                                                                                                                                                   
-                    </select>                  
-                                
-                <br><label for="formFile" class="form-label">Attachment:</label>
-                <input name="attachment" class="form-control" type="file" id="formFile" />                  
-                                                                                          
+                                  
+                                                                                                                                                    
                     <br><button type="submit" class="btn-submit">Update</button>
                 </form>
                     

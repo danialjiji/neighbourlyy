@@ -5,6 +5,7 @@
  */
 
 import bean.ReportBean;
+import bean.ReportBean2;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -55,26 +56,23 @@ public class ReportController extends HttpServlet {
                     String fileName = filePart.getSubmittedFileName();
                     InputStream fileContent = filePart.getInputStream();
                     
+                    //Bean Implementation
+                    ReportBean2 report = new ReportBean2(userID, reportDate, location, remarks, fileName);
                                        
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("INSERT INTO report (userID, dateOfVisit, \"location\", remarks, attachment) VALUES (?, TO_DATE(?, 'YYYY:MM:DD'), ?, ?, ?)");
             
-                    stmt.setInt(1, Integer.parseInt(userID));
-                    stmt.setString(2, reportDate);
-                    stmt.setString(3, location);
-                    stmt.setString(4, remarks);
-                    stmt.setString(5, fileName);
+                    stmt.setInt(1, Integer.parseInt(report.getUserID()));
+                    stmt.setString(2, report.getDateOfVisit());
+                    stmt.setString(3, report.getLocation());
+                    stmt.setString(4, report.getRemarks());
+                    stmt.setString(5, report.getAttachment());
             
                     stmt.executeUpdate();
                     conn.close();
                     stmt.close();
                     
-                    //Bean Implementation
-                    ReportBean report = new ReportBean();
-                    report.setDateofvisit(reportDate);
-                    report.setLocation(location);
-                    report.setRemarks(remarks);
-                    report.setAttachment(fileName);
+                    
                     
                 }catch(Exception e){
                     if (e instanceof ClassNotFoundException) {
@@ -100,15 +98,18 @@ public class ReportController extends HttpServlet {
                     Part filePart = request.getPart("attachment");
                     String fileName = filePart.getSubmittedFileName();
                     InputStream fileContent = filePart.getInputStream();
+                    
+                    //Bean Implementation
+                    ReportBean2 editReport = new ReportBean2(userID, reportDate, location, remarks, fileName);
                                                         
                     Connection conn = DBConnection.createConnection();
                     PreparedStatement stmt = conn.prepareStatement("UPDATE report SET userID=?, dateOfVisit=TO_DATE(?, 'YYYY:MM:DD'), \"location\"=?, remarks=?, attachment=? WHERE reportID=?");
                     
-                    stmt.setInt(1, Integer.parseInt(userID));
-                    stmt.setString(2, reportDate);
-                    stmt.setString(3, location);
-                    stmt.setString(4, remarks);
-                    stmt.setString(5, fileName);
+                    stmt.setInt(1, Integer.parseInt(editReport.getUserID()));
+                    stmt.setString(2, editReport.getDateOfVisit());
+                    stmt.setString(3, editReport.getLocation());
+                    stmt.setString(4, editReport.getRemarks());
+                    stmt.setString(5, editReport.getAttachment());
                     stmt.setInt(6, Integer.parseInt(reportID));
                     
                     stmt.executeUpdate();

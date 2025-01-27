@@ -12,7 +12,7 @@
 
 <sql:setDataSource var="myDatasource" 
 driver="oracle.jdbc.OracleDriver"
-url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
+url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="system"/>
 
 <%
     String updateRegisterID = request.getParameter("registerID");
@@ -100,7 +100,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     <li><a href="Fee.jsp">Fee</a></li>
                     <li><a href="Report.jsp">Report</a></li>
                     <li><a href="Complaint.jsp">Complaints</a></li>  
-                    <li><a href="registerGuard.jsp">Register Guard</a></li>
+                    <li><a href="registerGuard.jsp">Registeration</a></li>
                     <li><a href="userllist1.jsp">User List</a></li>
                     <li><a href="../LogoutServlet">Logout</a></li>              
                 </ul>

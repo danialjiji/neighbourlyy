@@ -5,6 +5,7 @@
  */
 
 import bean.FeeBean;
+import bean.FeeBean2;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -48,36 +49,29 @@ public class FeeController extends HttpServlet {
                 String feeCategoryID = request.getParameter("feeCategoryID");
                 String statusID = request.getParameter("statusID");
                 String feeDate = request.getParameter("feeDate");
-                int feeAmount = Integer.parseInt(request.getParameter("feeAmount"));
-                String feeStatus = request.getParameter("feeStatus");
-                                             
+                int feeAmount = Integer.parseInt(request.getParameter("feeAmount"));              
+                                            
                 try{
-                    Part filePart = request.getPart("attachment");
-                    String fileName = filePart.getSubmittedFileName();
-                    InputStream fileContent = filePart.getInputStream();
+                    
+                    
+                    //Bean Implementation
+                    FeeBean2 fee = new FeeBean2(userID, feeCategoryID, statusID, feeDate, feeAmount);
                   
                     
                     Connection conn = DBConnection.createConnection();
-                    PreparedStatement stmt = conn.prepareStatement("INSERT INTO fee (userID, fee_category_ID, statusID, fee_date, fee_amount, fee_status, attachment) VALUES (?, ?, ?, TO_DATE(?, 'YYYY:MM:DD'), ?, ?, ?)");
+                    PreparedStatement stmt = conn.prepareStatement("INSERT INTO fee (userID, fee_category_ID, statusID, fee_date, fee_amount) VALUES (?, ?, ?, TO_DATE(?, 'YYYY:MM:DD'), ?)");
             
-                    stmt.setInt(1, Integer.parseInt(userID));
-                    stmt.setString(2, feeCategoryID);
-                    stmt.setString(3, statusID);
-                    stmt.setString(4, feeDate);
-                    stmt.setInt(5, feeAmount);
-                    stmt.setString(6, feeStatus);
-                    stmt.setString(7, fileName);
-
-            
+                    stmt.setInt(1, Integer.parseInt(fee.getUserID()));
+                    stmt.setString(2, fee.getFeeCategoryID());
+                    stmt.setString(3, fee.getStatusID());
+                    stmt.setString(4, fee.getFeeDate());
+                    stmt.setInt(5, fee.getFeeAmount());                  
+                           
                     stmt.executeUpdate();
                     conn.close();
                     stmt.close();
                     
-                     //Bean Implementation
-                    FeeBean fee = new FeeBean();
-                    fee.setFeeType(Integer.parseInt(feeCategoryID));
-                    fee.setFeeType(feeAmount);
-                    fee.setReceipt(fileName);
+                    
                     
                 }catch(Exception e){
                     if (e instanceof ClassNotFoundException) {
@@ -99,25 +93,24 @@ public class FeeController extends HttpServlet {
                 String statusID = request.getParameter("statusID");
                 String feeDate = request.getParameter("feeDate");
                 int feeAmount = Integer.parseInt(request.getParameter("feeAmount"));
-                String feeStatus = request.getParameter("feeStatus");
+                
                 
                 try{
-                    Part filePart = request.getPart("attachment");
-                    String fileName = filePart.getSubmittedFileName();
-                    InputStream fileContent = filePart.getInputStream();
-                                       
+                    
+                    //Bean Implementation
+                    FeeBean2 editFee = new FeeBean2(userID, feeCategoryID, statusID, feeDate, feeAmount);                   
                     
                     Connection conn = DBConnection.createConnection();
-                    PreparedStatement stmt = conn.prepareStatement("UPDATE fee SET userID=?, fee_category_ID=?, statusID=?, fee_date=TO_DATE(?, 'YYYY:MM:DD'), fee_amount=?, fee_status=?, attachment=? WHERE feeID=?");
+                    PreparedStatement stmt = conn.prepareStatement("UPDATE fee SET userID=?, fee_category_ID=?, statusID=?, fee_date=TO_DATE(?, 'YYYY:MM:DD'), fee_amount=? WHERE feeID=?");
             
-                    stmt.setInt(1, Integer.parseInt(userID));
-                    stmt.setInt(2, Integer.parseInt(feeCategoryID));
-                    stmt.setInt(3, Integer.parseInt(statusID));
-                    stmt.setString(4, feeDate);
-                    stmt.setInt(5, feeAmount);
-                    stmt.setString(6, feeStatus);
-                    stmt.setString(7, fileName);
-                    stmt.setInt(8, Integer.parseInt(feeID));
+                    stmt.setInt(1, Integer.parseInt(editFee.getUserID()));
+                    stmt.setInt(2, Integer.parseInt(editFee.getFeeCategoryID()));
+                    stmt.setInt(3, Integer.parseInt(editFee.getStatusID()));
+                    stmt.setString(4, editFee.getFeeDate());
+                    stmt.setInt(5, editFee.getFeeAmount());
+                    
+                    
+                    stmt.setInt(6, Integer.parseInt(feeID));
                     
                     stmt.executeUpdate();
                     conn.close();

@@ -102,65 +102,10 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
                     
                     </form>
                 </div>
-                
-                <br><h3>Visitors per Month</h3>
-                <!-- Chart Container -->
-                <div class="chart-container">
-                    <canvas id="myChart"></canvas>
-                </div>
+                          
             
-                <div class="form-container">
-                    <h3>Visitor Form</h3>
-                
-                    <form action="/neighborlyy/VisitorController" method="post">    
-                                    
-                    <!-- Determine Action -->
-                    <input type="hidden" name="accessType" value="add">
-                                    
-                    <!-- User Input -->                          
-                    <label>User ID</label>
-                    <select name="userID">
-                        <sql:query var="result" dataSource="${myDatasource}">
-                            SELECT userID FROM admin
-                        </sql:query>
-                                                
-                        <option value="select" required>Select</option>
-                        <c:forEach var="row" items="${result.rowsByIndex}">
-                            <c:forEach var="column" items="${row}">
-                                <option value="${column}"><c:out value="${column}"/></option>
-                            </c:forEach>
-                        </c:forEach>                                                                                                                                                                           
-                    </select>
-                                                                                                     
-                    <br><label>Visitor Name:</label>
-                    <input type="text" name="visitorName" placeholder="Enter visitor name">
-                                                                                                         
-                    <br><label>IC Number:</label>
-                    <input type="text" name="visitorIC" placeholder="Enter IC number">
-                                                                      
-                    <br><label class="form-label">Plate Number:</label>
-                    <input type="text" name="plateNumber" placeholder="Enter plate number">
-                                                                     
-                    <br><label>Entry Time:</label>
-                    <input type="time" name="entryTime">
-                                                                     
-                    <br><label>Exit Time:</label>
-                    <input type="time" name="exitTime">
-                                                                    
-                    <br><label>Date of Visit:</label>
-                    <input type="date" name="visitDate">
-                                                                    
-                    <br><label>Purpose of Visit:</label>
-                    <textarea type="text" name="purposeOfVisit" placeholder="Hi, Do you have a moment to talk Gaeul?"></textarea>
-                               
-                    <br><label>Phone Number:</label>
-                    <input type="tel" placeholder="Enter phone number" name="phoneNumber">                                         
             
-                    <br><button type="submit" class="btn-submit">Submit</button>
-                </form>
-            </div>
-                                                
-            <section class="data-table">                    
+                    <section class="data-table">                    
                 <table class="table">
                     
                                    
@@ -182,11 +127,12 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
                     </thead>
                     <tbody
                         <%
-                            
+                            String searchVisitorName = request.getParameter("searchVisitorName");
                 
                             try{                         
                                 Connection conn = DBConnection.createConnection();
-                                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM visitor");
+                                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM visitor WHERE UPPER(visitor_name) LIKE ?");
+                                stmt.setString(1, "%" + searchVisitorName.toUpperCase() + "%");
                                 ResultSet rs = stmt.executeQuery();
 
                             
@@ -234,96 +180,8 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="syste
                         </tbody>
                     </table>
                 </section>
-            
-            </main>
-        </div>
-                      
-                        
-        <%
-            Connection conn = null;
-            PreparedStatement stmt = null;
-            ResultSet rs = null;
-
-            int[] visitorsPerMonth = new int[12]; // Array to store complaints for 12 months, initialize to 0
-
-            try {
-                conn = DBConnection.createConnection();
-                String query = "SELECT EXTRACT(MONTH FROM dateOfVisit) AS month, COUNT(*) AS total_visitors " +
-                            "FROM visitor " +
-                            "GROUP BY EXTRACT(MONTH FROM dateOfVisit) " +
-                            "ORDER BY month";
-
-                stmt = conn.prepareStatement(query);
-                rs = stmt.executeQuery();
-
-                while (rs.next()) {
-                    int month = rs.getInt("month"); // 1 for January, 2 for February, etc.
-                    int total = rs.getInt("total_visitors");
-                    visitorsPerMonth[month - 1] = total; // Map to the 0-based array index
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        %>
-        
-        <!-- Chart.js Script -->
-        <script>
-            const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August','September', 'October', 'November', 'December'];
-            const data = {
-            labels: labels,
-            datasets: [{
-                label: 'Visitors',
-                data: <%= Arrays.toString(visitorsPerMonth).replace("[", "[").replace("]", "]") %>,
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(201, 203, 207, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(201, 203, 207, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        };
-
-            const config = {
-                type: 'bar',
-                data: data,
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            };
-
-            const myChart = new Chart(
-                document.getElementById('myChart'),
-                config
-            );
-        </script>
-               
+            </div>
+        </main>
+                                                                           
     </body>
 </html>

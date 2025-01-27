@@ -12,7 +12,7 @@
 
 <sql:setDataSource var="myDatasource" 
 driver="oracle.jdbc.OracleDriver"
-url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
+url="jdbc:oracle:thin:@localhost:1521:XE" user="proj_neighborly" password="system"/>
 
 <!DOCTYPE html>
     <meta charset="UTF-8">
@@ -57,7 +57,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                         <li class="active"><a href="Fee.jsp">Fee</a></li>
                         <li><a href="Report.jsp">Report</a></li>
                         <li><a href="Complaint.jsp">Complaints</a></li>  
-                        <li><a href="registerGuard.jsp">Register Guard</a></li>
+                        <li><a href="registerGuard.jsp">Registeration</a></li>
                         <li><a href="userllist1.jsp">User List</a></li>
                         <li><a href="../LogoutServlet">Logout</a></li>
                     </ul>
@@ -78,7 +78,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     <label>User ID:</label>
                     <select name="userID">
                         <sql:query var="result" dataSource="${myDatasource}">
-                            SELECT userID FROM resident
+                            SELECT userID FROM admin
                         </sql:query>
                                                 
                         <option value="select" required>Select</option>
@@ -141,19 +141,8 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                     <input type="date" class="form-control" id="basic-default-fullname" name="feeDate">
             
                     <br><label>Fee Amount:</label>
-                    <input type="number" name="feeAmount" placeholder="0.00">
-
-                    <br><label for="defaultSelect" class="form-label">Fee Status:</label>
-                    <select name="feeStatus" class="form-select">
-                        <option value="Select">Select</option>
-                        <option value="Active">Active</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>                                                                                                                                                                                                   
-                    </select>                  
-                                
-                    <br><label for="formFile" class="form-label">Attachment:</label>
-                    <input name="attachment" class="form-control" type="file" id="formFile" />                  
-                                                                                          
+                    <input type="number" name="feeAmount" placeholder="0.00">                                  
+                                                                                                                                                             
                     <br><button type="submit" class="btn-submit">Submit</button>
                 </form>
                     </div>
@@ -165,13 +154,10 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                             <thead>
                                 <tr>
                                     <th>Fee ID</th>
-                                    <th>User ID</th>
-                                    <th>Fee Category ID</th>
-                                    <th>Status ID</th>
+                                    <th>User ID</th>                                   
                                     <th>Fee Date</th>
-                                    <th>Fee Amount</th>
-                                    <th>Fee Status</th>
-                                    <th>Attachment</th>
+                                    <th>Fee Amount</th>  
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                         
@@ -184,19 +170,16 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                 
                                     try{                         
                                         Connection conn = DBConnection.createConnection();
-                                        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fee");
+                                        PreparedStatement stmt = conn.prepareStatement("SELECT f.feeID, f.userID, f.fee_date, f.fee_amount, s.status_description FROM fee f JOIN status s ON (f.statusID=s.statusID)");
                                         ResultSet rs = stmt.executeQuery();
 
                             
                                         while(rs.next()){
                                             int feeID = rs.getInt("feeID");
-                                            int userID = rs.getInt("userID");
-                                            int feeCategoryID = rs.getInt("fee_category_ID");
-                                            int statusID = rs.getInt("statusID");
+                                            int userID = rs.getInt("userID");                                         
                                             String feeDate = rs.getString("fee_date");
-                                            int feeAmount = rs.getInt("fee_amount");
-                                            String feeStatus = rs.getString("fee_status");
-                                            String attachment = rs.getString("attachment");
+                                            int feeAmount = rs.getInt("fee_amount"); 
+                                            String status_description = rs.getString("status_description");
 
                        
                                     
@@ -216,13 +199,10 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                                                        
                                         <tr>
                                             <td><%= feeID %></td>
-                                            <td><%= userID %></td>
-                                            <td><%= feeCategoryID %></td>
-                                            <td><%= statusID %></td>
+                                            <td><%= userID %></td>                                           
                                             <td><%= onlyDate %></td>
-                                            <td>RM<%= feeAmount %></td>
-                                            <td><%= feeStatus %></td>
-                                            <td><%= attachment %></td>
+                                            <td>RM<%= feeAmount %></td> 
+                                            <td><%= status_description %></td>
                                                     
                                             <td>                                          
                                                 <a class="btn-submit" href="UpdateFee.jsp?feeID=<%= feeID %>">
