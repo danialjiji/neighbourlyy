@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="styless.css">
+        <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
         <title>Dashboard</title>
     </head>
@@ -33,17 +33,21 @@
                 <h3>Hi, <%= username %></h3>
                 
             </div>
-                <div>
-                    <a href="/neighborlyy/dashboardGuard.jsp" class="active">Dashboard</a>
-                    <a href="./Guard/profileGuard.jsp">Profile</a>
-                    <a href="./Guard/RoundingReport.jsp">Rounding Report</a>
-                    <a href="./Guard/VisitorForm.jsp">Visitor Form</a>
-                    <a href="./Guard/userlist.jsp">Users List</a>
-                    <a href="LogoutServlet">Logout</a>
-                </div>
+            
+            
+            <nav class="menu">
+                <ul>
+                    <li class="active"><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                    <li><a href="./Guard/profileGuard.jsp">Profile</a></li>
+                    <li><a href="./Guard/RoundingReport.jsp">Rounding Report</a></li>
+                    <li><a href="./Guard/VisitorForm.jsp">Visitor Form</a></li>
+                    <li><a href="./Guard/userlist.jsp">Users List</a></li>
+                    <li><a href="LogoutServlet">Logout</a></li>
+                </ul>
+            </nav>
         </aside>
         
-            <div class="content">
+            <main class="main-content">
             <header class="cardheader">
                 <h1>Welcome to the Dashboard, <%= username %>!</h1>
                 <span>Your User ID: <%= userid %></span>
@@ -179,7 +183,7 @@
                 %>
                     </table>
                 </section>
-            </div>
+            </main>
         </div>
     </body>
 </html>

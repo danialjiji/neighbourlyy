@@ -54,7 +54,7 @@
 
         <!-- Main Content -->
        <div class="content">
-            <header class="cardheader">
+            <header>
                 <h1>Complaint</h1>
             </header>
             <div class="form-container">

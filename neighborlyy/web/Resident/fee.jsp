@@ -14,11 +14,11 @@
     <title>Fee</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styless.css">
-    <style>
-         div.content{
-            height : 100vh;
-         }
+     <link rel="stylesheet" href=".../style.css">
+     <style>
+            .sidebar {
+                height: 100vh;
+            }
             .chart-container {
                 width: 68%; /* Adjust width as needed */
                 margin: 20px auto; /* Center the chart on the page */
@@ -27,7 +27,7 @@
                 max-width: 100%; /* Ensure the chart doesn't overflow */
                 height: 400px; /* Set a fixed height */
             }
-     </style>
+        </style>
 </head>
 <body>
     <div class="dashboard-container">
@@ -49,19 +49,20 @@
                 <h3>Hi, <%= username %></h3>
                 
             </div>
-                
-            <div>
-                  <a href="/neighborlyy/dashboardResident.jsp">Dashboard</a>
-                    <a href="./profile.jsp">Profile</a>
-                    <a href="./complaint.jsp">Complaint</a>
-                    <a class="active" href="./fee.jsp">Fee</a>
-                    <a href="/neighborlyy/LogoutServlet">Log Out</a>
-            </div>
+            <nav class="menu">
+                <ul>
+                   <li ><a href="/neighborlyy/dashboardResident.jsp">Dashboard</a></li>
+                    <li ><a href="./profile.jsp">Profile</a></li>
+                    <li ><a href="./complaint.jsp">Complaint</a></li>
+                    <li class="active"><a href="./fee.jsp">Fee</a></li>
+                    <li ><a href="/neighborlyy/LogoutServlet">Log Out</a></li>
+                </ul>
+            </nav>
         </aside>
 
         <!-- Main Content -->
-        <div class="content">
-            <header class="cardheader">
+        <main class="main-content">
+            <header>
                 <h1>Fee</h1>
             </header>
            <section class="data-table">
@@ -139,10 +140,10 @@
                         out.println("<tr><td colspan='4'>Error: " + e.getMessage() + "</td></tr>");
                     } 
                 %>
-                          </tbody>
-                      </table>
-                 </section>
-             </div>
-        </div>
-    </body>
+                    </tbody>
+                </table>
+            </section>
+     </main>
+   </div>
+</body>
 </html>

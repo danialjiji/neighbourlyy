@@ -7,7 +7,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href=".../styless.css">
+     <link rel="stylesheet" href=".../style.css">
 </head>
 <body>
         <%
@@ -29,18 +29,22 @@
                     <h3>Hi, <%= username %></h3>
 
                 </div>
+
+
+                <nav class="menu">
                     <ul>
-                        <a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a>
-                        <a href="profileGuard.jsp" class="active">Profile</a>
-                        <a href="RoundingReport.jsp">Rounding Report</a>
-                        <a href="VisitorForm.jsp">Visitor Form</a>
-                        <a href="userlist.jsp">Users List</a>
-                        <a href="../LogoutServlet">Logout</a>
+                        <li><a href="/neighborlyy/dashboardGuard.jsp">Dashboard</a></li>
+                        <li class="active"><a href="profileGuard.jsp">Profile</a></li>
+                        <li><a href="RoundingReport.jsp">Rounding Report</a></li>
+                        <li><a href="VisitorForm.jsp">Visitor Form</a></li>
+                        <li><a href="userlist.jsp">Users List</a></li>
+                        <li><a href="../LogoutServlet">Logout</a></li>
                     </ul>
+                </nav>
             </aside>
 
         <!-- Main Content -->
-        <div class="content">
+        <main class="main-content">
             <header>
                 <h1>Profile</h1>
                 <span>Overview</span>
@@ -117,7 +121,7 @@
                     </div>
                 </div>
             </section>
-     </div>
+     </main>
    </div>
 </body>
 </html>
