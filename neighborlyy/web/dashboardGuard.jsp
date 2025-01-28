@@ -100,10 +100,10 @@
                     <div class="card">
                         <h2>Rounding Reports</h2>
                         <p class="amount">Submitted Today: <%= submittedToday %></p>
-                        <p class="status increased">Total Reports Submitted  <%= totalReports %></p>
+                        <p style='color:#fff' class="status increased">Total Reports Submitted  <%= totalReports %></p>
                     </div>
                     <div class="card">
-                        <h2>Visitors</h2>
+                        <h2>Today's Visitors Count</h2>
                         <p class="amount">Visitor In: <%= totalVisitors %></p>
                         <p class="amount">Visitor Out: <%= totalExitedVisitors %></p>
                     </div>

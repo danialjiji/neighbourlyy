@@ -173,7 +173,7 @@
                                                 <td><%= status %></td>                                              
                                                 <td>
                                                     <% if (complaintAttachment != null && !complaintAttachment.isEmpty()) { %>
-                                                    <a href=".Admin/attachment/<%= complaintAttachment %>">View</a>
+                                                    <a href="Admin/attachment/<%= complaintAttachment %>">View</a>
                                                     <% } else { %>
                                                         No Attachment
                                                     <% } %>

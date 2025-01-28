@@ -159,6 +159,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                     <th>User ID</th>                                   
                                     <th>Fee Date</th>
                                     <th>Fee Amount</th>  
+                                    <th>Fee Category</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -172,7 +173,11 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                 
                                     try{                         
                                         Connection conn = DBConnection.createConnection();
-                                        PreparedStatement stmt = conn.prepareStatement("SELECT f.feeID, f.userID, f.fee_date, f.fee_amount, s.status_description FROM fee f JOIN status s ON (f.statusID=s.statusID)");
+                                        PreparedStatement stmt = conn.prepareStatement("SELECT f.feeID, f.userID, f.fee_date, f.fee_amount, " +
+                                                                                        "c.fee_category_name, s.status_description " +
+                                                                                        "FROM fee f " +
+                                                                                        "JOIN status s ON f.statusID = s.statusID " +
+                                                                                        "JOIN fee_category c ON f.fee_category_id = c.fee_category_id");
                                         ResultSet rs = stmt.executeQuery();
 
                             
@@ -181,6 +186,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                             int userID = rs.getInt("userID");                                         
                                             String feeDate = rs.getString("fee_date");
                                             int feeAmount = rs.getInt("fee_amount"); 
+                                            String feecategory = rs.getString("fee_category_name");  
                                             String status_description = rs.getString("status_description");  
                                             
                                     
@@ -203,6 +209,7 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/>
                                             <td><%= userID %></td>                                           
                                             <td><%= onlyDate %></td>
                                             <td>RM<%= feeAmount %></td> 
+                                            <td><%= feecategory %></td>
                                             <td><%= status_description %></td>
                                             
                                                     

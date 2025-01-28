@@ -143,7 +143,7 @@
                             String query = "SELECT * FROM visitor";
 
                             if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-                                query += " WHERE visitor_name LIKE ? OR visitor_ic LIKE ? OR no_plate LIKE ? OR PHONENUM LIKE ?";
+                                query += " WHERE visitor_name LIKE ? OR visitor_ic LIKE ? OR no_plate LIKE ? OR VISITOR_PHONENUM LIKE ?";
                             }
 
                             PreparedStatement stmt = conn.prepareStatement(query);

@@ -61,7 +61,7 @@
                     type="text" 
                     id="searchKeyword" 
                     name="searchKeyword" 
-                    placeholder="Enter name, ic/passport, plate number or phone number" 
+                    placeholder="Enter name, ic/passport or phone number" 
                     value="<%= request.getParameter("searchKeyword") != null ? request.getParameter("searchKeyword") : "" %>">
                 <button type="submit" class="btn-submit">Search</button>
                 <a href="userlist.jsp" class="btn-submit">Reset</a>

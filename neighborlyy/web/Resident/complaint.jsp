@@ -13,6 +13,10 @@
          .dashboard-container{
              background-color: #f4f4f9;
          }
+         
+         div.content{
+             height:100vh;
+         }
             .chart-container {
                 width: 68%; /* Adjust width as needed */
                 margin: 20px auto; /* Center the chart on the page */

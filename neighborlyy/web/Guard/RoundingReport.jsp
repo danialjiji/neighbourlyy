@@ -104,7 +104,7 @@
               <a href="RoundingReport.jsp" class="btn-submit">Reset</a>
             </form>
         </div>
-                <div>
+         <div>
                 <section class="data-table">
 
                     <table class="table">
