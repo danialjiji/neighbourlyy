@@ -173,7 +173,7 @@
                                                 <td><%= status %></td>                                              
                                                 <td>
                                                     <% if (complaintAttachment != null && !complaintAttachment.isEmpty()) { %>
-                                                    <a href="attachment/<%= complaintAttachment %>">View</a>
+                                                    <a href=".Admin/attachment/<%= complaintAttachment %>">View</a>
                                                     <% } else { %>
                                                         No Attachment
                                                     <% } %>
@@ -247,7 +247,7 @@
                                                 <td><%= status %></td>                                                                                           
                                                 <td>
                                                     <% if (feeAttachment != null && !feeAttachment.isEmpty()) { %>
-                                                    <a href="attachment/<%= feeAttachment %>">View</a>
+                                                    <a href="./Admin/attachment/<%= feeAttachment %>">View</a>
                                                     <% } else { %>
                                                         No Attachment
                                                     <% } %>
