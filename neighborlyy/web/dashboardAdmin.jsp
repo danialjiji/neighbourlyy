@@ -171,7 +171,13 @@
                                                 <td><%= onlyDate %></td>
                                                 <td><%= complaintLocation %></td>                                                                                            
                                                 <td><%= status %></td>                                              
-                                                <td><%= complaintAttachment %></td>                            
+                                                <td>
+                                                    <% if (complaintAttachment != null && !complaintAttachment.isEmpty()) { %>
+                                                    <a href="attachment/<%= complaintAttachment %>">View</a>
+                                                    <% } else { %>
+                                                        No Attachment
+                                                    <% } %>
+                                                </td>                           
                                                                           
                                             </tr>                                                                                                                                                                                                             
                                         <%                                   
@@ -238,8 +244,14 @@
                                                 <td><%= feeCategory %></td> 
                                                 <td><%= onlyDate %></td>
                                                 <td>RM<%= feeAmount %></td>                                                                                            
-                                                <td><%= status %></td>                                              
-                                                <td><%= feeAttachment %></td>                            
+                                                <td><%= status %></td>                                                                                           
+                                                <td>
+                                                    <% if (feeAttachment != null && !feeAttachment.isEmpty()) { %>
+                                                    <a href="attachment/<%= feeAttachment %>">View</a>
+                                                    <% } else { %>
+                                                        No Attachment
+                                                    <% } %>
+                                                </td>
                                                                           
                                             </tr>                                                                                                                                                                                                             
                                         <%                                   
