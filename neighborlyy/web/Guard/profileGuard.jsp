@@ -52,7 +52,6 @@
             </header>
             
            <section class="data-table">
-                <h3>Complaints List</h3>
                 <div class="profile-container">
                     <h1>User Profile</h1>
                     <div class="profile-box">

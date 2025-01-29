@@ -18,7 +18,10 @@
 </head>
 
 <style>  
-      
+        div.content{
+            height:100vh;
+        }
+    
         /* Input Fields */  
         .form-container input[type="number"] {  
             width: 100%;  

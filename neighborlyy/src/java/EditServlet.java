@@ -50,10 +50,12 @@ public class EditServlet extends HttpServlet {
         String phoneNum = request.getParameter("phoneNum");  
         String email = request.getParameter("email");  
         String plateNumber = request.getParameter("plateNumber");  
+        String salaryParam = request.getParameter("salary");  
+        double salary = 0.0; // Default value or handle it as needed  
 
-        // Initialize salary to 0 or handle error  
-        double salary = Double.parseDouble(request.getParameter("salary"));
-       
+        if (salaryParam != null && !salaryParam.isEmpty()) {  
+        salary = Double.parseDouble(salaryParam);  
+        }
         
         String shift = request.getParameter("shift");   
         String postlocation = request.getParameter("postlocation");   

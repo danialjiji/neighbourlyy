@@ -79,6 +79,7 @@
                </section>
                               
             <section class="data-table">
+                 <h2> Total of Complaints </h2>
                 <%
                     Connection conn = null;
                     PreparedStatement stmt = null;
@@ -172,6 +173,7 @@
                     </section>
                                     
                <section class="data-table">
+                   <h2> Total of Fees </h2>
                         <%
                             Map<String, Integer> feeStatusCounts = new HashMap<String, Integer>(); // Map to store count of statuses
 

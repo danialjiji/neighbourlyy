@@ -73,6 +73,7 @@
                     <option value="60003">Property</option>
                     <option value="60004">Environment</option>
                     <option value="60005">Waste Management</option>
+                    <option value="60006">Others</option>
                 </select>
                 
                <label for="dateComplaint">Date</label>

@@ -61,6 +61,13 @@ url="jdbc:oracle:thin:@localhost:1521:XE" user="neighborly" password="system"/> 
     <title>Complaint</title>
     <link rel="stylesheet" href="../styless.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    
+    <style>
+        div.content{
+            height: 100vh;
+        }
+    </style>
+    
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

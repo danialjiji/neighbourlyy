@@ -106,7 +106,7 @@ public class residentController extends HttpServlet {
                 stmt.setInt(2, cp.getStatusid());
                 stmt.setInt(3, cp.getComplaintType());
                 stmt.setString(4, cp.getDescription());
-                stmt.setDate (5, cp.getDateComplaint());
+                stmt.setDate (5, sqlDate);
                 stmt.setString(6, cp.getLocation ());
                 stmt.setString(7, cp.getAttachment());
                 stmt.executeUpdate();

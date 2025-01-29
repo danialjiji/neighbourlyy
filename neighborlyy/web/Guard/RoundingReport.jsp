@@ -128,7 +128,7 @@
                            String query;
 
                            if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-                               query = "SELECT * FROM report WHERE userid = ? AND (location LIKE ? OR remarks LIKE ?)";
+                               query = "SELECT * FROM report WHERE userid = ? AND (\"location\" LIKE ? OR remarks LIKE ?)";
                            } else {
                                query = "SELECT * FROM report WHERE userid = ?";
                            }
